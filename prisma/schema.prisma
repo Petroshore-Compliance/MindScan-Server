@@ -1,0 +1,139 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Cambia a tu proveedor si usas MySQL, SQLite, etc.
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id    Int       @id @default(autoincrement())
+  name       String
+  email      String    @unique
+  password   String
+  user_type  UserType
+  role       Role      @default(employee)
+  company    Company?  @relation(fields: [company_id], references: [company_id])
+  company_id Int?
+  responses  Response[]
+  results    Result[]
+  access     UserDiagnosisAccess[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Company {
+  company_id           Int                   @id @default(autoincrement())
+  name                 String
+  email                String    @unique
+  subscriptionPlan     Plan      @relation(fields: [subscription_plan_id], references: [plan_id])
+  subscription_plan_id Int
+  users                User[]
+  invitations          CompanyInvitation[]
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @updatedAt
+}
+
+model Plan {
+  plan_id    Int       @id @default(autoincrement())
+  plan_name  String
+  price      Float
+  features   String
+  companies  Company[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Diagnosis {
+  diagnosis_id Int                    @id @default(autoincrement())
+  title        String
+  description  String
+  questions    Question[]
+  results      Result[]
+  access       UserDiagnosisAccess[]
+  created_at   DateTime               @default(now())
+  updated_at   DateTime               @updatedAt
+}
+
+model Question {
+  question_id   Int        @id @default(autoincrement())
+  content       String
+  diagnosis     Diagnosis  @relation(fields: [diagnosis_id], references: [diagnosis_id])
+  diagnosis_id  Int
+  responses     Response[]
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+}
+
+model Response {
+  response_id  Int        @id @default(autoincrement())
+  value        Int
+  user         User       @relation(fields: [user_id], references: [user_id])
+  user_id      Int
+  question     Question   @relation(fields: [question_id], references: [question_id])
+  question_id  Int
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+}
+
+model Result {
+  result_id     Int        @id @default(autoincrement())
+  completed_at  DateTime   @default(now())
+  user          User       @relation(fields: [user_id], references: [user_id])
+  user_id       Int
+  diagnosis     Diagnosis  @relation(fields: [diagnosis_id], references: [diagnosis_id])
+  diagnosis_id  Int
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+}
+
+model UserDiagnosisAccess {
+  access_id    Int        @id @default(autoincrement())
+  has_access   Boolean
+  granted_by   String
+  user         User       @relation(fields: [user_id], references: [user_id])
+  user_id      Int
+  diagnosis    Diagnosis  @relation(fields: [diagnosis_id], references: [diagnosis_id])
+  diagnosis_id Int
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+}
+
+model CompanyInvitation {
+  invitation_id   Int        @id @default(autoincrement())
+  email           String
+  status          InvitationStatus @default(pending)
+  invitation_token String
+  company         Company    @relation(fields: [company_id], references: [company_id])
+  company_id      Int
+  sent_at         DateTime   @default(now())
+  responded_at    DateTime?
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @updatedAt
+}
+
+enum UserType {
+  individual
+  employee
+}
+
+enum Role {
+  admin
+  manager
+  employee
+}
+
+enum InvitationStatus {
+  pending
+  accepted
+  rejected
+}
