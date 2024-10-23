@@ -5,6 +5,6 @@ const {
   registerUserMiddleware,
 } = require("../middlewares/putUserMiddleware.js");
 
-router.post("/auth/register", registerUserMiddleware, registerUserHandler);
+router.post("/register", registerUserMiddleware, registerUserHandler);
 
 module.exports = router;

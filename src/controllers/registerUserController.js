@@ -1,4 +1,5 @@
 const prisma = require("../db.js");
+const bcrypt = require("bcrypt");
 
 const registerUserController = async (
   email,
@@ -11,11 +12,13 @@ const registerUserController = async (
   resultIds,
   accessIds
 ) => {
+  const hashedPassword = await hashPassword(password);
+
   const newUser = await prisma.user.create({
     data: {
       name,
-      email,
-      password,
+      email: email.toLowerCase(),
+      password: hashedPassword,
       user_type,
       role,
       company: companyId
@@ -41,6 +44,12 @@ const registerUserController = async (
     },
   });
   return `The User "${name}" was created successfully.`;
+};
+
+const hashPassword = async (plainPassword) => {
+  const saltRounds = 10; // The cost factor
+  const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+  return hashedPassword;
 };
 
 module.exports = {
