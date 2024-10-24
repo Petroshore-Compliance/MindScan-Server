@@ -15,6 +15,16 @@ const registerUserController = async (
   resultIds,
   accessIds
 ) => {
+  const emailInUse = await prisma.user.findUnique({
+    where: {
+      email: email.toLowerCase(),
+    },
+  });
+  if (emailInUse) {
+    //  return `The Email "${email}" is already in use, user not created.`;
+    return false;
+  }
+
   const newUser = await prisma.user.create({
     data: {
       name,
@@ -47,7 +57,8 @@ const registerUserController = async (
 
   createVerificationScript(newUser.user_id);
 
-  return `The User "${name}" was created successfully.`;
+  //return `The User "${name}" was created successfully.`;
+  return true;
 };
 
 module.exports = {

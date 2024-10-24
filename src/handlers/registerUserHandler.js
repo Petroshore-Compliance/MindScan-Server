@@ -1,4 +1,6 @@
-const { registerUserController } = require("../controllers/registerUserController.js");
+const {
+  registerUserController,
+} = require("../controllers/registerUserController.js");
 
 const registerUserHandler = async (req, res) => {
   try {
@@ -25,13 +27,16 @@ const registerUserHandler = async (req, res) => {
       resultIds,
       accessIds
     );
-
-    res.status(200).json({ message: "User registered successfully", response });
+    response
+      ? res
+          .status(200)
+          .json({ message: "User registered successfully", response })
+      : res
+          .status(400)
+          .json({ message: "Can not register user, email already in use" });
   } catch (error) {
-    console.error("Error registering user:", error);
-    res
-      .status(500)
-      .json({ message: "Can not register user, email already in use" });
+    console.error("Unhandled error registering user:", error);
+    res.status(500).json({ message: "Can not register user, try again later" });
   }
 };
 
