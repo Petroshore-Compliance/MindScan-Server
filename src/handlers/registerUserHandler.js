@@ -1,6 +1,4 @@
-const {
-  registerUserController,
-} = require("../controllers/registerUserController.js");
+const { registerUserController } = require("../controllers/registerUserController.js");
 
 const registerUserHandler = async (req, res) => {
   try {
