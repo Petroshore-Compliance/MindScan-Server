@@ -29,10 +29,10 @@ model User {
   access            UserDiagnosisAccess[]
   created_at        DateTime              @default(now())
   updated_at        DateTime              @updatedAt
-  VerificationCodes VerificationCodes[]
+  VerificationCodes VerificationCode[]
 }
 
-model VerificationCodes {
+model VerificationCode {
   verificationcodes_id Int  @id @default(autoincrement())
   user                 User @relation(fields: [user_id], references: [user_id])
   user_id              Int

@@ -25,12 +25,13 @@ const registerUserHandler = async (req, res) => {
       resultIds,
       accessIds
     );
+
     res.status(200).json({ message: "User registered successfully", response });
   } catch (error) {
     console.error("Error registering user:", error);
     res
       .status(500)
-      .json({ message: "Error registering user", error: error.message });
+      .json({ message: "Can not register user, email already in use" });
   }
 };
 

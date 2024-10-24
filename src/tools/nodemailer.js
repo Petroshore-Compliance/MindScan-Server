@@ -1,17 +1,21 @@
+require("dotenv").config();
+
+const { EMAIL_SENDER, EMAIL_TOKEN } = process.env;
+
 const nodemailer = require("nodemailer");
 
 // Step 5.1: Create a transporter
 let transporter = nodemailer.createTransport({
   service: "gmail", // e.g., 'gmail'
   auth: {
-    user: "roman.delasheras@petroshorecompliance.com", // Your email address
-    pass: "yrbn hkmr olbe uddm", // Your email account password or app password
+    user: EMAIL_SENDER, // Your email address
+    pass: EMAIL_TOKEN, // Your email account password or app password
   },
 });
 
 // Step 5.2: Set up email data
 let mailOptions = {
-  from: '"Your Name" <roman.delasheras@petroshorecompliance.com>', // Sender address
+  from: '"Petroshore Compliance"', // Sender address
   to: "roman.delasheras@petroshorecompliance.com", // List of recipients
   subject: "Hello from Nodemailer", // Subject line
   text: "Hello world?", // Plain text body
