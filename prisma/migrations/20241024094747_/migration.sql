@@ -23,6 +23,15 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
+CREATE TABLE "VerificationCode" (
+    "verificationcodes_id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
+    "code" INTEGER NOT NULL,
+
+    CONSTRAINT "VerificationCode_pkey" PRIMARY KEY ("verificationcodes_id")
+);
+
+-- CreateTable
 CREATE TABLE "Company" (
     "company_id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
@@ -128,6 +137,9 @@ CREATE UNIQUE INDEX "Company_email_key" ON "Company"("email");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "Company"("company_id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "VerificationCode" ADD CONSTRAINT "VerificationCode_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Company" ADD CONSTRAINT "Company_subscription_plan_id_fkey" FOREIGN KEY ("subscription_plan_id") REFERENCES "Plan"("plan_id") ON DELETE RESTRICT ON UPDATE CASCADE;
