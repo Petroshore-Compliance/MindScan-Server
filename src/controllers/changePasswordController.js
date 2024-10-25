@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const prisma = require('../db.js');
 const bcrypt = require('bcrypt');
 
