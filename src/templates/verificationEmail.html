@@ -1,42 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Welcome Page</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        margin-top: 50px;
-      }
-      button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #4caf50; /* Green */
-        color: white;
-        border: none;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #45a049;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Welcome, <span id="username">User</span>!</h1>
-    <button onclick="verifyUser()">Verify</button>
-
-    <script>
-      // Replace 'User' with the actual user's name
-      const userName = "John Doe"; // This should be set dynamically
-      document.getElementById("username").textContent = userName;
-
-      function verifyUser() {
-        // Add your verification logic here
-        alert("Verification link clicked for " + userName + "!");
-        // For example, redirect to a verification URL
-        // window.location.href = 'https://yourwebsite.com/verify?user=' + encodeURIComponent(userName);
-      }
-    </script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Email</title>
+</head>
+<body>
+    <h1>Welcome to Petroshore Compliance</h1>
+    <p>Your verification code is: <strong>{{verificationCode}}</strong></p>
+    
+</body>
 </html>
