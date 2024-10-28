@@ -35,8 +35,8 @@ model User {
 model VerificationCode {
   verificationcodes_id Int  @id @default(autoincrement())
   user                 User @relation(fields: [user_id], references: [user_id])
-  user_id              Int
-  code                 Int
+  user_id              Int  @unique
+  code                 Int  @unique
 }
 
 model Company {

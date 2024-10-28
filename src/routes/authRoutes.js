@@ -6,11 +6,12 @@ const { registerUserHandler } = require("../handlers/registerUserHandler.js");
 const { loginUserHandler } = require("../handlers/loginUserHandler.js");
 const { authMiddleware } = require("../middlewares/authMiddleware.js");
 const { changePasswordHandler } = require("../handlers/changePasswordHandler.js");
+const { verificateUserHandler } = require("../handlers/verificateUserHandler.js");
 
 router.post("/register", registerUserMiddleware, registerUserHandler);
 router.post("/login", loginUserHandler);
-
-router.patch("/change-password", changePasswordHandler);
+router.get("/verificate-user", verificateUserHandler);
+router.patch("/change-password",authMiddleware, changePasswordHandler);
 
 // Ruta para verificar si el token es válido (Solo para pruebas)
 router.post("/verify-user", authMiddleware, (req, res) => {
