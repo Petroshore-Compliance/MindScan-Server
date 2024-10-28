@@ -10,13 +10,21 @@ const loginUserController = async (email, password) => {
   });
 
   if (!user) {
-    throw new Error('Correo electrónico o contraseña inválidos');
+    throw new Error('Invalid email or password');
   }
+
+  const isNotVerified = await prisma.verificationCode.findUnique({
+where:{ user_id : user.user_id},
+  });
+
+if(isNotVerified){
+return { success: false, message: "The user is not verified" };
+}
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    throw new Error('Correo electrónico o contraseña inválidos');
+    throw new Error('Invalid email or password');
   }
 
   const token = jwt.sign(
