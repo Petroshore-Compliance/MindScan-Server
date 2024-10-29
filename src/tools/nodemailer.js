@@ -1,6 +1,5 @@
 require("dotenv").config();
-const fs = require("fs");
-const path = require("path");
+
 const nodemailer = require("nodemailer");
 
 const { EMAIL_SENDER, EMAIL_TOKEN } = process.env;
@@ -10,18 +9,6 @@ if (!EMAIL_SENDER || !EMAIL_TOKEN) {
   process.exit(1);
 }
 
-// Step 1: Read the HTML template
-const htmlTemplatePath = path.join(__dirname, "../templates/verificationEmail.html");
-let htmlTemplate;
-
-try {
-  htmlTemplate = fs.readFileSync(htmlTemplatePath, "utf8");
-} catch (error) {
-  console.error("Error reading HTML template:", error.message);
-  process.exit(1);
-}
-
-// Step 5.1: Create a transporter
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -30,25 +17,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Function to send email
-async function sendVerificationEmail(recipientEmail, verificationCode) {
+async function sendVerificationEmail(recipientEmail,subject, htmlContent) {
   if (!recipientEmail) {
     throw new Error("Recipient email is required.");
   }
 
-  if (!verificationCode) {
-    throw new Error("Verification code is required.");
-  }
-
-  // Replace the placeholder in the HTML template with the actual verification code
-  const htmlContent = htmlTemplate.replace(/{{verificationCode}}/g, verificationCode);
-
-  // Step 5.2: Set up email data
   const mailOptions = {
-    from: `"Petroshore Compliance" <${EMAIL_SENDER}>`, // Sender address with name
-    to: recipientEmail, // Recipient address passed as an argument
-    subject: "Verification Code from Petroshore Compliance", // Subject line
-    text: `Your verification code is: ${verificationCode}`, // Plain text body
+    from: `"Petroshore Compliance" <${EMAIL_SENDER}>`, 
+    to: recipientEmail, 
+    subject: subject, // Subject line
+    text: ``, // Plain text body
     html: htmlContent, // HTML body
   };
 
