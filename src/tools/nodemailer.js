@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendVerificationEmail(recipientEmail,subject, htmlContent) {
+async function sendEmail(recipientEmail,subject, htmlContent) {
   if (!recipientEmail) {
     throw new Error("Recipient email is required.");
   }
@@ -25,12 +25,11 @@ async function sendVerificationEmail(recipientEmail,subject, htmlContent) {
   const mailOptions = {
     from: `"Petroshore Compliance" <${EMAIL_SENDER}>`, 
     to: recipientEmail, 
-    subject: subject, // Subject line
-    text: ``, // Plain text body
-    html: htmlContent, // HTML body
+    subject: subject, 
+    text: ``, 
+    html: htmlContent, 
   };
 
-  // Step 5.3: Send the email using async/await
   try {
     const info = await transporter.sendMail(mailOptions);
     console.log("Email sent:", info.response);
@@ -41,5 +40,4 @@ async function sendVerificationEmail(recipientEmail,subject, htmlContent) {
   }
 }
 
-// Export the function so it can be used in other modules
-module.exports = sendVerificationEmail;
+module.exports = sendEmail;
