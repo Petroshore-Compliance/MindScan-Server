@@ -1,4 +1,4 @@
-const { setPasswordController } = require("../controllers/setPasswordController.js");
+const { setPasswordController } = require("../../controllers/authControllers/setPasswordController.js");
 
 
 

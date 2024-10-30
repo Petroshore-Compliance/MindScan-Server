@@ -1,4 +1,4 @@
-const prisma = require('../db.js');
+const prisma = require('../../db.js');
 
 const getProfileController = async (userID) => {
     const user = await prisma.user.findUnique({

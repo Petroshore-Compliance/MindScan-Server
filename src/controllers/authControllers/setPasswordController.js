@@ -1,5 +1,6 @@
-const prisma = require("../db.js");
 const bcrypt = require("bcrypt");
+
+const prisma = require("../../db.js");
 
 const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 

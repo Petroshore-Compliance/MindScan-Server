@@ -1,5 +1,6 @@
 const { parse } = require("dotenv");
-const prisma = require("../db");
+
+const prisma = require("../../db");
 
 const verificateUserController = async (userId, code) => { 
 
