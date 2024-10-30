@@ -1,6 +1,7 @@
-const prisma = require("../db.js");
 const bcrypt = require("bcrypt");
-const { createVerificationScript } = require("../tools/createVerificationScript.js");
+
+const prisma = require("../../db.js");
+const { createVerificationScript } = require("../../tools/createVerificationScript.js");
 
 const registerUserController = async (
   email,

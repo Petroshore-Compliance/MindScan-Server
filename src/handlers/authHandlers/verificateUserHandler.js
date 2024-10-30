@@ -1,4 +1,4 @@
-const { verificateUserController } = require("../controllers/verificateUserController.js");
+const { verificateUserController } = require("../../controllers/authControllers/verificateUserController.js");
 
 const verificateUserHandler = async (req, res) => {
   const { user_id, verificationCode } = req.body;

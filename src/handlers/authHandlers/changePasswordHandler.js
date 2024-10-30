@@ -1,4 +1,4 @@
-const { changePasswordController } = require('../controllers/changePasswordController.js');
+const { changePasswordController } = require('../../controllers/authControllers/changePasswordController.js');
 
 const changePasswordHandler = async (req, res) => {
     try {

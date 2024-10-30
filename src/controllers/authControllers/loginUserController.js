@@ -1,7 +1,9 @@
-const jwt = require('jsonwebtoken');
-const prisma = require('../db.js');
-const bcrypt = require('bcrypt');
 require("dotenv").config();
+
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const prisma = require('../../db.js');
 
 
 const loginUserController = async (email, password) => {
