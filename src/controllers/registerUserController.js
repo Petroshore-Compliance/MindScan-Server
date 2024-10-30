@@ -20,7 +20,7 @@ const registerUserController = async (
     },
   });
   if (emailInUse) {
-    return false;
+    return {status: 400, message: 'Email already in use'};
   }
 
   const newUser = await prisma.user.create({
@@ -40,7 +40,7 @@ const registerUserController = async (
 
   createVerificationScript(newUser.user_id, newUser.email);
 
-  return true;
+  return {status: 204, message: 'User registered successfully', user: newUser};
 };
 
 module.exports = {

@@ -13,7 +13,7 @@ const authMiddleware = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(403).json({ message: 'Token inválido' });
+    res.status(401).json({ message: 'Acceso denegado, token inválido' });
   }
 };
 

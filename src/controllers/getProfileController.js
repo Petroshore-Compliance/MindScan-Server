@@ -13,12 +13,12 @@ const getProfileController = async (userID) => {
     })
 
     if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return {status: 404, message: 'User not found'};
     }
 
     const { password, ...userData } = user;
 
-    return userData;
+    return {status: 200, message: 'User profile found', user: userData};
 };
 
 module.exports = { getProfileController };

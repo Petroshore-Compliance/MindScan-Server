@@ -15,16 +15,16 @@ const changePasswordController = async (user_id, password, newPassword) => {
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if(!isPasswordValid){
-    return { status: 'BAD_OLD_PASSWORD' };
+    return { status: 400, message: 'Old password is incorrect.' };
   }
 
   const isPasswordSameAsBefore = await bcrypt.compare(newPassword, user.password);
   if (isPasswordSameAsBefore) {
-    return { status: 'NEW_PASSWORD_IS_THE_SAME_AS_OLD_PASSWORD' };
+    return { status:400, message: 'New password cannot be the same as the old password.' };
   }
 
   if (!regexPass.test(newPassword)) {
-    return { status: 'WEAK_NEW_PASSWORD' };
+    return { status:400, message: 'New password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit.' };
   }
   
   user.password = await bcrypt.hash(newPassword, 10);
@@ -34,7 +34,7 @@ const changePasswordController = async (user_id, password, newPassword) => {
     data: { password: user.password },
   });
 
-  return { status: 'SUCCESS' };
+  return { status:200, message: 'Password changed successfully.' };
 
 }
 

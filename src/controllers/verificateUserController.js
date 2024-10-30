@@ -4,18 +4,17 @@ const prisma = require("../db");
 const verificateUserController = async (userId, code) => { 
 
   console.log(userId, code);
-  if(!userId || !code){
-    return { success: false, message: "Missing parameters" };}
+  if(!userId || !code) {return { status: 400, message: "User ID and verification code are required" };}
 
     userId = parseInt(userId);
 
-    findUser = await prisma.user.findUnique({
+    const findUser = await prisma.user.findUnique({
       where: {
         user_id: userId,
       },
     });
     if (!findUser) {
-      return { success: false, message: "The user does not exist" };
+      return { status: 404, message: "User not found" };
     }
 
     const verificationCodeFound = await prisma.VerificationCode.findUnique({
@@ -25,7 +24,7 @@ const verificateUserController = async (userId, code) => {
     });
 
     if (!verificationCodeFound) {
-      return { success: false, message: "The user is already verified" };
+      return { status: 400, message: "The user is already verified" };
     }
 
     await prisma.verificationCode.delete({
@@ -34,7 +33,7 @@ const verificateUserController = async (userId, code) => {
       },
     });
     
-    return { success: true, message: "User verified successfully" };
+    return { status: 200, message: "User verified successfully" };
 }
 
 module.exports = { verificateUserController };
