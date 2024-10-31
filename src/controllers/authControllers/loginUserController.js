@@ -7,26 +7,31 @@ const prisma = require('../../db.js');
 
 
 const loginUserController = async (email, password) => {
-  const user = await prisma.user.findUnique({
+  let user;
+  try {
+    user = await prisma.user.update({
     where: { email: email.toLowerCase() },
+    data: { connected_at: new Date() },
   });
 
-  if (!user) {
-    throw new Error('Invalid email or password');
+} catch (error) {
+  if(error.code === "P2025"){
+return {status: 401, message: "Wrong Email or Password"};
   }
+};
 
   const isNotVerified = await prisma.verificationCode.findUnique({
 where:{ user_id : user.user_id},
   });
 
 if(isNotVerified){
-return { success: false, message: "The user is not verified" };
+  return {status: 401, message: "The user is not verified"};
 }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    throw new Error('Invalid email or password');
+    return {status: 401, message: "Wrong Email or Password"};
   }
 
   const token = jwt.sign(
@@ -49,8 +54,11 @@ return { success: false, message: "The user is not verified" };
       email: user.email,
       role: user.role,
       user_type: user.user_type,
-    }
+    },
+    status: 200,
+    message: "User logged in successfully",
   };
-};
+
+}
 
 module.exports = { loginUserController };
