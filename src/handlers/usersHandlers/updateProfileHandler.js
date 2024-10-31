@@ -1,5 +1,5 @@
 
-const { updateProfileController } = require('../../controllers/userControllers/updateProfileController.js');
+const { updateProfileController } = require('../../controllers/usersControllers/updateProfileController.js');
 
 const updateProfileHandler = async (req, res) => {
     try {
