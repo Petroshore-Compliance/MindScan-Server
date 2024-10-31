@@ -18,6 +18,7 @@ const loginUserController = async (email, password) => {
   if(error.code === "P2025"){
 return {status: 401, message: "Wrong Email or Password"};
   }
+  throw error;
 };
 
   const isNotVerified = await prisma.verificationCode.findUnique({
