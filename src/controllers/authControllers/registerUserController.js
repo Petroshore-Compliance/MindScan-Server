@@ -28,7 +28,7 @@ const registerUserController = async (
     data: {
       name,
       email: email.toLowerCase(),
-      password: await bcrypt.hash(password, 10),
+      password: password ? await bcrypt.hash(password, 10) : null,
       user_type,
       role,
       company: companyId
