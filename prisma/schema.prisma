@@ -124,8 +124,6 @@ model CompanyInvitation {
   invitation_token String
   company          Company          @relation(fields: [company_id], references: [company_id])
   company_id       Int
-  sent_at          DateTime         @default(now())
-  responded_at     DateTime?
   created_at       DateTime         @default(now())
   updated_at       DateTime         @updatedAt
 }
@@ -144,5 +142,4 @@ enum Role {
 enum InvitationStatus {
   pending
   accepted
-  rejected
 }
