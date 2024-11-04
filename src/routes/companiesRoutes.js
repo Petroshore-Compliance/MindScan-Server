@@ -6,7 +6,7 @@ const { createCompanyHandler } = require("../handlers/companiesHandlers/createCo
 const { getCompanyHandler } = require("../handlers/companiesHandlers/getCompanyHandler.js");
 
 
-router.post("/create-company", createCompanyHandler);
-router.get("/get-company", getCompanyHandler);
+router.post("/create-company", authMiddleware, createCompanyHandler);
+router.get("/get-company", authMiddleware, getCompanyHandler);
 
 module.exports = router;
