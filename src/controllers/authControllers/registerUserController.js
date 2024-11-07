@@ -14,7 +14,6 @@ const registerUserController = async (
 
   companyId = user_type === 'individual' ? null : companyId;
 
-
   const emailInUse = await prisma.user.findUnique({
     where: {
       email: email.toLowerCase(),
@@ -39,7 +38,7 @@ const registerUserController = async (
     },
   });
 
-  createVerificationScript(newUser.user_id, newUser.email);
+  createVerificationScript(newUser.user_id, newUser.email,"../templates/verificationEmail.html");
 
   return {status: 204, message: 'User registered successfully', user: newUser};
 };
