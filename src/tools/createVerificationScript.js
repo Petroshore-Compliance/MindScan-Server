@@ -4,8 +4,8 @@ const fs = require("fs");
 const path = require("path");
 
 
-const createVerificationScript = async (id_to_link, emailToVerify) => {
-  const newCode = Math.floor(Math.random() * 10000);
+const createVerificationScript = async (id_to_link, emailToVerify, htmlPath,companyName) => {
+  const newCode = 1000 + Math.floor(Math.random() * 9000);
    await prisma.VerificationCode.create({
     data: {
       user_id: id_to_link,
@@ -15,13 +15,14 @@ const createVerificationScript = async (id_to_link, emailToVerify) => {
 );
 const subject = "Verification code";
 
-const htmlTemplatePath = path.join(__dirname, "../templates/verificationEmail.html");
+const htmlTemplatePath = path.join(__dirname, htmlPath);
 let htmlTemplate;
 
 
   htmlTemplate = fs.readFileSync(htmlTemplatePath, "utf8");
 
-  const htmlContent = htmlTemplate.replace(/{{verificationCode}}/g, newCode);
+  const htmlContent2 = htmlTemplate.replace(/{{verificationCode}}/g, newCode);
+  const htmlContent = htmlContent2.replace(/{{company}}/g,companyName? companyName : "Petroshore Compliance");
 
 
 sendEmail(emailToVerify,subject, htmlContent);

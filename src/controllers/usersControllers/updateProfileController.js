@@ -1,10 +1,12 @@
+const bcrypt = require("bcrypt");
 
 const prisma = require('../../db.js');
 
-const updateProfileController = async (userID, data) => {
+const updateProfileController = async ( data) => {
   data.updated_at = new Date();
+  data.password = await bcrypt.hash(data.password, 10);
     const user = await prisma.user.update({
-        where: { user_id: userID },
+        where: { user_id: data.user_id },
         data: data,
     });
 
