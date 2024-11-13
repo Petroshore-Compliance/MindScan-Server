@@ -4,7 +4,6 @@ const path = require("path");
 const prisma = require("../../db.js");
 const sendEmail = require("../../tools/nodemailer.js");
 
-
 const forgotPasswordController = async (email) =>{
   const user = await prisma.User.findUnique({
     where: {
@@ -12,11 +11,11 @@ const forgotPasswordController = async (email) =>{
     },
   });
 
-if(!user) return {message: "Email not found."};
+if(!user) return {status:404, message: "Email not found."};
 
 const subject = "Reset confirmation";
 
-const htmlTemplatePath = path.join(__dirname, "../templates/resetPassword.html");
+const htmlTemplatePath = path.join(__dirname, "../../templates/resetPassword.html");
 let htmlTemplate;
 
   htmlTemplate = fs.readFileSync(htmlTemplatePath, "utf8");
@@ -25,8 +24,7 @@ let htmlTemplate;
 
 sendEmail(user.email,subject, htmlContent);
 
-return { URL: `localhost:4000/reset-password/${user.user_id}`};
+return {status:200, URL: `localhost:4000/reset-password/${user.user_id}`};
 }
-
 
 module.exports = { forgotPasswordController };

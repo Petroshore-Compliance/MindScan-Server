@@ -9,6 +9,6 @@ const { inviteHandler } = require("../handlers/companiesHandlers/inviteHandler.j
 
 router.post("/create-company", authMiddleware, createCompanyHandler);
 router.get("/get-company", authMiddleware, getCompanyHandler);
-router.post("/invite", inviteHandler);
+router.post("/invite",authMiddleware, inviteHandler);
 
 module.exports = router;

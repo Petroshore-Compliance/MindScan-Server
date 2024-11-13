@@ -7,6 +7,9 @@ const prisma = require('../../db.js');
 
 
 const loginUserController = async (email, password) => {
+
+if(!email || !password ){return {status:400, message: "Both email and password are required"}};
+
   let user;
   try {
     user = await prisma.user.update({
@@ -16,7 +19,7 @@ const loginUserController = async (email, password) => {
 
 } catch (error) {
   if(error.code === "P2025"){
-return {status: 401, message: "Wrong Email or Password"};
+return {status: 400, message: "Wrong Email or Password"};
   }
   throw error;
 };
@@ -32,7 +35,7 @@ if(isNotVerified){
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    return {status: 401, message: "Wrong Email or Password"};
+    return {status: 400, message: "Wrong Email or Password"};
   }
 
   const token = jwt.sign(
