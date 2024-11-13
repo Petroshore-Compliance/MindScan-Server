@@ -6,7 +6,7 @@ const forgotPasswordHandler = async (req, res) => {
     const { email } = req.body;
     const response = await forgotPasswordController(email);
 
-    res.status(200).json({ message: response.URL});
+    res.status(response.status).json({  message: response.message, URL: response.URL });
 
   }catch (error) {
     res.status(500).json({ message: `Unsuported error finding email ${error}` });

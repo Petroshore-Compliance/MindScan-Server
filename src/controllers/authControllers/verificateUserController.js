@@ -4,7 +4,6 @@ const prisma = require("../../db");
 
 const verificateUserController = async (userId, code) => { 
 
-  console.log(userId, code);
   if(!userId || !code) {return { status: 400, message: "User ID and verification code are required" };}
 
     userId = parseInt(userId);

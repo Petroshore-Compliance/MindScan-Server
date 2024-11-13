@@ -13,6 +13,10 @@ const changePasswordController = async (user_id, password, newPassword) => {
     where: { user_id: parsed_user_id },
   });
 
+  if(!user){
+    return { status: 404, message: 'User not found.' };
+  }
+
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if(!isPasswordValid){
