@@ -244,22 +244,9 @@ describe('Auth Endpoints', () => {
 
 // borrado de todo lo creado
 afterAll(async () => {
-  if (EMAIL_TESTER) {
-    try {
-      // Comprobar la existencia del usuario antes de intentar borrarlo
-      const user = await prisma.user.findUnique({ where: { email: EMAIL_TESTER } });
-      const company = await prisma.company.findUnique({where:{email:companyEmail}});
-
-      if (user) {
-        await prisma.user.delete({ where: { email: EMAIL_TESTER } });
-      } 
-      if(company){
-        await prisma.company.delete({where:{company_id:company.company_id}});
-      }
-
-    } catch (error) {
-      console.error('Failed to delete test user:', error);
-    }
-  }
+    
+  await prisma.verificationCode.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.company.deleteMany();
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

@@ -5,21 +5,26 @@ const bcrypt = require("bcrypt");
 
 
 const inviteHandler = async (req, res) => {
+  try{
+console.log(req.body);
   const { email } = req.body;
+  console.log(email);
+  
+//if not email in req.body, return 400
+  if (!email ) {
+return res.status(400).json({ message: "Email is required" });
 
-  if (!email) {
-return res.status(400).json({ errors: "Email is required" });
 }
 
   if (!regexEmail.test(email)) {
-return res.status(400).json({ errors: "Invalid email format" });
+return res.status(400).json({ message: "Invalid email format" });
 }
-  try{
+    
     const response = await inviteController(req.body);
     return res.status(response.status).json({ message: response.message, invitation: response.invitation });
 
   }catch(error){
-    return res.status(400).json({ errors: error.message });
+    return res.status(500).json({ errors: error.message });
   }
 };
 

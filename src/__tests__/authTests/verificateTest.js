@@ -53,8 +53,8 @@ const userData = await prisma.user.findUnique({
       console.log('Response body:', response.body);
     }
 
-    expect(response.status).toBe(200);
     expect(response.body).toEqual({ message: 'User verified successfully' });
+    expect(response.status).toBe(200);
 
   });
 });

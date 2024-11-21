@@ -3,10 +3,15 @@ const { emailChangeCompanySenderScript } = require("../../tools/emailChangeCompa
 const {createInvitationController} = require("../../controllers/invitationsControllers/createInvitationController.js");
 const { createVerificationScript } = require("../../tools/createVerificationScript.js");
 
-
+//recibe email, role, company_id, companyName y crea una invitación para el usuario de esa empresa y envia un email
 const inviteController = async (data) => {
 
-let isNew;
+if(!data.email || !data.role || !data.company_id || !data.companyName){
+  console.log("data", data)
+  return {status:400, message: 'All fields are required.'};
+}
+
+  let isNew;
 
   let user = await prisma.user.findUnique({
     where: {
@@ -21,7 +26,7 @@ let isNew;
           email: data.email.toLowerCase(),
           user_type: "company",
           role: data.role,
-          company_id: parseInt(data.companyId),
+          company_id: parseInt(data.company_id),
         },
       });
     isNew = true;
@@ -29,10 +34,10 @@ let isNew;
     
     }else { //all checks to know if the need of a new invitation is really needed
       if( user.role == 'admin') {
-        if(data.companyId == user.company_id) {
+        if(data.company_id == user.company_id) {
           return {status:400, message:"This user is the administrator of this company."};
         }else{
-          return {status:400, message:"This user is the administrator of a company, you can't invite him to another company"};
+          return {status:400, message:"This user is the administrator of a company, you cant invite him to another company"};
 
         }
 
@@ -41,25 +46,27 @@ let isNew;
       let invitationsSentByCompanyToThisEmail = await prisma.companyInvitation.findMany({
         where: {
           email: data.email.toLowerCase(),
-          company_id: parseInt(data.companyId),
+          company_id: parseInt(data.company_id),
         },
       });
       
       if (invitationsSentByCompanyToThisEmail.length > 0) {
         // Check if any invitation is pending
         const hasActiveInvitation = invitationsSentByCompanyToThisEmail.some(
-          (invitation) => invitation.status === 'pending'
+          (invitation) => invitation.active === true
         );
-        
       
+        
+        console.log(invitationsSentByCompanyToThisEmail)
+        
         if (hasActiveInvitation) {
           
-          return {status:400, message: `The email: ${data.email} already has a pending invitation`};
-        }else{
-          if(user.company_id == parseInt(data.companyId)) {
+          return {status:400, message: `This email already has a pending invitation`};
+        }
+          if(user.company_id == parseInt(data.company_id)) {
             return {status:400, message:"This user is already part of this company"};
           }
-        }
+        
 
       
         // If none are pending, find the most recent invitation based on "created_at"
@@ -71,7 +78,7 @@ let isNew;
         const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
         if (new Date(mostRecentInvitation.created_at) > oneHourAgo) {
           
-          return {status:400, message: `The email: ${data.email} already invited in the last hour`};
+          return {status:400, message: `This email has already been invited to this company within the last hour`};
         }
       }
       isNew = false;
@@ -80,9 +87,7 @@ let isNew;
 
 //create invitetocompany
 
-
-
-const response = await createInvitationController(parseInt(data.companyId),user.email);
+const response = await createInvitationController(data,user.email);
 
 
 

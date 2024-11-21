@@ -6,19 +6,14 @@ const app = require('../../app');
 const prisma = require('../../db.js'); 
 const { EMAIL_TESTER } = process.env;
 
-let companyId = 0;
+let companyId;
 let userId;
-let auxUserId;
 let companyEmail = "test@test.com";
+let companyEmail2 = "test2@test.com";
 
 let subscriptionPlanId = 4;
 let token;
 
-/* beforeAll:
-1- Registrar usuario que va a ser el admin de la compañía
-2- Registrar usuario que va a ser el usuario de la compañía
-3- Crear una compañía
-*/
 beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",
@@ -27,31 +22,10 @@ beforeAll(async () => {
     user_type: "individual"
   };
 
-     await request(app)
+  const response = await request(app)
     .post('/auth/register')
     .send(registrationData);
-
-    const registrationDataAux = {
-      name: "Alice Smith",
-      email: "aux@email.com",
-      password: "secureHashedPassword123",
-      user_type: "individual"
-    };
-  
-     await request(app)
-      .post('/auth/register')
-      .send(registrationDataAux);
-
     
-      const auxuserData = await prisma.user.findUnique({
-        where: {       email: "aux@email.com"},
-        include: {
-          VerificationCodes: true
-        }
-      })
-
-      auxUserId = auxuserData.user_id;
-
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
   include: {
@@ -59,13 +33,12 @@ const userData = await prisma.user.findUnique({
   }
 })
 
-
     const verificationData = {
       "user_id": userData.user_id,
       "verificationCode": userData.VerificationCodes[0].code
     }
 
-    await request(app)
+    const response2 = await request(app)
       .get('/auth/verificate-user')
       .send(verificationData);
 
@@ -85,8 +58,7 @@ const userData = await prisma.user.findUnique({
           }
       
           token=response3.body.token;
-
-          const companyData = {
+          const companyRegistrationData = {
             name: "Test company name",
             email: companyEmail,
             subscription_plan_id: subscriptionPlanId,
@@ -96,125 +68,108 @@ const userData = await prisma.user.findUnique({
           const companyResponse = await request(app)
             .post('/companies/create-company')
             .set('Authorization', `Bearer ${token}`)
-            .send(companyData);
+            .send(companyRegistrationData);
 
-            const companyInviter = await prisma.company.findUnique({
-              where: {       company_id: companyResponse._body.company.company_id},
-              include: {
-                users: true
-              }
-            })
-
-           
-
-companyId = companyInviter.company_id;
-
-
-});
-
-
-
-
-describe('Auth Endpoints', () => {
-  it('success create invitation; status 201 ', async () => {
-
-    const companyData = {
-      company_id: companyId,
-      email: "roman.delasheras@petroshorecompasdliance.com"
-    };
-
-    const response = await request(app)
-      .post('/invitations/create-invitation')
-      .set('Authorization', `Bearer ${token}`)
-      .send(companyData);
-
-    if (response.status !== 201) {
-      console.log('Response body:', response.body);
-    }
-    expect(response.body).toBe('Invitation created successfully');
-    expect(response.status).toBe(201);
-
-  });
-});
-
-
-describe('Auth Endpoints', () => {
-  it('fail create invitation;company not found; status 404 ', async () => {
-
-    const companyData = {
-      company_id: 1,
-      email: "roman.delasheras@lol.com"
-    };
-
-    const response = await request(app)
-      .post('/invitations/create-invitation')
-      .set('Authorization', `Bearer ${token}`)
-      .send(companyData);
-
-    if (response.status !== 400) {
-      console.log('Response body:', response.body);
-    }
-    expect(response.body).toBe('Company not found');
-    expect(response.status).toBe(400);
-
-  });
-});
-
-
-describe('Auth Endpoints', () => {
-  it('fail create invitation; not company id; status 404 ', async () => {
-
-    const companyData = {
-      email: "roman.delasheras@lol.com"
-    };
-
-    const response = await request(app)
-      .post('/invitations/create-invitation')
-      .set('Authorization', `Bearer ${token}`)
-      .send(companyData);
-
-    if (response.status !== 400) {
-      console.log('Response body:', response.body);
-    }
-    expect(response.body).toBe('Company id is required');
-    expect(response.status).toBe(400);
-
-  });
-});
-
-
-describe('Auth Endpoints', () => {
-  it('fail create invitation; not company id; status 404 ', async () => {
-
-    const companyData = {
-company_id:1
-    };
-
-    const response = await request(app)
-      .post('/invitations/create-invitation')
-      .set('Authorization', `Bearer ${token}`)
-      .send(companyData);
-
-    if (response.status !== 400) {
-      console.log('Response body:', response.body);
-    }
-    expect(response.body).toBe('Email is required');
-    expect(response.status).toBe(400);
-
-  });
-});
-
-
-
-
-// borrado de lo creado
-afterAll(async () => {
-  await prisma.verificationCode.deleteMany();
-      await prisma.user.deleteMany();
+            companyId = companyResponse._body.company.company_id;
       
-      await prisma.companyInvitation.deleteMany();
+});
+
+
+describe('Auth Endpoints', () => {
+  it('success get company; status 200 ', async () => {
+    
+    const copmanyData = {
+      company_id: companyId,
+    };
+
+    const response = await request(app)
+      .get('/companies/get-company')
+      .set('Authorization', `Bearer ${token}`)
+      .send(copmanyData);
+
+    if (response.status !== 200) {
+      console.log('Response body:', response.body);
+    }
+    
+    expect(response.body.message).toBe("Company found");
+    expect(response.status).toBe(200);
+
+  });
+});
+
+
+describe('Auth Endpoints', () => {
+  it('fail get company; not found; status 404 ', async () => {
+    
+    const copmanyData = {
+      company_id: 1,
+    };
+
+    const response = await request(app)
+      .get('/companies/get-company')
+      .set('Authorization', `Bearer ${token}`)
+      .send(copmanyData);
+
+    if (response.status !== 404) {
+      console.log('Response body:', response.body);
+    }
+    
+    expect(response.body.message).toBe("Company not found");
+    expect(response.status).toBe(404);
+
+  });
+});
+
+
+describe('Auth Endpoints', () => {
+  it('fail get company; not id; status 400 ', async () => {
+    
+    const copmanyData = {
+    };
+
+    const response = await request(app)
+      .get('/companies/get-company')
+      .set('Authorization', `Bearer ${token}`)
+      .send(copmanyData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    
+    expect(response.body.message).toBe("company id is required");
+    expect(response.status).toBe(400);
+
+  });
+});
+describe('Auth Endpoints', () => {
+  it('fail get company; not id; status 400 ', async () => {
+    
+    const copmanyData = {
+    };
+
+    const response = await request(app)
+      .get('/companies/get-company')
+      .set('Authorization', `Bearer ${token}`)
+      .send(copmanyData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    
+    expect(response.body.message).toBe("company id is required");
+    expect(response.status).toBe(400);
+
+  });
+});
+
+// borrado de todo lo creado
+afterAll(async () => {
+  
+      
+      await prisma.verificationCode.deleteMany();
+      await prisma.user.deleteMany();
       await prisma.company.deleteMany();
+
   
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });
-

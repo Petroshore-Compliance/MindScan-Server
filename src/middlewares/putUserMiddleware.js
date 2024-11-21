@@ -9,6 +9,7 @@ const registerUserMiddleware = (req, res, next) => {
 
   if (!email || !password || !name) {
     message.push("All fields are required.");
+    
   }
 
   if (!regexEmail.test(email)) {
