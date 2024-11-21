@@ -3,8 +3,8 @@ const {getCompanyController} = require("../../controllers/companiesControllers/g
 const getCompanyHandler = async (req, res) => {
 
 try {
-  const {companyId} =req.body;
-  const response = await getCompanyController({companyId});
+  
+  const response = await getCompanyController(req.body.company_id);
   res.status(response.status).json({message: response.message, company: response.company});
 
 } catch (error) {

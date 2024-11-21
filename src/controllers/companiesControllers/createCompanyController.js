@@ -2,6 +2,11 @@ const prisma = require('../../db.js');
 const { Prisma } = require('@prisma/client');
 
 const createCompanyController = async (data) => {
+
+if(!data.name || !data.email || !data.subscription_plan_id || !data.user_id){
+  return {status: 400, message: 'Missing required fields'};
+}
+
   try {
     data.subscription_plan_id = parseInt(data.subscription_plan_id, 10);
 
@@ -35,7 +40,7 @@ const createCompanyController = async (data) => {
       
     });
 
-    return {status: 200,  message: 'Company created successfully',company: company,admin: companyadmin};
+    return {status: 201,  message: 'Company created successfully',company: company,admin: companyadmin};
   } catch (error) {
 
     // Check if the error is a Prisma known error
