@@ -9,93 +9,59 @@ const { EMAIL_TESTER } = process.env;
 let UserId;
 let token;
 
-describe('Auth Endpoints', () => {
-  it('should register a user successfully and return a 204 status', async () => {
-    const registrationData = {
-      name: "Alice Smith",
-      email: EMAIL_TESTER,
-      password: "secureHashedPassword123",
-      user_type: "individual"
-    };
-
-    const response = await request(app)
-      .post('/auth/register')
-      .send(registrationData);
-
-    if (response.status !== 204) {
-      console.log('Response body:', response.body);
-    }
-
-    expect(response.status).toBe(204);
-
-    const user = await prisma.user.findUnique({ where: { email: EMAIL_TESTER } });
-    UserId = user.user_id;
-
-  });
-});
 
 
-describe('Auth Endpoints', () => {
-  it('should verificate a user and return a 200 status', async () => {
+beforeAll(async () => {
+  const registrationData = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+    user_type: "individual"
+  };
 
+  const response = await request(app)
+    .post('/auth/register')
+    .send(registrationData);
+    
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
   include: {
     VerificationCodes: true
   }
 })
+
+UserId = userData.user_id;
 
     const verificationData = {
       "user_id": userData.user_id,
       "verificationCode": userData.VerificationCodes[0].code
     }
 
-    const response = await request(app)
+    const response2 = await request(app)
       .get('/auth/verificate-user')
       .send(verificationData);
 
-    if (response.status !== 200) {
-      console.log('Response body:', response.body);
-    }
+      userId = userData.user_id;
 
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: 'User verified successfully' });
+          const verificationData2 = {
+            "email": EMAIL_TESTER,
+            "password": "secureHashedPassword123"
+          }
+      
+          const response3 = await request(app)
+            .post('/auth/login')
+            .send(verificationData2);
+      
+          if (response3.status !== 200) {
+            console.log('Response body:', response3.body);
+          }
+      
+          token=response3.body.token;
 
-  });
 });
 
 describe('Auth Endpoints', () => {
-  it('should login a user and return a 200 status', async () => {
-
-const userData = await prisma.user.findUnique({
-  where: {       email: EMAIL_TESTER},
-  include: {
-    VerificationCodes: true
-  }
-})
-
-    const verificationData = {
-      "email": "roman.delasheras@petroshorecompliance.com",
-      "password": "secureHashedPassword123"
-    }
-
-    const response = await request(app)
-      .post('/auth/login')
-      .send(verificationData);
-
-    if (response.status !== 200) {
-      console.log('Response body:', response.body);
-    }
-
-    expect(response.status).toBe(200);
-
-    token=response.body.token;
-
-  });
-});
-
-describe('Auth Endpoints', () => {
-  it('should change the password of an user successfully and return a 200 status', async () => {
+  it('change password; status 200 ', async () => {
     const registrationData = {
       "user_id": UserId,
       "password": "secureHashedPassword123",
@@ -118,7 +84,7 @@ describe('Auth Endpoints', () => {
 });
 
 describe('Auth Endpoints', () => {
-  it('should try to change the password of an user with a bad old password and return a 400 status', async () => {
+  it('fail change password; wrong old password; status 400 ', async () => {
     const registrationData = {
       "user_id": UserId,
       "password": "secureHashedPassword123",
@@ -141,7 +107,7 @@ describe('Auth Endpoints', () => {
 });
 
 describe('Auth Endpoints', () => {
-  it('should try to change the password of an user with a invalid new password and return a 400 status', async () => {
+  it('fail change password; invalid new password; status 400 ', async () => {
     const registrationData = {
       "user_id": UserId,
       "password": "secureHashedPasswor1231",
@@ -157,14 +123,14 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
 
-    expect(response.body.message).toBe("New password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit.");
+    expect(response.body.errors).toEqual(["Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]);
     expect(response.status).toBe(400);
 
   });
 });
 
 describe('Auth Endpoints', () => {
-  it('should try to change the password of an user with a the same new password and return a 400 status', async () => {
+  it('fail change password; same new password; status 400 ', async () => {
     const registrationData = {
       "user_id": UserId,
       "password": "secureHashedPasswor1231",
@@ -186,11 +152,11 @@ describe('Auth Endpoints', () => {
   });
 });
 describe('Auth Endpoints', () => {
-  it('should try to change the password of an user with a invalid new password and return a 400 status', async () => {
+  it('fail change password; user not found; status 404 ', async () => {
     const registrationData = {
       "user_id": 1,
       "password": "secureHashedPasswor1231",
-      "newPassword": "a"
+      "newPassword": "secureHashedPasswor123"
     };
     
     const response = await request(app)
@@ -209,6 +175,54 @@ describe('Auth Endpoints', () => {
 });
 
 
+describe('Auth Endpoints', () => {
+  it('fail change password; no parameters; status 400 ', async () => {
+    const registrationData = {
+    
+    };
+    
+    const response = await request(app)
+      .patch('/auth/change-password')
+      .set('Authorization', `Bearer ${token}`)
+      .send(registrationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.body.errors).toEqual(["Password cannot be empty.",
+      "New password cannot be empty.",
+       "User id cannot be empty."]);
+    expect(response.status).toBe(400);
+
+  });
+});
+
+
+describe('Auth Endpoints', () => {
+  it('fail change password; wrong parameters typeof; status 400 ', async () => {
+    const registrationData = {
+      "user_id": "h",
+      "password": 2,
+      "newPassword": 2
+    };
+    
+    const response = await request(app)
+      .patch('/auth/change-password')
+      .set('Authorization', `Bearer ${token}`)
+      .send(registrationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.body.errors).toEqual(["Password must be a string.",
+       "New password must be a string.",
+       "User id must be a number."]);
+    expect(response.status).toBe(400);
+
+  });
+});
 
 // borrado de todo lo creado
 afterAll(async () => {

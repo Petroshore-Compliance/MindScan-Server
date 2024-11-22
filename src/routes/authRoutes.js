@@ -3,6 +3,7 @@ const router = Router();
 
 const { authMiddleware } = require("../middlewares/authMiddleware.js");
 const { registerUserMiddleware } = require("../middlewares/authMiddlewares/putUserMiddleware.js");
+const {changePasswordMiddleware} = require("../middlewares/authMiddlewares/changePasswordMiddleware.js");
 
 const { changePasswordHandler } = require("../handlers/authHandlers/changePasswordHandler.js");
 const { forgotPasswordHandler } = require("../handlers/authHandlers/forgotPasswordHandler.js");
@@ -17,7 +18,7 @@ router.get("/verificate-user", verificateUserHandler);
 router.get("/forgot-password", forgotPasswordHandler);
 router.patch("/set-password", setPasswordHandler);
 
-router.patch("/change-password",authMiddleware, changePasswordHandler);
+router.patch("/change-password",authMiddleware, changePasswordMiddleware,changePasswordHandler);
 
 
 

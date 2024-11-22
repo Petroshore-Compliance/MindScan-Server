@@ -2,9 +2,10 @@ const bcrypt = require('bcrypt');
 
 const prisma = require('../../db.js');
 
-const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
-
+//cambiar la contraseña de un usuario
+//recibe el user_id, la contraseña actual y la nueva contraseña
+//y devuelve cambio de contraseña exitoso o porque ha fallado
 const changePasswordController = async (user_id, password, newPassword) => {
 
   const parsed_user_id = parseInt(user_id);
@@ -28,9 +29,6 @@ const changePasswordController = async (user_id, password, newPassword) => {
     return { status:400, message: 'New password cannot be the same as the old password.' };
   }
 
-  if (!regexPass.test(newPassword)) {
-    return { status:400, message: 'New password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit.' };
-  }
   
   user.password = await bcrypt.hash(newPassword, 10);
 
