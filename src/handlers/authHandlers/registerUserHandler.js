@@ -7,11 +7,7 @@ const registerUserHandler = async (req, res) => {
       password,
       name,
       user_type,
-      role,
-      companyId,
-      responseIds,
-      resultIds,
-      accessIds,
+      
     } = req.body;
 
     const response = await registerUserController(
@@ -19,11 +15,7 @@ const registerUserHandler = async (req, res) => {
       password,
       name,
       user_type,
-      role,
-      companyId,
-      responseIds,
-      resultIds,
-      accessIds
+      
     );
 
 res.status(response.status).json({ message: response.message});

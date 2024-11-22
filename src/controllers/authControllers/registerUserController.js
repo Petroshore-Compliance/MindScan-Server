@@ -3,6 +3,10 @@ const bcrypt = require("bcrypt");
 const prisma = require("../../db.js");
 const { createVerificationScript } = require("../../tools/createVerificationScript.js");
 
+
+//este método se encarga de crear un nuevo usuario en la base de datos
+// recibe como parámetros el email, la contraseña, el nombre, el tipo de usuario, el rol y el id de la compañía
+// y devuelve un objeto con la respuesta del registro del usuario
 const registerUserController = async (
   email,
   password,
@@ -12,11 +16,12 @@ const registerUserController = async (
   companyId
 ) => {
 
+//si el tipo es individual, significa que no está conectado a una compañía
   companyId = user_type === 'individual' ? null : companyId;
 
   const emailInUse = await prisma.user.findUnique({
     where: {
-      email: email.toLowerCase(),
+      email: email,
     },
   });
   if (emailInUse) {
@@ -26,8 +31,8 @@ const registerUserController = async (
   const newUser = await prisma.user.create({
     data: {
       name,
-      email: email.toLowerCase(),
-      password: password ? await bcrypt.hash(password, 10) : null,
+      email: email,
+      password:  await bcrypt.hash(password, 10),
       user_type,
       role,
       company: companyId
@@ -38,9 +43,10 @@ const registerUserController = async (
     },
   });
 
+  //llamada al script que envía el corrreo de verificación (tools/createVerificationScript.js)
   createVerificationScript(newUser.user_id, newUser.email,"../templates/verificationEmail.html");
 
-  return {status: 204, message: 'User registered successfully', user: newUser};
+  return {status: 201, message: 'User registered successfully', user: newUser};
 };
 
 module.exports = {

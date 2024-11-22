@@ -6,9 +6,7 @@ const bcrypt = require("bcrypt");
 
 const inviteHandler = async (req, res) => {
   try{
-console.log(req.body);
   const { email } = req.body;
-  console.log(email);
   
 //if not email in req.body, return 400
   if (!email ) {
