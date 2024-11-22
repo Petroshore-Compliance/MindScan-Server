@@ -17,10 +17,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendEmail(recipientEmail,subject, htmlContent) {
-//estas dos líneas "simulan" el envío de un email
 
-  
+
+// este método se encarga de enviar el email
+// recibe como parámetros el email del destinatario, el asunto y el contenido del email()
+// y devuelve un objeto con la respuesta del envío del email
+
+async function sendEmail(recipientEmail,subject, htmlContent) {
+
+  //estas dos líneas "simulan" el envío de un email
+
   console.log("Email sending skipped in test environment (nodemailer.js)");
   return { success: true, info: "Test environment - email not sent." };
 

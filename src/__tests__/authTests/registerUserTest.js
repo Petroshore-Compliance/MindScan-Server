@@ -8,7 +8,7 @@ const { EMAIL_TESTER } = process.env;
 
 
 describe('Auth Endpoints', () => {
-  it('should register a user successfully and return a 204 status', async () => {
+  it('should register a user successfully and return a 201 status', async () => {
     const registrationData = {
       name: "Alice Smith",
       email: EMAIL_TESTER,
@@ -20,11 +20,10 @@ describe('Auth Endpoints', () => {
       .post('/auth/register')
       .send(registrationData);
 
-    if (response.status !== 204) {
+    if (response.status !== 201) {
       console.log('Response body:', response.body);
     }
-
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(201);
 
   });
 });
@@ -55,7 +54,7 @@ describe('Auth Endpoints', () => {
 describe('Auth Endpoints', () => {
   it('should register try and fail registering a user without an email', async () => {
     const registrationData = {
-      name: "Alice Smith",
+      name: "Alice Smith ",
       password: "secureHashedPassword123",
       user_type: "individual"
     };
@@ -69,13 +68,13 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({errors: ["All fields are required.","Invalid email format."]});
+    expect(response.body).toEqual({errors: ["Email cannot be empty."]});
 
   });
 });
 
 describe('Auth Endpoints', () => {
-  it('should register try and fail registering a user without a name', async () => {
+  it('fail register user; no name; status 400', async () => {
     const registrationData = {
       email: EMAIL_TESTER,
       password: "secureHashedPassword123",
@@ -91,13 +90,13 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({errors: ["All fields are required."]});
+    expect(response.body).toEqual({errors: ["Name cannot be empty."]});
 
   });
 });
 
 describe('Auth Endpoints', () => {
-  it('should register try and fail registering a user without a password', async () => {
+  it('fail register user; no password; status 400', async () => {
     const registrationData = {
           name: "Alice Smith",
       email: EMAIL_TESTER,
@@ -113,13 +112,13 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({errors: ["All fields are required.","Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]});
+    expect(response.body).toEqual({errors: ["Password cannot be empty."]});
 
   });
 });
 
 describe('Auth Endpoints', () => {
-  it('should verificate a user and return a 200 status', async () => {
+  it('success verificate user; status 200', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -146,6 +145,31 @@ const userData = await prisma.user.findUnique({
 
   });
 });
+
+
+describe('Auth Endpoints', () => {
+  it('fail register user; bad typeof; status 400', async () => {
+    const registrationData = {
+      name: 3,
+      email: 3,
+      password: 3,
+      user_type: 3
+    };
+
+    const response = await request(app)
+      .post('/auth/register')
+      .send(registrationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.body).toEqual({"errors": ["Invalid user type","Email must be a string.", "Password must be a string.", "Name must be a string."]});
+    expect(response.status).toBe(400);
+
+  });
+});
+
 
 // borrado de todo lo creado
 afterAll(async () => {

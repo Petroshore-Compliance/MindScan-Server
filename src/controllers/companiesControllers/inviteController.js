@@ -7,7 +7,6 @@ const { createVerificationScript } = require("../../tools/createVerificationScri
 const inviteController = async (data) => {
 
 if(!data.email || !data.role || !data.company_id || !data.companyName){
-  console.log("data", data)
   return {status:400, message: 'All fields are required.'};
 }
 
@@ -57,7 +56,6 @@ if(!data.email || !data.role || !data.company_id || !data.companyName){
         );
       
         
-        console.log(invitationsSentByCompanyToThisEmail)
         
         if (hasActiveInvitation) {
           

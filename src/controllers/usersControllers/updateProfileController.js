@@ -14,7 +14,6 @@ const updateProfileController = async ( data) => {
         return { status: 400, message: 'User profile cannot be updated with only user_id', user: data };
     }
   data.updated_at = new Date();
-console.log(data);
   
     if(!data.user_id){
       return {status:400, message: 'User id is required'};
