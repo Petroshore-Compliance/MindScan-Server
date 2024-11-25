@@ -5,6 +5,7 @@ const { authMiddleware } = require("../middlewares/authMiddleware.js");
 const { registerUserMiddleware } = require("../middlewares/authMiddlewares/putUserMiddleware.js");
 const {changePasswordMiddleware} = require("../middlewares/authMiddlewares/changePasswordMiddleware.js");
 const { forgotPasswordMiddleware } = require("../middlewares/authMiddlewares/forgotPasswordMiddleware.js");
+const { loginUserMiddleware } = require("../middlewares/authMiddlewares/loginUserMiddleware.js");
 
 const { changePasswordHandler } = require("../handlers/authHandlers/changePasswordHandler.js");
 const { forgotPasswordHandler } = require("../handlers/authHandlers/forgotPasswordHandler.js");
@@ -14,7 +15,7 @@ const { setPasswordHandler } = require("../handlers/authHandlers/setPasswordHand
 const { verificateUserHandler } = require("../handlers/authHandlers/verificateUserHandler.js");
 
 router.post("/register", registerUserMiddleware, registerUserHandler);
-router.post("/login", loginUserHandler);
+router.post("/login", loginUserMiddleware,loginUserHandler);
 router.get("/verificate-user", verificateUserHandler);
 router.get("/forgot-password", forgotPasswordMiddleware,forgotPasswordHandler);
 router.patch("/set-password", setPasswordHandler);
