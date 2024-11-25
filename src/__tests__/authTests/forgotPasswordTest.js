@@ -136,6 +136,27 @@ describe('Auth Endpoints', () => {
   });
 });
 
+
+describe('Auth Endpoints', () => {
+  it('fail forgot password;email is not a string; status 400', async () => {
+    const registrationData = {
+      email: 33,
+    };
+
+    const response = await request(app)
+      .get('/auth/forgot-password')
+      .send(registrationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.body).toEqual({ message: 'Email must be a string.' });
+    expect(response.status).toBe(400);
+
+  });
+});
+
 // borrado de todo lo creado
 afterAll(async () => {
   if (EMAIL_TESTER) {

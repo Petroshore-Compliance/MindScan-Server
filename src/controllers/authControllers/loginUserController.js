@@ -8,8 +8,6 @@ const prisma = require('../../db.js');
 
 const loginUserController = async (email, password) => {
 
-if(!email || !password ){return {status:400, message: "Both email and password are required"}};
-
   let user;
   try {
     user = await prisma.user.update({
@@ -18,6 +16,7 @@ if(!email || !password ){return {status:400, message: "Both email and password a
   });
 
 } catch (error) {
+  //error p2025 es porque no existe usuario con este email
   if(error.code === "P2025"){
 return {status: 400, message: "Wrong Email or Password"};
   }
