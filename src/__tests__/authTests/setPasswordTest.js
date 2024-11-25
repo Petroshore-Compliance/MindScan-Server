@@ -7,61 +7,21 @@ const prisma = require('../../db.js');
 const { EMAIL_TESTER } = process.env;
 
 
-describe('Auth Endpoints', () => {
-  it('should register a user successfully and return a 204 status', async () => {
-    const registrationData = {
-      name: "Alice Smith",
-      email: EMAIL_TESTER,
-      password: "secureHashedPassword123",
-      user_type: "individual"
-    };
+beforeAll(async () => {
+  const registrationData = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+    user_type: "individual"
+  };
 
-    const response = await request(app)
-      .post('/auth/register')
-      .send(registrationData);
-
-    if (response.status !== 204) {
-      console.log('Response body:', response.body);
-    }
-
-    expect(response.status).toBe(204);
-
-  });
-});
-
-describe('Auth Endpoints', () => {
-  it('should verificate a user and return a 200 status', async () => {
-
-const userData = await prisma.user.findUnique({
-  where: {       email: EMAIL_TESTER},
-  include: {
-    VerificationCodes: true
-  }
+  const response = await request(app)
+    .post('/auth/register')
+    .send(registrationData);
 })
 
-    const verificationData = {
-      "user_id": userData.user_id,
-      "verificationCode": userData.VerificationCodes[0].code
-    }
-
-    const response = await request(app)
-      .get('/auth/verificate-user')
-      .send(verificationData);
-
-    if (response.status !== 200) {
-      console.log('Response body:', response.body);
-    }
-
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: 'User verified successfully' });
-
-  });
-});
-
-
-
 describe('Auth Endpoints', () => {
-  it('should set the password of a user and return a 200 status', async () => {
+  it('set user password preverificación; status 200', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -89,10 +49,37 @@ newPassword: "secureHashedPassword123"
   });
 });
 
+describe('Auth Endpoints', () => {
+  it('verificate user; status 400', async () => {
 
+const userData = await prisma.user.findUnique({
+  where: {       email: EMAIL_TESTER},
+  include: {
+    VerificationCodes: true
+  }
+})
+
+    const verificationData = {
+      "user_id": userData.user_id,
+      "verificationCode": userData.VerificationCodes[0].code
+    }
+
+    const response = await request(app)
+      .get('/auth/verificate-user')
+      .send(verificationData);
+
+    if (response.status !== 200) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ message: 'User verified successfully' });
+    
+  });
+});
 
 describe('Auth Endpoints', () => {
-  it('should try to set the password of an user without an id and return a 400 status', async () => {
+  it('fail set password; missing id; status 400', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -112,15 +99,16 @@ newPassword: "secureHashedPassword123"
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body).toEqual({ message: 'User ID is required.' });
+    expect(response.body.errors).toEqual([
+           "User id cannot be empty."
+         ]);
     expect(response.status).toBe(400);
 
   });
 });
 
-
 describe('Auth Endpoints', () => {
-  it('should set try to set the password of a user without a new password and return a 400 status', async () => {
+  it('fail set password; missing password; status 400', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -140,7 +128,7 @@ user_id: userData.user_id
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body).toEqual({ message: 'New password is required.' });
+    expect(response.body.errors).toEqual(["Password cannot be empty.", "Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]);
 
     expect(response.status).toBe(400);
 
@@ -148,7 +136,7 @@ user_id: userData.user_id
 });
 
 describe('Auth Endpoints', () => {
-  it('should try to set the password of a user that doesnt exist and return a 404 status', async () => {
+  it('fail set password; user not exist; status 404', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -177,7 +165,7 @@ newPassword: "secureHashedPassword123"
 });
 
 describe('Auth Endpoints', () => {
-  it('should try to set a unvalid password onto a user and return a 400 status', async () => {
+  it('fail set password; invalid password; status 400', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -198,13 +186,41 @@ newPassword: "a"
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body).toEqual({ message: 'Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit.' });
+    expect(response.body.errors).toEqual(["Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]);
 
     expect(response.status).toBe(400);
 
   });
 });
 
+describe('Auth Endpoints', () => {
+  it('fail set password; wrong typeof; status 400', async () => {
+
+const userData = await prisma.user.findUnique({
+  where: {       email: EMAIL_TESTER},
+  include: {
+    VerificationCodes: true
+  }
+})
+    const verificationData = {
+      
+user_id: "definitivamente esto es un id",
+newPassword: 3
+    }
+
+    const response = await request(app)
+      .patch('/auth/set-password')
+      .send(verificationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.errors).toEqual(["Password must be a string.", "User id must be a number.", "Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]);
+
+    expect(response.status).toBe(400);
+
+  });
+});
 
 // borrado de todo lo creado
 afterAll(async () => {
