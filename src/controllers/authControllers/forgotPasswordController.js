@@ -13,6 +13,8 @@ const forgotPasswordController = async (email) =>{
 
 if(!user) return {status:404, message: "Email not found."};
 
+//setup para enviar el email
+
 const subject = "Reset confirmation";
 
 const htmlTemplatePath = path.join(__dirname, "../../templates/resetPassword.html");
