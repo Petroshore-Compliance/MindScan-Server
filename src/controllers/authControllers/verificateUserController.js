@@ -2,11 +2,12 @@ const { parse } = require("dotenv");
 
 const prisma = require("../../db");
 
+//este método verifica el usuario (elimina el registro de la tabla verificationCodes)
+//recibe el id del usuario y el código de verificación
+//devuelve un objeto con el estado del método y un mensaje
+
 const verificateUserController = async (userId, code) => { 
 
-  if(!userId || !code) {return { status: 400, message: "User ID and verification code are required" };}
-
-    userId = parseInt(userId);
 
     const findUser = await prisma.user.findUnique({
       where: {
