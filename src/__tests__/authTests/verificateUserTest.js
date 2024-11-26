@@ -1,37 +1,27 @@
 require("dotenv").config();
 
-
 const request = require('supertest');
 const app = require('../../app');
 const prisma = require('../../db.js'); 
 const { EMAIL_TESTER } = process.env;
 
 
-describe('Auth Endpoints', () => {
-  it('should register a user successfully and return a 204 status', async () => {
-    const registrationData = {
-      name: "Alice Smith",
-      email: EMAIL_TESTER,
-      password: "secureHashedPassword123",
-      user_type: "individual"
-    };
+beforeAll(async () => {
+  const registrationData = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+    user_type: "individual"
+  };
 
-    const response = await request(app)
-      .post('/auth/register')
-      .send(registrationData);
-
-    if (response.status !== 204) {
-      console.log('Response body:', response.body);
-    }
-
-    expect(response.status).toBe(204);
-
-  });
-});
+  const response = await request(app)
+    .post('/auth/register')
+    .send(registrationData);
+})
 
 
 describe('Auth Endpoints', () => {
-  it('should verificate a user and return a 200 status', async () => {
+  it('verificate user; success; status 200', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -60,7 +50,7 @@ const userData = await prisma.user.findUnique({
 });
 
 describe('Auth Endpoints', () => {
-  it('should try toverificate a user already verificated and return a 400 status', async () => {
+  it('fail verificate user; already verificated; status 400', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -69,12 +59,10 @@ const userData = await prisma.user.findUnique({
   }
 })
 
-
-
     const verificationData = {
       "user_id": userData.user_id,
       //"verificationCode": userData.VerificationCodes[0].code no va a funcionar porque ya no existe en la bbdd
-      "verificationCode": 2222
+      "verificationCode": 5464
     }
 
     const response = await request(app)
@@ -91,9 +79,8 @@ const userData = await prisma.user.findUnique({
   });
 });
 
-
 describe('Auth Endpoints', () => {
-  it('should try to verificate a user and return a 400 status for not having an email', async () => {
+  it('fail verificate user; no email; status 400', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -102,8 +89,6 @@ const userData = await prisma.user.findUnique({
   }
 })
     const verificationData = {
-
-      //"verificationCode" is a dummy value, it will not work because it is not in the database
       "verificationCode": 2222
     }
 
@@ -116,14 +101,13 @@ const userData = await prisma.user.findUnique({
     }
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({ message: 'User ID and verification code are required' });
+    expect(response.body.errors).toEqual(["User id cannot be empty."]);
 
   });
 });
 
-
 describe('Auth Endpoints', () => {
-  it('should try to verificate a user and return a 400 status for not having a verification code', async () => {
+  it('fail verificate user; no verification code; status 400', async () => {
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
@@ -133,7 +117,6 @@ const userData = await prisma.user.findUnique({
 })
     const verificationData = {
       "user_id": userData.user_id
-
     }
 
     const response = await request(app)
@@ -145,10 +128,70 @@ const userData = await prisma.user.findUnique({
     }
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({ message: 'User ID and verification code are required' });
+    expect(response.body.errors).toEqual(["Verification code cannot be empty."]);
 
   });
 });
+
+
+describe('Auth Endpoints', () => {
+  it('fail verificate user; nwrong types; status 400', async () => {
+
+const userData = await prisma.user.findUnique({
+  where: {       email: EMAIL_TESTER},
+  include: {
+    VerificationCodes: true
+  }
+})
+    const verificationData = {
+      "user_id": "userData.user_id",
+      "verificationCode": "userData.VerificationCodes[0].code"
+    }
+
+    const response = await request(app)
+      .get('/auth/verificate-user')
+      .send(verificationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toEqual(["User id must be a number.","Verification code must be a number."]);
+
+  });
+});
+
+
+describe('Auth Endpoints', () => {
+  it('fail verificate user; user not exists; status 400', async () => {
+
+const userData = await prisma.user.findUnique({
+  where: {       email: EMAIL_TESTER},
+  include: {
+    VerificationCodes: true
+  }
+})
+    const verificationData = {
+      "user_id": 1,
+      "verificationCode": 2222
+    }
+
+    const response = await request(app)
+      .get('/auth/verificate-user')
+      .send(verificationData);
+
+    if (response.status !== 404) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({"message": "User not found"});
+
+  });
+});
+
+
 
 
 
