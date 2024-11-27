@@ -112,9 +112,6 @@ companyId = companyInviter.company_id;
 
 });
 
-
-
-
 describe('Auth Endpoints', () => {
   it('success create invitation; status 201 ', async () => {
 
@@ -131,12 +128,11 @@ describe('Auth Endpoints', () => {
     if (response.status !== 201) {
       console.log('Response body:', response.body);
     }
-    expect(response.body).toBe('Invitation created successfully');
+    expect(response.body).toEqual('Invitation created successfully');
     expect(response.status).toBe(201);
 
   });
 });
-
 
 describe('Auth Endpoints', () => {
   it('fail create invitation;company not found; status 404 ', async () => {
@@ -160,7 +156,6 @@ describe('Auth Endpoints', () => {
   });
 });
 
-
 describe('Auth Endpoints', () => {
   it('fail create invitation; not company id; status 404 ', async () => {
 
@@ -176,12 +171,11 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body).toBe('Company id is required');
+    expect(response.body.errors).toEqual(["company id cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
 });
-
 
 describe('Auth Endpoints', () => {
   it('fail create invitation; not company id; status 404 ', async () => {
@@ -198,14 +192,33 @@ company_id:1
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body).toBe('Email is required');
+    expect(response.body.errors).toEqual(["Email cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
 });
 
+describe('Auth Endpoints', () => {
+  it('fail create invitation; wrong typeof; status 404 ', async () => {
 
+    const companyData = {
+company_id:"definetly not a number",
+email: 234,
+    };
 
+    const response = await request(app)
+      .post('/invitations/create-invitation')
+      .set('Authorization', `Bearer ${token}`)
+      .send(companyData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.errors).toEqual(["company id must be a number.", "Email must be a string."]);
+    expect(response.status).toBe(400);
+
+  });
+});
 
 // borrado de lo creado
 afterAll(async () => {
@@ -217,4 +230,3 @@ afterAll(async () => {
   
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });
-

@@ -1,11 +1,9 @@
 const prisma = require("../../db.js");
 
-//receive email and companyId, create a invitation token, then returns the 3 things
+//crea la invitación
+//recibe el email y el id de la compañía
+//devuelve las tres cosas en caso de exito
 const createInvitationController = async (data) => {
-
-  if(!data.companyId && !data.company_id || !data.email){
-    return {status:400, message: data.company_id ? 'Email is required' : 'Company id is required'};
-  }
 
   const company = await prisma.company.findUnique({
     where: {
