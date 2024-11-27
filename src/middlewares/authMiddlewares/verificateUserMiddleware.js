@@ -4,7 +4,7 @@ const verificateUserMiddleware = (req, res, next) => {
 let errors = [];
 
 if (user_id && user_id !== '') {
-  if (isNaN(user_id) || parseInt(user_id) !== Number(user_id)) {
+  if (isNaN(user_id)) {
     errors.push('User id must be a number.');
   }
 } else {
