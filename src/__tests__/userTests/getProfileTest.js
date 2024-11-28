@@ -124,6 +124,27 @@ describe('Auth Endpoints', () => {
   });
 });
 
+describe('Auth Endpoints', () => {
+  it('fail get profile;no token; status 400 ', async () => {
+
+    const userData = {
+      user_id: 'userId',
+
+    };
+
+    const response = await request(app)
+      .get('/users/me')
+      .send(userData);
+
+    if (response.status !== 401) {
+      console.log('Response body:', response.body);
+    }
+    
+    expect(response.body).toEqual({"message": "Acceso denegado"});
+    expect(response.status).toBe(401);
+
+  });
+});
 
 // borrado de lo creado
 afterAll(async () => {
