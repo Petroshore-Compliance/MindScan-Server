@@ -1,5 +1,8 @@
 const prisma = require('../../db.js');
 
+//devuelve el perfil del usuario con el id que se le pasa
+//recibe el user_id
+//devuelve todo menos el password
 const getProfileController = async (userID) => {
     const user = await prisma.user.findUnique({
         where: { user_id: userID },
