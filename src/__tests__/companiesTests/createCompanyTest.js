@@ -65,7 +65,7 @@ describe('Auth Endpoints', () => {
   it('success create company; status 201 ', async () => {
     const registrationData = {
       name: "Test company name",
-      email: companyEmail,
+      email: companyEmail+'   ',
       subscription_plan_id: subscriptionPlanId,
       user_id: userId
     };
@@ -100,7 +100,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response);
     }
     expect(response.status).toBe(400);
-expect(response.body.message).toBe('Missing required fields');
+    expect(response.body.errors).toEqual(["Name cannot be empty."]);
 
   });
 });
@@ -121,7 +121,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response);
     }
     expect(response.status).toBe(400);
-expect(response.body.message).toBe('Missing required fields');
+expect(response.body.errors).toEqual(["Email cannot be empty."]);
 
   });
 });
@@ -142,7 +142,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response);
     }
     expect(response.status).toBe(400);
-expect(response.body.message).toBe('Missing required fields');
+expect(response.body.errors).toEqual(["Subscription plan ID cannot be empty."]);
 
   });
 });
@@ -163,13 +163,13 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response);
     }
     expect(response.status).toBe(400);
-expect(response.body.message).toBe('Missing required fields');
+expect(response.body.errors).toEqual(["User ID cannot be empty."]);
 
   });
 });
 
 describe('Auth Endpoints', () => {
-  it('fail create company; user of user_id not exist; status 400', async () => {
+  it('fail create company; user of user_id not exist; status 404', async () => {
     const registrationData = {
       name: "Test company name",
       email: companyEmail,
@@ -183,10 +183,10 @@ describe('Auth Endpoints', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(registrationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 404) {
       console.log('Response body:', response);
     }
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
   expect(response.body.message).toBe('user does not exist');
 
   });
@@ -237,6 +237,29 @@ describe('Auth Endpoints', () => {
     }
     expect(response.status).toBe(400);
   expect(response.body.message).toBe('Invalid subscription plan ID');
+
+  });
+});
+describe('Auth Endpoints', () => {
+  it('fail create company; wrong typeof; status 400', async () => {
+    const registrationData = {
+      name: 23,
+      email: 23,
+      subscription_plan_id: 'sdf',
+      user_id: 'userId'
+
+    };
+
+    const response = await request(app)
+      .post('/companies/create-company')
+      .set('Authorization', `Bearer ${token}`)
+      .send(registrationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response);
+    }
+    expect(response.status).toBe(400);
+  expect(response.body.errors).toEqual(["User ID must be a number.","Subscription plan ID must be a number.", "Email must be a string.", "Name must be a string."]);
 
   });
 });
