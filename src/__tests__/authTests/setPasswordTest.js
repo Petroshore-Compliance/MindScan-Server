@@ -15,7 +15,7 @@ beforeAll(async () => {
     user_type: "individual"
   };
 
-  const response = await request(app)
+  await request(app)
     .post('/auth/register')
     .send(registrationData);
 })
@@ -81,7 +81,7 @@ const userData = await prisma.user.findUnique({
 describe('Auth Endpoints', () => {
   it('fail set password; missing id; status 400', async () => {
 
-const userData = await prisma.user.findUnique({
+ await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
   include: {
     VerificationCodes: true
@@ -138,7 +138,7 @@ user_id: userData.user_id
 describe('Auth Endpoints', () => {
   it('fail set password; user not exist; status 404', async () => {
 
-const userData = await prisma.user.findUnique({
+ await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
   include: {
     VerificationCodes: true
@@ -196,7 +196,7 @@ newPassword: "a"
 describe('Auth Endpoints', () => {
   it('fail set password; wrong typeof; status 400', async () => {
 
-const userData = await prisma.user.findUnique({
+ await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
   include: {
     VerificationCodes: true

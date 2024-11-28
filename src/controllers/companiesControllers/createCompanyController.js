@@ -1,15 +1,12 @@
 const prisma = require('../../db.js');
 const { Prisma } = require('@prisma/client');
 
+//crea una compañía
+//recibe nombre, email, subscription_plan_id, user_id
+//devuelve un objeto con el mensaje y la compañía creada
 const createCompanyController = async (data) => {
 
-if(!data.name || !data.email || !data.subscription_plan_id || !data.user_id){
-  return {status: 400, message: 'Missing required fields'};
-}
-
   try {
-    data.subscription_plan_id = parseInt(data.subscription_plan_id, 10);
-
     const userExists = await prisma.user.findUnique({
       where: {
         user_id: data.user_id,
@@ -17,7 +14,7 @@ if(!data.name || !data.email || !data.subscription_plan_id || !data.user_id){
     });
 
     if (!userExists) {
-      return { status: 400, message: `user does not exist` };
+      return { status: 404, message: `user does not exist` };
     }
       
     const company = await prisma.company.create({
