@@ -9,6 +9,8 @@ const { EMAIL_TESTER } = process.env;
 
 
 let userId;
+
+let subscriptionPlanId = 4;
 let token;
 
 beforeAll(async () => {
@@ -19,7 +21,7 @@ beforeAll(async () => {
     user_type: "individual"
   };
 
-   await request(app)
+  const response = await request(app)
     .post('/auth/register')
     .send(registrationData);
     
@@ -35,7 +37,7 @@ const userData = await prisma.user.findUnique({
       "verificationCode": userData.VerificationCodes[0].code
     }
 
-     await request(app)
+    const response2 = await request(app)
       .get('/auth/verificate-user')
       .send(verificationData);
 
@@ -73,6 +75,7 @@ describe('Auth Endpoints', () => {
 
     const response = await request(app)
       .patch('/users/update-profile')
+      .set('Authorization', `Bearer ${token}`)
       .send(updateProfileData);
 
     if (response.status !== 200) {
@@ -98,6 +101,7 @@ describe('Auth Endpoints', () => {
 
     const response = await request(app)
       .patch('/users/update-profile')
+      .set('Authorization', `Bearer ${token}`)
       .send(updateProfileData);
 
     if (response.status !== 400) {
@@ -105,7 +109,7 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toEqual( 'User id is required' );
+    expect(response.body.errors).toEqual( ['User ID cannot be empty.'] );
 
   });
 });
@@ -125,6 +129,7 @@ describe('Auth Endpoints', () => {
 
     const response = await request(app)
       .patch('/users/update-profile')
+      .set('Authorization', `Bearer ${token}`)
       .send(updateProfileData);
 
     if (response.status !== 400) {
@@ -132,7 +137,8 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toEqual( 'Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit.' );
+    expect(response.body.errors).toEqual(["Invalid password format."]);
+
 
   });
 });
@@ -150,6 +156,7 @@ describe('Auth Endpoints', () => {
 
     const response = await request(app)
       .patch('/users/update-profile')
+      .set('Authorization', `Bearer ${token}`)
       .send(updateProfileData);
 
     if (response.status !== 400) {
@@ -157,7 +164,7 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toEqual( 'Invalid email format.' );
+    expect(response.body.errors).toEqual(["Invalid email format."]);
 
   });
 });
@@ -175,6 +182,7 @@ describe('Auth Endpoints', () => {
 
     const response = await request(app)
       .patch('/users/update-profile')
+      .set('Authorization', `Bearer ${token}`)
       .send(updateProfileData);
 
     if (response.status !== 400) {
@@ -182,7 +190,7 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toEqual( 'Invalid name format.' );
+    expect(response.body.errors).toEqual(["Invalid name format."]);
 
   });
 });
@@ -198,6 +206,7 @@ describe('Auth Endpoints', () => {
 
     const response = await request(app)
       .patch('/users/update-profile')
+      .set('Authorization', `Bearer ${token}`)
       .send(updateProfileData);
 
     if (response.status !== 400) {
@@ -208,6 +217,59 @@ describe('Auth Endpoints', () => {
     expect(response.body.message).toEqual( 'User profile cannot be updated with only user_id' );
 
   });
+});
+
+describe('Auth Endpoints', () => {
+  it('fail update profile;wrong typeof; status 400 ', async () => {
+    
+
+    const updateProfileData = {
+      user_id: "userId" ,
+      company_id: "companyId",
+      name: 33,
+      email: 33,
+      user_type: "33",
+      role: 33,
+      password: 33
+    }
+
+    const response = await request(app)
+      .patch('/users/update-profile')
+      .set('Authorization', `Bearer ${token}`)
+      .send(updateProfileData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toEqual( ["Company ID must be a number.", "User ID must be a number.", "Name must be a string.", "Email must be a string.", "Password must be a string.", "Invalid user type", "Invalid role"]);
+
+  });
+
+
+describe('Auth Endpoints', () => {
+  it('fail update profile;no token; status 400 ', async () => {
+
+    const userData = {
+      user_id: 'userId',
+
+    };
+
+    const response = await request(app)
+      .get('/users/me')
+      .send(userData);
+
+    if (response.status !== 401) {
+      console.log('Response body:', response.body);
+    }
+    
+    expect(response.body).toEqual({"message": "Acceso denegado"});
+    expect(response.status).toBe(401);
+
+  });
+});
+
 });
 
 // borrado de todo lo creado
