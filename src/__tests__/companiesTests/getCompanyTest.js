@@ -70,7 +70,8 @@ const userData = await prisma.user.findUnique({
             .set('Authorization', `Bearer ${token}`)
             .send(companyRegistrationData);
 
-            companyId = companyResponse._body.company.company_id;
+            companyId = companyResponse.body.company.company_id;
+            
       
 });
 
@@ -114,7 +115,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     
-    expect(response.body.message).toBe("Company not found");
+    expect(response.body.message).toEqual("Company not found");
     expect(response.status).toBe(404);
 
   });
@@ -136,7 +137,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     
-    expect(response.body.message).toBe("company id is required");
+    expect(response.body.errors).toEqual(["Company ID cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
@@ -156,7 +157,30 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     
-    expect(response.body.message).toBe("company id is required");
+    expect(response.body.errors).toEqual(["Company ID cannot be empty."]);
+    expect(response.status).toBe(400);
+
+  });
+});
+
+
+describe('Auth Endpoints', () => {
+  it('fail get company; wrong typeof; status 400 ', async () => {
+    
+    const copmanyData = {
+      company_id: "definitivamente esto es un id",
+    };
+
+    const response = await request(app)
+      .get('/companies/get-company')
+      .set('Authorization', `Bearer ${token}`)
+      .send(copmanyData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    
+    expect(response.body.errors).toEqual(["Company ID must be a number."]);
     expect(response.status).toBe(400);
 
   });
