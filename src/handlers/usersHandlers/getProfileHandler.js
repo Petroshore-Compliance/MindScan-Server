@@ -2,7 +2,6 @@ const { getProfileController } = require('../../controllers/usersControllers/get
 
 const getProfileHandler = async (req, res) => {
     try {
-        //const response = await getProfileController(req.user.id);
         
                 const response = await getProfileController(req.body.user_id);
 
