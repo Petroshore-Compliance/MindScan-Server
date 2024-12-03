@@ -141,6 +141,30 @@ describe('Auth Endpoints', () => {
 });
 
 describe('Auth Endpoints', () => {
+  it('fail create invitation;role not exists ;status 200 ', async () => {
+
+    const invitationData = {
+      email: "exito@invited.com",
+      role:"definitivamente esto no es un rol",
+      company_id: companyId,
+      companyName: "uwuntu"
+    };
+
+    const response = await request(app)
+      .post('/companies/invite')
+      .set('Authorization', `Bearer ${token}`)
+      .send(invitationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.errors).toEqual(["Role not recognised"]);
+    expect(response.status).toBe(400);
+
+  });
+});
+
+describe('Auth Endpoints', () => {
   it('success create invitation; status 200 ', async () => {
 
     const invitationData = {
@@ -160,6 +184,30 @@ describe('Auth Endpoints', () => {
     }
     expect(response.body.message).toBe('Invitation created successfully');
     expect(response.status).toBe(201);
+
+  });
+});
+
+describe('Auth Endpoints', () => {
+  it('fail create invitation;wrong typeof; status 200 ', async () => {
+
+    const invitationData = {
+      email: 34,
+      role:22,
+      company_id: "companyId",
+      companyName: 2
+    };
+
+    const response = await request(app)
+      .post('/companies/invite')
+      .set('Authorization', `Bearer ${token}`)
+      .send(invitationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.errors).toEqual(["Email must be a string.","Role must be a string.", "Company Name must be a string.", "Company ID must be a number."]);
+    expect(response.status).toBe(400);
 
   });
 });
@@ -354,35 +402,11 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.message).toBe('Email is required');
+    expect(response.body.errors).toEqual(["Email cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
 });
-
-describe('Auth Endpoints', () => {
-  it('fail create invitation; missing role;status 400 ', async () => {
-
-    const invitationData = {
-      email: "exito@invited.com",
-      company_id: companyId,
-      companyName: "uwuntu"
-    };
-
-    const response = await request(app)
-      .post('/companies/invite')
-      .set('Authorization', `Bearer ${token}`)
-      .send(invitationData);
-
-    if (response.status !== 400) {
-      console.log('Response body:', response.body);
-    }
-    expect(response.body.message).toBe('All fields are required.');
-    expect(response.status).toBe(400);
-
-  });
-});
-
 
 describe('Auth Endpoints', () => {
   it('fail create invitation; missing role;status 400 ', async () => {
@@ -402,7 +426,33 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.message).toBe('All fields are required.');
+    expect(response.body.errors).toEqual(["Role cannot be empty."]);
+    expect(response.status).toBe(400);
+
+  });
+});
+
+describe('Auth Endpoints', () => {
+  it('fail create invitation; missing all data;status 400 ', async () => {
+
+    const invitationData = {
+      
+    };
+
+    const response = await request(app)
+      .post('/companies/invite')
+      .set('Authorization', `Bearer ${token}`)
+      .send(invitationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.errors).toEqual([
+         "Email cannot be empty.",
+          "Role cannot be empty.",
+         "Company Name cannot be empty.",
+         "Company ID cannot be empty.",
+        ]);
     expect(response.status).toBe(400);
 
   });
@@ -426,7 +476,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.message).toBe('All fields are required.');
+    expect(response.body.errors).toEqual(["Company ID cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
@@ -450,7 +500,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.message).toBe('All fields are required.');
+    expect(response.body.errors).toEqual(["Company Name cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
