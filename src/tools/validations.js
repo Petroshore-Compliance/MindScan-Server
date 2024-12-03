@@ -21,6 +21,12 @@ const validateString = (value, fieldName, regex) => {
   if (regex && !regex.test(value)) {
     return { error: `Invalid ${fieldName.toLowerCase()} format.` };
   }
+
+  if(fieldName==="Role"){
+    if(value !== 'employee' && value !== 'manager' && value!== 'admin'){
+      return { error: 'Role not recognised'}
+    }
+  }
   return { value };
 };
 
