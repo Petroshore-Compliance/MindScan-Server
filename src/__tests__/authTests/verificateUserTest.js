@@ -10,8 +10,7 @@ beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",
     email: EMAIL_TESTER,
-    password: "secureHashedPassword123",
-    user_type: "individual"
+    password: "secureHashedPassword123"
   };
 
   const response = await request(app)

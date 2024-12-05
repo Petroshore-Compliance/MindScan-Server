@@ -6,7 +6,6 @@ const registerUserHandler = async (req, res) => {
       email,
       password,
       name,
-      user_type,
       
     } = req.body;
 
@@ -14,7 +13,6 @@ const registerUserHandler = async (req, res) => {
       email,
       password,
       name,
-      user_type,
       
     );
 

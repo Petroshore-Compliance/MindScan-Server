@@ -1,5 +1,5 @@
 const registerUserMiddleware = (req, res, next) => {
-  let { email, password, name, user_type } = req.body;
+  let { email, password, name } = req.body;
 
   // Default missing fields to empty strings to avoid `typeof` errors
 
@@ -12,15 +12,7 @@ const registerUserMiddleware = (req, res, next) => {
 
   // Check that all fields are strings, not empty, and apply regex
 
-  //ckeck if the user type is valid
-if (user_type) {
-if(user_type !== "individual" && user_type !== "company"){
-  errors.push('Invalid user type');
-}
-
-}else{
-  errors.push('User type is required');
-}
+  
 
 
 if(email && email !== ''){

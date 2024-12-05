@@ -16,7 +16,6 @@ beforeAll(async () => {
     name: "Alice Smith",
     email: EMAIL_TESTER,
     password: "secureHashedPassword123",
-    user_type: "individual"
   };
 
   const response = await request(app)

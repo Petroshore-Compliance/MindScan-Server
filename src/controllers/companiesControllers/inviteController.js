@@ -20,7 +20,6 @@ const inviteController = async (data) => {
       user = await prisma.user.create({
         data: {
           email: data.email.toLowerCase(),
-          user_type: "company",
           role: data.role,
           company_id: parseInt(data.company_id),
         },
