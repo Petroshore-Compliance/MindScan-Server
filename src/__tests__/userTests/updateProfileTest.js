@@ -17,8 +17,7 @@ beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",
     email: EMAIL_TESTER,
-    password: "secureHashedPassword123",
-    user_type: "individual"
+    password: "secureHashedPassword123"
   };
 
   const response = await request(app)
@@ -228,7 +227,6 @@ describe('Auth Endpoints', () => {
       company_id: "companyId",
       name: 33,
       email: 33,
-      user_type: "33",
       role: 33,
       password: 33
     }
@@ -243,7 +241,7 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body.errors).toEqual( ["Company ID must be a number.", "User ID must be a number.", "Name must be a string.", "Email must be a string.", "Password must be a string.", "Invalid user type", "Invalid role"]);
+    expect(response.body.errors).toEqual( ["Company ID must be a number.", "User ID must be a number.", "Name must be a string.", "Email must be a string.", "Password must be a string.",  "Invalid role"]);
 
   });
 

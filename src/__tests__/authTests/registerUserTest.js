@@ -12,8 +12,7 @@ describe('Auth Endpoints', () => {
     const registrationData = {
       name: "Alice Smith",
       email: EMAIL_TESTER,
-      password: "secureHashedPassword123",
-      user_type: "individual"
+      password: "secureHashedPassword123"
     };
 
     const response = await request(app)
@@ -33,8 +32,7 @@ describe('Auth Endpoints', () => {
     const registrationData = {
       name: "Alice Smith",
       email: EMAIL_TESTER,
-      password: "secureHashedPassword123",
-      user_type: "individual"
+      password: "secureHashedPassword123"
     };
 
     const response = await request(app)
@@ -55,8 +53,7 @@ describe('Auth Endpoints', () => {
   it('should register try and fail registering a user without an email', async () => {
     const registrationData = {
       name: "Alice Smith ",
-      password: "secureHashedPassword123",
-      user_type: "individual"
+      password: "secureHashedPassword123"
     };
 
     const response = await request(app)
@@ -77,8 +74,7 @@ describe('Auth Endpoints', () => {
   it('fail register user; no name; status 400', async () => {
     const registrationData = {
       email: EMAIL_TESTER,
-      password: "secureHashedPassword123",
-      user_type: "individual"
+      password: "secureHashedPassword123"
     };
 
     const response = await request(app)
@@ -99,8 +95,7 @@ describe('Auth Endpoints', () => {
   it('fail register user; no password; status 400', async () => {
     const registrationData = {
           name: "Alice Smith",
-      email: EMAIL_TESTER,
-      user_type: "individual"
+      email: EMAIL_TESTER
     };
 
     const response = await request(app)
@@ -152,8 +147,7 @@ describe('Auth Endpoints', () => {
     const registrationData = {
       name: 3,
       email: 3,
-      password: 3,
-      user_type: 3
+      password: 3
     };
 
     const response = await request(app)
@@ -164,7 +158,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
 
-    expect(response.body).toEqual({"errors": ["Invalid user type","Email must be a string.", "Password must be a string.", "Name must be a string."]});
+    expect(response.body).toEqual({"errors": ["Email must be a string.", "Password must be a string.", "Name must be a string."]});
     expect(response.status).toBe(400);
 
   });

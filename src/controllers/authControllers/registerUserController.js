@@ -11,14 +11,11 @@ const registerUserController = async (
   email,
   password,
   name,
-  user_type,
   role,
   companyId
 ) => {
 
 //si el tipo es individual, significa que no está conectado a una compañía
-  companyId = user_type === 'individual' ? null : companyId;
-
   const emailInUse = await prisma.user.findUnique({
     where: {
       email: email,
@@ -33,7 +30,6 @@ const registerUserController = async (
       name,
       email: email,
       password:  await bcrypt.hash(password, 10),
-      user_type,
       role,
       company: companyId
         ? {

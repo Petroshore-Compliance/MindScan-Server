@@ -20,7 +20,6 @@ model User {
   name              String?
   email             String                @unique
   password          String?
-  user_type         UserType
   role              Role?
   company           Company?              @relation(fields: [company_id], references: [company_id])
   company_id        Int?
@@ -41,46 +40,21 @@ model VerificationCode {
 }
 
 model Company {
-  company_id           Int                 @id @default(autoincrement())
-  name                 String
-  email                String
-  subscriptionPlan     Plan                @relation(fields: [subscription_plan_id], references: [plan_id])
-  subscription_plan_id Int
-  users                User[]
-  invitations          CompanyInvitation[]
-  created_at           DateTime            @default(now())
-  updated_at           DateTime?           @default(now()) @updatedAt
-}
-
-model Plan {
-  plan_id    Int       @id @default(autoincrement())
-  plan_name  String
-  price      Float
-  features   String
-  companies  Company[]
-  created_at DateTime  @default(now())
-  updated_at DateTime? @updatedAt
-}
-
-model Diagnosis {
-  diagnosis_id Int                   @id @default(autoincrement())
-  title        String
-  description  String
-  questions    Question[]
-  results      Result[]
-  access       UserDiagnosisAccess[]
-  created_at   DateTime              @default(now())
-  updated_at   DateTime?             @updatedAt
+  company_id  Int                 @id @default(autoincrement())
+  name        String
+  email       String
+  users       User[]
+  invitations CompanyInvitation[]
+  created_at  DateTime            @default(now())
+  updated_at  DateTime?           @default(now()) @updatedAt
 }
 
 model Question {
-  question_id  Int        @id @default(autoincrement())
-  content      String
-  diagnosis    Diagnosis  @relation(fields: [diagnosis_id], references: [diagnosis_id])
-  diagnosis_id Int
-  responses    Response[]
-  created_at   DateTime   @default(now())
-  updated_at   DateTime?  @updatedAt
+  question_id Int        @id @default(autoincrement())
+  content     String
+  responses   Response[]
+  created_at  DateTime   @default(now())
+  updated_at  DateTime?  @updatedAt
 }
 
 model Response {
@@ -99,22 +73,19 @@ model Result {
   completed_at DateTime  @default(now())
   user         User      @relation(fields: [user_id], references: [user_id])
   user_id      Int
-  diagnosis    Diagnosis @relation(fields: [diagnosis_id], references: [diagnosis_id])
-  diagnosis_id Int
   created_at   DateTime  @default(now())
   updated_at   DateTime? @updatedAt
 }
 
+//esta tabla es para dar permisos a los usuarios para que vean los diágnosticos de otros usuarios
 model UserDiagnosisAccess {
-  access_id    Int       @id @default(autoincrement())
-  has_access   Boolean
-  granted_by   String
-  user         User      @relation(fields: [user_id], references: [user_id])
-  user_id      Int
-  diagnosis    Diagnosis @relation(fields: [diagnosis_id], references: [diagnosis_id])
-  diagnosis_id Int
-  created_at   DateTime  @default(now())
-  updated_at   DateTime? @updatedAt
+  access_id  Int       @id @default(autoincrement())
+  has_access Boolean
+  granted_by String
+  user       User      @relation(fields: [user_id], references: [user_id])
+  user_id    Int
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
 }
 
 model CompanyInvitation {
@@ -129,11 +100,6 @@ model CompanyInvitation {
   updated_at       DateTime?        @updatedAt
 }
 
-enum UserType {
-  individual
-  company
-}
-
 enum Role {
   admin
   manager
@@ -144,3 +110,10 @@ enum InvitationStatus {
   pending
   accepted
 }
+
+// quitar usertype, añadir contador licencias
+//apuntar si ha usado una licencia, no pueda invitar mas usuarios que licencias, check if made or has licenses
+//reorganizar diagnosticos para el trato de datos
+//tabla admin, crear admin, log admin, get admins, change paswword admin, delete admin, receptor de emails?
+//tabla preguntas, respuesta,respuestaDeUser, resultado
+//idioma en las preguntas y respuesta

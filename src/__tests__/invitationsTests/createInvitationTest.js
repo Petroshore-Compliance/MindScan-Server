@@ -23,8 +23,7 @@ beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",
     email: EMAIL_TESTER,
-    password: "secureHashedPassword123",
-    user_type: "individual"
+    password: "secureHashedPassword123"
   };
 
      await request(app)
@@ -34,8 +33,7 @@ beforeAll(async () => {
     const registrationDataAux = {
       name: "Alice Smith",
       email: "aux@email.com",
-      password: "secureHashedPassword123",
-      user_type: "individual"
+      password: "secureHashedPassword123"
     };
   
      await request(app)
@@ -97,6 +95,8 @@ const userData = await prisma.user.findUnique({
             .post('/companies/create-company')
             .set('Authorization', `Bearer ${token}`)
             .send(companyData);
+
+            console.log("usunu",companyResponse.body)
 
             const companyInviter = await prisma.company.findUnique({
               where: {       company_id: companyResponse._body.company.company_id},

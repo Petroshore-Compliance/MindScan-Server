@@ -24,7 +24,6 @@ beforeAll(async () => {
     name: "Alice Smith",
     email: EMAIL_TESTER,
     password: "secureHashedPassword123",
-    user_type: "individual"
   };
 
      await request(app)
@@ -34,8 +33,7 @@ beforeAll(async () => {
     const registrationDataAux = {
       name: "Alice Smith",
       email: "aux@email.com",
-      password: "secureHashedPassword123",
-      user_type: "individual"
+      password: "secureHashedPassword123"
     };
   
      await request(app)

@@ -12,7 +12,7 @@ const updateProfileMiddleware = (req, res, next) => {
 
 
   let errors = [];
-  let {company_id,user_id,name,email,user_type,role,password} = req.body;
+  let {company_id,user_id,name,email,role,password} = req.body;
 
   if(company_id){
 result = validateNumber(company_id, 'Company ID');
@@ -40,12 +40,7 @@ if (result.error) errors.push(result.error);
     if (result.error) errors.push(result.error);
     }
 
-    if(user_type){
-      if(user_type !== "individual" && user_type !== "company"){
-        errors.push('Invalid user type');
-      }
-    }
-
+    
     if(role){
       if(role !== "manager" && role !== "employee"){
         errors.push('Invalid role');
