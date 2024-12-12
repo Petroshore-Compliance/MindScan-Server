@@ -141,7 +141,6 @@ const userData = await prisma.user.findUnique({
   });
 });
 
-
 describe('Auth Endpoints', () => {
   it('fail register user; bad typeof; status 400', async () => {
     const registrationData = {

@@ -7,9 +7,7 @@ const app = require('../../app');
 const prisma = require('../../db.js'); 
 const { EMAIL_TESTER } = process.env;
 
-
 let userId;
-
 let subscriptionPlanId = 4;
 let token;
 
@@ -59,8 +57,6 @@ const userData = await prisma.user.findUnique({
 
 });
 
-
-
 describe('Auth Endpoints', () => {
   it('success update profile; status 200 ', async () => {
     
@@ -87,7 +83,6 @@ describe('Auth Endpoints', () => {
   });
 });
 
-
 describe('Auth Endpoints', () => {
   it('fail update profile; no userId; status 400 ', async () => {
     
@@ -113,8 +108,6 @@ describe('Auth Endpoints', () => {
   });
 });
 
-
-
 describe('Auth Endpoints', () => {
   it('fail update profile;invalid password; status 400 ', async () => {
     
@@ -138,14 +131,12 @@ describe('Auth Endpoints', () => {
     expect(response.status).toBe(400);
     expect(response.body.errors).toEqual(["Invalid password format."]);
 
-
   });
 });
 
 describe('Auth Endpoints', () => {
   it('fail update profile;invalid email; status 400 ', async () => {
     
-
     const updateProfileData = {
       user_id: userId,
       name: "roman",
@@ -168,7 +159,6 @@ describe('Auth Endpoints', () => {
   });
 });
 
-
 describe('Auth Endpoints', () => {
   it('fail update profile;invalid name; status 400 ', async () => {
     
@@ -176,7 +166,6 @@ describe('Auth Endpoints', () => {
     const updateProfileData = {
       user_id: userId,
       name: " h!$·,.",
-      
     }
 
     const response = await request(app)
@@ -193,7 +182,6 @@ describe('Auth Endpoints', () => {
 
   });
 });
-
 
 describe('Auth Endpoints', () => {
   it('fail update profile;no data; status 400 ', async () => {

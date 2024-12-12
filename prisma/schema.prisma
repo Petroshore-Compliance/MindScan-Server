@@ -30,6 +30,8 @@ model User {
   updated_at        DateTime?             @updatedAt
   connected_at      DateTime?
   VerificationCodes VerificationCode[]
+  userResponses     userResponses[]
+  resultado         resultado[]
 }
 
 model VerificationCode {
@@ -44,6 +46,7 @@ model Company {
   name        String
   email       String
   users       User[]
+  licenses    Int                 @default(0)
   invitations CompanyInvitation[]
   created_at  DateTime            @default(now())
   updated_at  DateTime?           @default(now()) @updatedAt
@@ -100,6 +103,101 @@ model CompanyInvitation {
   updated_at       DateTime?        @updatedAt
 }
 
+model questionAnswer {
+  questionAnswer_id Int             @id @default(autoincrement())
+  answer_pt         String
+  anser_es          String
+  answer_en         String
+  created_at        DateTime        @default(now())
+  updated_at        DateTime?       @updatedAt
+  userResponses     userResponses[]
+}
+
+model question {
+  question_id   Int             @id @default(autoincrement())
+  content_es    String
+  content_en    String
+  content_pt    String
+  created_at    DateTime        @default(now())
+  updated_at    DateTime?       @updatedAt
+  userResponses userResponses[]
+}
+
+//userResponses.response is {user_id: Int, [question_id: Int, answer: id],[question_id: Int, answer: id]...}
+model userResponses {
+  userResponses_id  Int            @id @default(autoincrement())
+  user              User           @relation(fields: [user_id], references: [user_id])
+  user_id           Int
+  question          question       @relation(fields: [question_id], references: [question_id])
+  question_id       Int
+  questionAnswer    questionAnswer @relation(fields: [questionAnswer_id], references: [questionAnswer_id])
+  questionAnswer_id Int
+}
+
+model form {
+  form_id  Int    @id @default(autoincrement())
+  content  String
+  name     String
+  email    String
+  phone    String
+  language String
+  message  String
+}
+
+model petroAdmin {
+  petroAdmin_id Int     @id @default(autoincrement())
+  name          String
+  email         String
+  password      String
+  notifications Boolean
+}
+
+model resultado {
+  resultado_id   Int  @id @default(autoincrement())
+  user           User @relation(fields: [user_id], references: [user_id])
+  user_id        Int
+  anxiety        Int
+  hostility      Int
+  depression     Int
+  social_anxiety Int
+  impulsivity    Int
+  vulnerability  Int
+
+  cordiality         Int
+  gregariousness     Int
+  assertiveness      Int
+  activity           Int
+  excitement_seeking Int
+  positive_emotions  Int
+
+  fantasy                Int
+  aesthetic_appreciation Int
+  feelings               Int
+  actions                Int
+  ideas                  Int
+  values                 Int
+
+  trust                 Int
+  frankness             Int
+  altruism              Int
+  conciliatory_attitude Int
+  modesty               Int
+  sensitivity_to_others Int
+
+  competence           Int
+  orderliness          Int
+  sense_of_duty        Int
+  need_for_achievement Int
+  self_discipline      Int
+  deliberation         Int
+
+  neuroticism_x_emotional_stability Int
+  extraversion                      Int
+  openness_to_experience            Int
+  agreeableness_or_amiability       Int
+  perseverance_or_responsibility    Int
+}
+
 enum Role {
   admin
   manager
@@ -111,9 +209,13 @@ enum InvitationStatus {
   accepted
 }
 
-// quitar usertype, añadir contador licencias
-//apuntar si ha usado una licencia, no pueda invitar mas usuarios que licencias, check if made or has licenses
+//apuntar si ha usado una licencia, 
+//no pueda invitar mas usuarios que licencias, 
+//check if made or has licenses
 //reorganizar diagnosticos para el trato de datos
-//tabla admin, crear admin, log admin, get admins, change paswword admin, delete admin, receptor de emails?
+//tabla admin, crear admin, log admin, get admins, change paswword admin, change email admin, delete admin, receptor de emails?
 //tabla preguntas, respuesta,respuestaDeUser, resultado
 //idioma en las preguntas y respuesta
+
+//listo 
+// quitar usertype, añadir contador licencias
