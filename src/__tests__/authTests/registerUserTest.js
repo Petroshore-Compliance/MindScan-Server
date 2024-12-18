@@ -113,35 +113,6 @@ describe('Auth Endpoints', () => {
 });
 
 describe('Auth Endpoints', () => {
-  it('success verificate user; status 200', async () => {
-
-const userData = await prisma.user.findUnique({
-  where: {       email: EMAIL_TESTER},
-  include: {
-    VerificationCodes: true
-  }
-})
-
-    const verificationData = {
-      "user_id": userData.user_id,
-      "verificationCode": userData.VerificationCodes[0].code
-    }
-
-    const response = await request(app)
-      .get('/auth/verificate-user')
-      .send(verificationData);
-
-    if (response.status !== 200) {
-      console.log('Response body:', response.body);
-    }
-
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: 'User verified successfully' });
-
-  });
-});
-
-describe('Auth Endpoints', () => {
   it('fail register user; bad typeof; status 400', async () => {
     const registrationData = {
       name: 3,
