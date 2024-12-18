@@ -8,8 +8,8 @@ const getProfileController = async (userID) => {
         where: { user_id: userID },
         include: {
             company: true,
-            responses: true,
-            results: true,
+            userResponses:true,
+            userResult: true,
             access: true,
             VerificationCodes: true
         }
@@ -20,7 +20,6 @@ const getProfileController = async (userID) => {
     }
 
     const { password, ...userData } = user;
-
     return {status: 200, message: 'User profile found', user: userData};
 };
 

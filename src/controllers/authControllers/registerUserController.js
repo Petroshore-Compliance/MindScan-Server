@@ -1,7 +1,9 @@
 const bcrypt = require("bcrypt");
 
 const prisma = require("../../db.js");
-const { createVerificationScript } = require("../../tools/createVerificationScript.js");
+
+//pendiente de eliminar
+//const { createVerificationScript } = require("../../tools/createVerificationScript.js");
 
 
 //este método se encarga de crear un nuevo usuario en la base de datos
@@ -39,8 +41,9 @@ const registerUserController = async (
     },
   });
 
+  //pendiente de eliminar
   //llamada al script que envía el corrreo de verificación (tools/createVerificationScript.js)
-  createVerificationScript(newUser.user_id, newUser.email,"../templates/verificationEmail.html");
+  //createVerificationScript(newUser.user_id, newUser.email,"../templates/verificationEmail.html");
 
   return {status: 201, message: 'User registered successfully', user: newUser};
 };

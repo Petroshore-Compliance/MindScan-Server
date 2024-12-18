@@ -18,7 +18,7 @@ const { verificateUserHandler } = require("../handlers/authHandlers/verificateUs
 
 router.post("/register", registerUserMiddleware, registerUserHandler);
 router.post("/login", loginUserMiddleware,loginUserHandler);
-router.get("/verificate-user", verificateUserMiddleware,verificateUserHandler);
+//router.get("/verificate-user", verificateUserMiddleware,verificateUserHandler);
 router.get("/forgot-password", forgotPasswordMiddleware,forgotPasswordHandler);
 router.patch("/set-password",setPasswordMiddleware, setPasswordHandler);
 
