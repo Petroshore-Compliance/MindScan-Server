@@ -23,13 +23,8 @@ return {status: 400, message: "Wrong Email or Password"};
   throw error;
 };
 
-  const isNotVerified = await prisma.verificationCode.findUnique({
-where:{ user_id : user.user_id},
-  });
+  
 
-if(isNotVerified){
-  return {status: 401, message: "The user is not verified"};
-}
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 

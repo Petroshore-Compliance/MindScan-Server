@@ -1,13 +1,32 @@
 const prisma = require("../../db");
+
 const { emailChangeCompanySenderScript } = require("../../tools/emailChangeCompanySenderScript.js");
+const { emailCreateNewUserScript } = require("../../tools/emailCreateNewUserScript.js");
+
 const {createInvitationController} = require("../../controllers/invitationsControllers/createInvitationController.js");
+
+    //pendiente de eliminar
+//eliminar tras la finalización de adaptación de código a que ahora los usuarios se crean con un email; román 12/12/2024
 const { createVerificationScript } = require("../../tools/createVerificationScript.js");
-// crea una invitación para el usuario de esa empresa y envia un email
-//recibe email, role, company_id, companyName
+
+// crea una invitación para el usuario y envia un email
+//recibe email, role, company_id
 const inviteController = async (data) => {
 
-
   let isNew;
+
+  let company = await prisma.company.findUnique({
+    where: {
+      company_id: data.company_id,
+    },
+    include: {
+      invitations: true
+    }
+  });
+
+if(company.invitations.length > company.licenses){
+  return {status:400, message: "Too many invitations"};
+}
 
   let user = await prisma.user.findUnique({
     where: {
@@ -15,8 +34,14 @@ const inviteController = async (data) => {
     },
   });
 
+
+  if(!company){
+    return {status: 400, message: "Company not found"};
+  }
+company
   if(!user) {
-    
+    //pendiente de eliminar
+    /*
       user = await prisma.user.create({
         data: {
           email: data.email.toLowerCase(),
@@ -24,6 +49,7 @@ const inviteController = async (data) => {
           company_id: parseInt(data.company_id),
         },
       });
+      */
     isNew = true;
       
     
@@ -36,6 +62,10 @@ const inviteController = async (data) => {
         }
       }
 
+          if(user.company_id == parseInt(data.company_id)) {
+            return {status:400, message:"This user is already part of this company"};
+          }
+
       //recolectar las invitaciones enviadas al email por esta empresa
       let invitationsSentByCompanyToThisEmail = await prisma.companyInvitation.findMany({
         where: {
@@ -45,41 +75,37 @@ const inviteController = async (data) => {
       });
       
       if (invitationsSentByCompanyToThisEmail.length > 0) {
-        // Comprobar si hay invitaciones pendientres
-        const hasActiveInvitation = invitationsSentByCompanyToThisEmail.some(
-          (invitation) => invitation.active === true
-        );
+        
 
-        if (hasActiveInvitation) {
           return {status:400, message: `This email already has a pending invitation`};
         }
-          if(user.company_id == parseInt(data.company_id)) {
-            return {status:400, message:"This user is already part of this company"};
-          }
+        
 
-        // Si no hay ninguna pendiente, ordenar las invitaciones por "created_at"
-        const mostRecentInvitation = invitationsSentByCompanyToThisEmail.reduce((latest, current) => {
-          return new Date(latest.created_at) > new Date(current.created_at) ? latest : current;
-        });
-      
-        // Si la invitacion mas reciente fue creada en el ultimo hora, devolver error
-        const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-        if (new Date(mostRecentInvitation.created_at) > oneHourAgo) {
-          return {status:400, message: `This email has already been invited to this company within the last hour`};
-        }
-      }
-      isNew = false;
     };
 
 //create invitetocompany
 
-const response = await createInvitationController(data,user.email);
+const response = await createInvitationController(data,company.companyName);
 
 //send email to user
-    if(!isNew){
-  emailChangeCompanySenderScript(user.user_id, user.email,"../templates/invitationEmailExistingAccount.html",data.companyName,response.invitation.invitation_token);
+    if(isNew){
+      
+      let alreadyInvited = await prisma.companyInvitation.findMany({
+        where: {
+          email: data.email.toLowerCase(),
+          company_id: parseInt(data.company_id),
+        },
+      });
+
+      if (alreadyInvited.length > 0) {
+        return {status:400, message: `This email already has a pending invitation`};
+      }
+
+      emailCreateNewUserScript(data.email,"../templates/invitationEmailNewAccount.html",data.companyName,response.invitation.invitation_token);
+          //pendiente de eliminar
+      //createVerificationScript(user.user_id, user.email,"../templates/invitationEmail.html",data.companyName);
     }else{
-        createVerificationScript(user.user_id, user.email,"../templates/invitationEmail.html",data.companyName);
+      emailChangeCompanySenderScript(user.user_id, user.email,"../templates/invitationEmailExistingAccount.html",company.companyName,response.invitation.invitation_token);
     };
     return {status: response.status, message: response.message, invitation: response.invitation};
 }

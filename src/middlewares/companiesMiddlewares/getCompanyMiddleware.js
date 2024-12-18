@@ -7,8 +7,7 @@ let errors = [];
 
 let { company_id } = req.body;
 
-
-result = validateNumber(company_id, 'Company ID');
+let result = validateNumber(company_id, 'Company ID');
 if (result.error) errors.push(result.error);
 
 if(errors.length === 0) {
@@ -16,7 +15,6 @@ if(errors.length === 0) {
 } else {
   return res.status(400).json({ errors });
 }
-
 
 }
 

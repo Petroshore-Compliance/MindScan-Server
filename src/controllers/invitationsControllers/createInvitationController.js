@@ -14,7 +14,7 @@ if(!company){
   return {status:400, message: 'Company not found'};
 }
   //hay que mantener la misma cantidad de 0 para que sea de 1000000 a 999999 en vez de 0 a 999999
-  const invToken = Math.floor(100000 + Math.random() * 9000000);
+  const invToken = Math.floor(1000000000 + Math.random() * 90000000000);
 
 const invitation = await prisma.companyInvitation.create({
   data: {

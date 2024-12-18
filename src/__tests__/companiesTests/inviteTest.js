@@ -10,7 +10,6 @@ let companyId = 0;
 let userId;
 let auxUserId;
 let companyEmail = "test@test.com";
-
 let subscriptionPlanId = 4;
 let token;
 
@@ -19,6 +18,7 @@ let token;
 2- Registrar usuario que va a ser el usuario de la compañía
 3- Crear una compañía
 */
+
 beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",
@@ -237,12 +237,14 @@ describe('Auth Endpoints', () => {
 describe('Auth Endpoints', () => {
   it('fail create invitation ; already a member ; status 400', async () => {
   
+    //simula que ya es miembro
 await prisma.companyInvitation.updateMany({
   where: {
     company_id: companyId,
   },
   data: {
-    active: false,
+    
+    user_id: auxUserId,
   },
 });
 
@@ -271,15 +273,8 @@ await prisma.companyInvitation.updateMany({
 describe('Auth Endpoints', () => {
   it('fail create invitation ; invited in last hour ; status 400', async () => {
   
-await prisma.companyInvitation.updateMany({
-  where: {
-    email: "exito@invited.com",
-  },
-  data: {
-    active: false,
-  },
-});
-
+    
+//simula sacar el usuario de la empresa
 await prisma.user.update(
   {
     where: {
@@ -314,17 +309,9 @@ await prisma.user.update(
 
 
 describe('Auth Endpoints', () => {
-  it('fail create invitation ; invited in last hour ; status 400', async () => {
+  it('fail create invitation ; admin another company ; status 400', async () => {
   
-await prisma.companyInvitation.updateMany({
-  where: {
-    email: "exito@invited.com",
-  },
-  data: {
-    active: false,
-  },
-});
-
+    //simula que el usuario es admin en otra empresa
 await prisma.user.update(
   {
     where: {

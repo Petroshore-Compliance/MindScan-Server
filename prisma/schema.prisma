@@ -23,61 +23,33 @@ model User {
   role              Role?
   company           Company?              @relation(fields: [company_id], references: [company_id])
   company_id        Int?
-  responses         Response[]
-  results           Result[]
   access            UserDiagnosisAccess[]
   created_at        DateTime              @default(now())
   updated_at        DateTime?             @updatedAt
   connected_at      DateTime?
-  VerificationCodes VerificationCode[]
-  userResponses     userResponses[]
-  resultado         resultado[]
+  //VerificationCodes VerificationCode[]
+  userResponses     UserResponses[]
+  userResult        Result[]
+  CompanyInvitation CompanyInvitation[]
 }
 
-model VerificationCode {
-  verificationcodes_id Int  @id @default(autoincrement())
-  user                 User @relation(fields: [user_id], references: [user_id])
-  user_id              Int  @unique
-  code                 Int  @unique
-}
+//model VerificationCode {
+//  verificationcodes_id Int  @id @default(autoincrement())
+//  user                 User @relation(fields: [user_id], references: [user_id])
+//  user_id              Int  @unique
+//  code                 Int  @unique
+//}
 
 model Company {
-  company_id  Int                 @id @default(autoincrement())
-  name        String
-  email       String
-  users       User[]
-  licenses    Int                 @default(0)
-  invitations CompanyInvitation[]
-  created_at  DateTime            @default(now())
-  updated_at  DateTime?           @default(now()) @updatedAt
-}
-
-model Question {
-  question_id Int        @id @default(autoincrement())
-  content     String
-  responses   Response[]
-  created_at  DateTime   @default(now())
-  updated_at  DateTime?  @updatedAt
-}
-
-model Response {
-  response_id Int       @id @default(autoincrement())
-  value       Int
-  user        User      @relation(fields: [user_id], references: [user_id])
-  user_id     Int
-  question    Question  @relation(fields: [question_id], references: [question_id])
-  question_id Int
-  created_at  DateTime  @default(now())
-  updated_at  DateTime? @updatedAt
-}
-
-model Result {
-  result_id    Int       @id @default(autoincrement())
-  completed_at DateTime  @default(now())
-  user         User      @relation(fields: [user_id], references: [user_id])
-  user_id      Int
-  created_at   DateTime  @default(now())
-  updated_at   DateTime? @updatedAt
+  company_id   Int                 @id @default(autoincrement())
+  name         String
+  email        String
+  users        User[]
+  licenses     Int                 @default(0)
+  licensesUsed Int                 @default(0)
+  invitations  CompanyInvitation[]
+  created_at   DateTime            @default(now())
+  updated_at   DateTime?           @default(now()) @updatedAt
 }
 
 //esta tabla es para dar permisos a los usuarios para que vean los diágnosticos de otros usuarios
@@ -92,51 +64,50 @@ model UserDiagnosisAccess {
 }
 
 model CompanyInvitation {
-  invitation_id    Int              @id @default(autoincrement())
+  invitation_id    Int       @id @default(autoincrement())
   email            String
-  status           InvitationStatus @default(pending)
-  invitation_token String
-  company          Company          @relation(fields: [company_id], references: [company_id])
+  user             User?     @relation(fields: [user_id], references: [user_id])
+  user_id          Int?
+  invitation_token String    @unique
+  company          Company   @relation(fields: [company_id], references: [company_id])
   company_id       Int
-  active           Boolean          @default(true)
-  created_at       DateTime         @default(now())
-  updated_at       DateTime?        @updatedAt
+  created_at       DateTime  @default(now())
+  updated_at       DateTime? @updatedAt
 }
 
-model questionAnswer {
+model QuestionAnswer {
   questionAnswer_id Int             @id @default(autoincrement())
   answer_pt         String
   anser_es          String
   answer_en         String
   created_at        DateTime        @default(now())
   updated_at        DateTime?       @updatedAt
-  userResponses     userResponses[]
+  userResponses     UserResponses[]
 }
 
-model question {
+model Question {
   question_id   Int             @id @default(autoincrement())
   content_es    String
   content_en    String
   content_pt    String
   created_at    DateTime        @default(now())
   updated_at    DateTime?       @updatedAt
-  userResponses userResponses[]
+  userResponses UserResponses[]
 }
 
 //userResponses.response is {user_id: Int, [question_id: Int, answer: id],[question_id: Int, answer: id]...}
-model userResponses {
+model UserResponses {
   userResponses_id  Int            @id @default(autoincrement())
   user              User           @relation(fields: [user_id], references: [user_id])
   user_id           Int
-  question          question       @relation(fields: [question_id], references: [question_id])
+  question          Question       @relation(fields: [question_id], references: [question_id])
   question_id       Int
-  questionAnswer    questionAnswer @relation(fields: [questionAnswer_id], references: [questionAnswer_id])
+  questionAnswer    QuestionAnswer @relation(fields: [questionAnswer_id], references: [questionAnswer_id])
   questionAnswer_id Int
 }
 
-model form {
+model Form {
   form_id  Int    @id @default(autoincrement())
-  content  String
   name     String
   email    String
   phone    String
@@ -144,7 +115,7 @@ model form {
   message  String
 }
 
-model petroAdmin {
+model PetroAdmin {
   petroAdmin_id Int     @id @default(autoincrement())
   name          String
   email         String
@@ -152,10 +123,11 @@ model petroAdmin {
   notifications Boolean
 }
 
-model resultado {
-  resultado_id   Int  @id @default(autoincrement())
-  user           User @relation(fields: [user_id], references: [user_id])
-  user_id        Int
+model Result {
+  resultado_id Int  @id @default(autoincrement())
+  user         User @relation(fields: [user_id], references: [user_id])
+  user_id      Int
+
   anxiety        Int
   hostility      Int
   depression     Int
@@ -202,11 +174,6 @@ enum Role {
   admin
   manager
   employee
-}
-
-enum InvitationStatus {
-  pending
-  accepted
 }
 
 //apuntar si ha usado una licencia, 
