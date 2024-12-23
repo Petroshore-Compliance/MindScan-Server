@@ -1,5 +1,11 @@
+const { 
+  validateNumber,
+  validateString
+} = require("../../tools/validations.js");
+
+
 const registerUserMiddleware = (req, res, next) => {
-  let { email, password, name } = req.body;
+  let { email, password, name,company_id,role } = req.body;
 
   // Default missing fields to empty strings to avoid `typeof` errors
 
@@ -9,64 +15,39 @@ const registerUserMiddleware = (req, res, next) => {
   const regexName = /^[A-Za-zÀ-ÿ\s]+$/;
 
   let errors = [];
-
+  let result;
   // Check that all fields are strings, not empty, and apply regex
 
-  
-
-
-if(email && email !== ''){
-
-  if (typeof email !== 'string') {
-    errors.push('Email must be a string.');
-  } else {
-    email = email.trim().toLowerCase();
+  if(company_id){
+    result = validateNumber(company_id, 'Company ID');
+    if(result.error) errors.push(result.error);
   }
-  
-}else{
-  errors.push('Email cannot be empty.');
-}
 
-if(password && password !== ''){
-
-  if (typeof password !== 'string') {
-    errors.push('Password must be a string.');
-  } 
-  
-}else{
-  errors.push('Password cannot be empty.');
-}
-
-if(name && name !== ''){
-
-  if (typeof name !== 'string') {
-    errors.push('Name must be a string.');
-  } else {
-    name = name.trim();
+  if(role){
+    result = validateString(role,'Role');
+    if(result.error) errors.push(result.error);
+    else if (role !== 'employee' && role !== 'manager' && role!== 'admin'){
+    errors.push("Role not recognised")
+    }
+    
   }
-  
-}else{
-  errors.push('Name cannot be empty.');
-}
+
+  result = validateString(email,'Email',regexEmail);
+  if(result.error) errors.push(result.error);
+  else email = result.value;
+
+  result = validateString(password,'Password',regexPass);
+  if(result.error) errors.push(result.error);
+  else password = result.value;
+
+
+  result = validateString(name,'Name',regexName);
+  if(result.error) errors.push(result.error);
+  else name = result.value;
 
   // Return errors if any fields are invalid
   if (errors.length > 0) {
     return res.status(400).json({ errors });
-  }
-
-  // Proceed with regex validations
-  if (!regexEmail.test(email)) {
-    errors.push('Invalid email format.');
-  }
-
-  if (!regexPass.test(password)) {
-    errors.push(
-      'Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit.'
-    );
-  }
-
-  if (!regexName.test(name)) {
-    errors.push('Invalid name format.');
   }
 
   if (errors.length === 0) {

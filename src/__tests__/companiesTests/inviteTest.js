@@ -43,40 +43,27 @@ beforeAll(async () => {
     
       const auxuserData = await prisma.user.findUnique({
         where: {       email: "aux@email.com"},
-        include: {
-          VerificationCodes: true
-        }
+        
       })
 
       auxUserId = auxuserData.user_id;
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
-  include: {
-    VerificationCodes: true
-  }
+
 })
 
 
-    const verificationData = {
-      "user_id": userData.user_id,
-      "verificationCode": userData.VerificationCodes[0].code
-    }
-
-    await request(app)
-      .get('/auth/verificate-user')
-      .send(verificationData);
-
       userId = userData.user_id;
 
-          const verificationData2 = {
+          const loginData = {
             "email": EMAIL_TESTER,
             "password": "secureHashedPassword123"
           }
       
           const response3 = await request(app)
             .post('/auth/login')
-            .send(verificationData2);
+            .send(loginData);
       
           if (response3.status !== 200) {
             console.log('Response body:', response3.body);
@@ -162,29 +149,6 @@ describe('Auth Endpoints', () => {
   });
 });
 
-describe('Auth Endpoints', () => {
-  it('success create invitation; status 200 ', async () => {
-
-    const invitationData = {
-      email: "exito@invited.com",
-      role:"employee",
-      company_id: companyId,
-      companyName: "uwuntu"
-    };
-
-    const response = await request(app)
-      .post('/companies/invite')
-      .set('Authorization', `Bearer ${token}`)
-      .send(invitationData);
-
-    if (response.status !== 201) {
-      console.log('Response body:', response.body);
-    }
-    expect(response.body.message).toBe('Invitation created successfully');
-    expect(response.status).toBe(201);
-
-  });
-});
 
 describe('Auth Endpoints', () => {
   it('fail create invitation;wrong typeof; status 200 ', async () => {
@@ -204,11 +168,41 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["Email must be a string.","Role must be a string.", "Company Name must be a string.", "Company ID must be a number."]);
+    expect(response.body.errors).toEqual(["Email must be a string.","Role must be a string.",  "Company ID must be a number."]);
     expect(response.status).toBe(400);
 
   });
 });
+
+
+describe('Auth Endpoints', () => {
+  it('success create invitation; status 200 ', async () => {
+
+    const invitationData = {
+      email: "exito@invited.com",
+      role:"employee",
+      company_id: companyId
+    };
+
+    const response = await request(app)
+      .post('/companies/invite')
+      .set('Authorization', `Bearer ${token}`)
+      .send(invitationData);
+
+    if (response.status !== 201) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.message).toBe('Invitation created successfully');
+    expect(response.status).toBe(201);
+
+    await request(app)
+      .post('/auth/registerUser')
+      .send(invitationData);
+
+
+  });
+});
+
 
 describe('Auth Endpoints', () => {
   it('fail create invitation;already pending invitation; status 400', async () => {
@@ -234,26 +228,32 @@ describe('Auth Endpoints', () => {
   });
 });
 
+
 describe('Auth Endpoints', () => {
   it('fail create invitation ; already a member ; status 400', async () => {
   
-    //simula que ya es miembro
-await prisma.companyInvitation.updateMany({
-  where: {
-    company_id: companyId,
-  },
-  data: {
-    
-    user_id: auxUserId,
-  },
-});
 
+const registerUserData = {
+  email: "exito@invited.com",
+  password: "secureHashedPassword123",
+  name: "exito",
+  surname: "exito",
+  company_id: companyId,
+        role:"employee",
+
+};
+console.log("bbbbbbdfsbsdfbvsdfbsdfbsefbsd",registerUserData)
     const invitationData = {
       email: "exito@invited.com",
       role:"employee",
-      company_id: companyId,
-      companyName: "uwuntu"
+      company_id: companyId
     };
+
+    await request(app)
+    .post('/auth/register')
+    .send(registerUserData);
+
+await prisma.companyInvitation.deleteMany();
 
     const response = await request(app)
       .post('/companies/invite')
@@ -263,8 +263,11 @@ await prisma.companyInvitation.updateMany({
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
+
+    
     expect(response.body.message).toBe('This user is already part of this company');
     expect(response.status).toBe(400);
+    
 
   });
 });
@@ -292,6 +295,19 @@ await prisma.user.update(
       company_id: companyId,
       companyName: "uwuntu"
     };
+    await request(app)
+    .post('/companies/invite')
+    .set('Authorization', `Bearer ${token}`)
+    .send(invitationData);
+
+    await prisma.companyInvitation.updateMany({
+      where: {
+        email: "exito@invited.com",
+      },
+      data: {
+        status: "cancelled",
+      },
+    });
 
     const response = await request(app)
       .post('/companies/invite')
@@ -301,12 +317,30 @@ await prisma.user.update(
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.message).toBe('This email has already been invited to this company within the last hour');
+    expect(response.body.message).toBe('Email invited within hour');
     expect(response.status).toBe(400);
 
   });
 });
+/*
+aça
+a
+aa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 
+*/
 
 describe('Auth Endpoints', () => {
   it('fail create invitation ; admin another company ; status 400', async () => {
@@ -435,7 +469,6 @@ describe('Auth Endpoints', () => {
     expect(response.body.errors).toEqual([
          "Email cannot be empty.",
           "Role cannot be empty.",
-         "Company Name cannot be empty.",
          "Company ID cannot be empty.",
         ]);
     expect(response.status).toBe(400);
@@ -468,33 +501,9 @@ describe('Auth Endpoints', () => {
 });
 
 
-describe('Auth Endpoints', () => {
-  it('fail create invitation; missing companyName ;status 400 ', async () => {
-
-    const invitationData = {
-      email: "exito@invited.com",
-      role:"employee",
-      company_id: companyId
-    };
-
-    const response = await request(app)
-      .post('/companies/invite')
-      .set('Authorization', `Bearer ${token}`)
-      .send(invitationData);
-
-    if (response.status !== 400) {
-      console.log('Response body:', response.body);
-    }
-    expect(response.body.errors).toEqual(["Company Name cannot be empty."]);
-    expect(response.status).toBe(400);
-
-  });
-});
-
 
 // borrado de lo creado
 afterAll(async () => {
-  await prisma.verificationCode.deleteMany();
       await prisma.user.deleteMany();
       
       await prisma.companyInvitation.deleteMany();

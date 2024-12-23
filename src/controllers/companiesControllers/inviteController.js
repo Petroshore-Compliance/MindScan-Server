@@ -13,9 +13,9 @@ const { createVerificationScript } = require("../../tools/createVerificationScri
 //recibe email, role, company_id
 const inviteController = async (data) => {
 
-  let isNew;
+  let isNew=false;
 
-  let company = await prisma.company.findUnique({
+  const company = await prisma.company.findUnique({
     where: {
       company_id: data.company_id,
     },
@@ -23,12 +23,9 @@ const inviteController = async (data) => {
       invitations: true
     }
   });
+  
 
-if(company.invitations.length > company.licenses){
-  return {status:400, message: "Too many invitations"};
-}
-
-  let user = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email: data.email.toLowerCase(),
     },
@@ -38,72 +35,84 @@ if(company.invitations.length > company.licenses){
   if(!company){
     return {status: 400, message: "Company not found"};
   }
-company
   if(!user) {
-    //pendiente de eliminar
-    /*
-      user = await prisma.user.create({
-        data: {
-          email: data.email.toLowerCase(),
-          role: data.role,
-          company_id: parseInt(data.company_id),
-        },
-      });
-      */
+  
     isNew = true;
       
     
     }else { //Comprobar si es necesario invitar
       if( user.role == 'admin') {
-        if(data.company_id == user.company_id) {
+        if(company.company_id == user.company_id) {
           return {status:400, message:"This user is the administrator of this company."};
         }else{
           return {status:400, message:"This user is the administrator of a company, you cant invite him to another company"};
         }
       }
-
-          if(user.company_id == parseInt(data.company_id)) {
+          if(user.company_id == parseInt(company.company_id)) {
             return {status:400, message:"This user is already part of this company"};
           }
+// Check if there's any active (pending) invitation
+const activeInvitation = await prisma.companyInvitation.findFirst({
+  where: {
+    email: data.email.toLowerCase(),
+    company_id: parseInt(company.company_id),
+    // Adjust this condition based on how you define 'active'
+    status: 'pending'  
+  },
+});
 
-      //recolectar las invitaciones enviadas al email por esta empresa
-      let invitationsSentByCompanyToThisEmail = await prisma.companyInvitation.findMany({
-        where: {
-          email: data.email.toLowerCase(),
-          company_id: parseInt(data.company_id),
-        },
-      });
-      
-      if (invitationsSentByCompanyToThisEmail.length > 0) {
-        
+if (activeInvitation) {
+  return { status: 400, message: "This email already has a pending invitation" };
+}
 
-          return {status:400, message: `This email already has a pending invitation`};
-        }
-        
+// No active invitations, now check if any invitation was created in the last hour
+const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
 
+const recentInvitation = await prisma.companyInvitation.findFirst({
+  where: {
+    email: data.email.toLowerCase(),
+    company_id: parseInt(company.company_id),
+    created_at: { gte: oneHourAgo }
+    // No status filter here, we consider all statuses.
+  },
+});
+
+if (recentInvitation) {
+  return {
+    status: 400,
+    message: "Email invited within hour"
+  };
+}
+
+// If we reach this point, there are no active invitations and no invitations in the last hour.
+// Proceed to create a new invitation.
+const response = await createInvitationController(data, company.companyName);
+// ...rest of your logic (sending emails, etc.)
+return { status: response.status, message: response.message, invitation: response.invitation };
     };
 
-//create invitetocompany
-
+    //create invitetocompany
+    
+    let alreadyInvited = await prisma.companyInvitation.findMany({
+      where: {
+        email: data.email.toLowerCase(),
+        company_id: parseInt(company.company_id),
+      },
+    });
+    
+    if (alreadyInvited.length !== 0) {
+      return {status:400, message: `This email already has a pending invitation`};
+    }
+    if(company.invitations.length > company.licenses){
+      return {status:400, message: "Too many invitations"};
+    }
 const response = await createInvitationController(data,company.companyName);
 
 //send email to user
     if(isNew){
-      
-      let alreadyInvited = await prisma.companyInvitation.findMany({
-        where: {
-          email: data.email.toLowerCase(),
-          company_id: parseInt(data.company_id),
-        },
-      });
 
-      if (alreadyInvited.length > 0) {
-        return {status:400, message: `This email already has a pending invitation`};
-      }
-
-      emailCreateNewUserScript(data.email,"../templates/invitationEmailNewAccount.html",data.companyName,response.invitation.invitation_token);
-          //pendiente de eliminar
-      //createVerificationScript(user.user_id, user.email,"../templates/invitationEmail.html",data.companyName);
+      emailCreateNewUserScript(data.email,"../templates/invitationEmailNewAccount.html",company.companyName,response.invitation.invitation_token);
+        
     }else{
       emailChangeCompanySenderScript(user.user_id, user.email,"../templates/invitationEmailExistingAccount.html",company.companyName,response.invitation.invitation_token);
     };
