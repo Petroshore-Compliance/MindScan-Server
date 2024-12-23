@@ -6,6 +6,8 @@ const registerUserHandler = async (req, res) => {
       email,
       password,
       name,
+      role,
+      company_id,
       
     } = req.body;
 
@@ -13,7 +15,8 @@ const registerUserHandler = async (req, res) => {
       email,
       password,
       name,
-      
+      role,
+      company_id,
     );
 
 res.status(response.status).json({ message: response.message});

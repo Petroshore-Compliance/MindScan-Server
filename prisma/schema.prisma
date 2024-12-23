@@ -71,6 +71,7 @@ model CompanyInvitation {
   invitation_token String    @unique
   company          Company   @relation(fields: [company_id], references: [company_id])
   company_id       Int
+  status           Status    @default(pending)
   created_at       DateTime  @default(now())
   updated_at       DateTime? @updatedAt
 }
@@ -174,6 +175,14 @@ enum Role {
   admin
   manager
   employee
+}
+
+enum Status {
+  pending
+  cancelled
+  rejected
+  accepted
+  expired
 }
 
 //apuntar si ha usado una licencia, 

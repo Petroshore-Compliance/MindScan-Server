@@ -9,7 +9,7 @@ const inviteMiddleware = (req, res, next) => {
 
 let errors = [];
 
-let {email, role, company_id, companyName} = req.body;
+let {email, role, company_id} = req.body;
 
 
 result = validateString(email,'Email',regexEmail);
@@ -19,8 +19,6 @@ else email = result.value;
 result = validateString(role,'Role');
 if(result.error) errors.push(result.error);
 
-result = validateString(companyName,'Company Name');
-if(result.error) errors.push(result.error);
 
 result = validateNumber(company_id, 'Company ID');
 if(result.error) errors.push(result.error);

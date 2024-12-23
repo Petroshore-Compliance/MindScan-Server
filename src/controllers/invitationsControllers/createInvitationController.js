@@ -13,8 +13,24 @@ const createInvitationController = async (data) => {
 if(!company){
   return {status:400, message: 'Company not found'};
 }
+let uniqueInvitationToken = false;
+let tokenUsed;
+let invToken;
+while(!uniqueInvitationToken){
   //hay que mantener la misma cantidad de 0 para que sea de 1000000 a 999999 en vez de 0 a 999999
-  const invToken = Math.floor(1000000000 + Math.random() * 90000000000);
+  invToken = Math.floor(1000000000 + Math.random() * 90000000000);
+
+  tokenUsed = await prisma.companyInvitation.findUnique({
+    where: {
+      invitation_token: invToken.toString(),
+    },
+  });
+
+  if(!tokenUsed){
+    uniqueInvitationToken = true;
+  }
+
+}
 
 const invitation = await prisma.companyInvitation.create({
   data: {

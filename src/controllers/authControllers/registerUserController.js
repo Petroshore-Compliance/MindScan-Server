@@ -14,7 +14,7 @@ const registerUserController = async (
   password,
   name,
   role,
-  companyId
+  company_id
 ) => {
 
 //si el tipo es individual, significa que no está conectado a una compañía
@@ -32,15 +32,14 @@ const registerUserController = async (
       name,
       email: email,
       password:  await bcrypt.hash(password, 10),
-      role,
-      company: companyId
+      role: role,
+      company: company_id
         ? {
-            connect: { company_id: companyId },
+            connect: { company_id: company_id },
           }
         : undefined,
     },
   });
-
   //pendiente de eliminar
   //llamada al script que envía el corrreo de verificación (tools/createVerificationScript.js)
   //createVerificationScript(newUser.user_id, newUser.email,"../templates/verificationEmail.html");
