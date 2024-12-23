@@ -10,8 +10,7 @@ const getProfileController = async (userID) => {
             company: true,
             userResponses:true,
             userResult: true,
-            access: true,
-            VerificationCodes: true
+            access: true
         }
     })
 
