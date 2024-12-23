@@ -43,40 +43,27 @@ beforeAll(async () => {
     
       const auxuserData = await prisma.user.findUnique({
         where: {       email: "aux@email.com"},
-        include: {
-          VerificationCodes: true
-        }
+      
       })
 
       auxUserId = auxuserData.user_id;
 
 const userData = await prisma.user.findUnique({
   where: {       email: EMAIL_TESTER},
-  include: {
-    VerificationCodes: true
-  }
+
 })
 
 
-    const verificationData = {
-      "user_id": userData.user_id,
-      "verificationCode": userData.VerificationCodes[0].code
-    }
-
-    await request(app)
-      .get('/auth/verificate-user')
-      .send(verificationData);
-
       userId = userData.user_id;
 
-          const verificationData2 = {
+          const loginData = {
             "email": EMAIL_TESTER,
             "password": "secureHashedPassword123"
           }
       
           const response3 = await request(app)
             .post('/auth/login')
-            .send(verificationData2);
+            .send(loginData);
       
           if (response3.status !== 200) {
             console.log('Response body:', response3.body);
@@ -222,7 +209,6 @@ email: 234,
 
 // borrado de lo creado
 afterAll(async () => {
-  await prisma.verificationCode.deleteMany();
       await prisma.user.deleteMany();
       
       await prisma.companyInvitation.deleteMany();
