@@ -114,6 +114,7 @@ model Form {
   phone    String
   language String
   message  String
+  state    State  @default(new)
 }
 
 model PetroAdmin {
@@ -183,6 +184,13 @@ enum Status {
   rejected
   accepted
   expired
+}
+
+enum State {
+  new
+  inProgress
+  accepted
+  rejected
 }
 
 //apuntar si ha usado una licencia, 
