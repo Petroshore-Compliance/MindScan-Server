@@ -1,3 +1,4 @@
+const e = require('express');
 const prisma = require('../../db.js');
 
 const getCompanyEmployeesController = async (data) => {
@@ -9,41 +10,40 @@ const requestingUser = await prisma.user.findUnique({
 });
 
 if(!requestingUser){
-  return {status: 400, message: 'user does not exist'};
+  return {status: 404, message: 'User not found'};
 }
 
 const requestedCompany = await prisma.company.findUnique({
   where: {
     company_id: data.company_id,
   },
-  
-    include: {
-      users: {
-        select: {
-          user_id: true,
-          name: true,
-          email: true
-        }
-      }
-    }
-  
+  select: {
+    company_id: true,
+    name: true,
+    users: {
+      select: {
+        user_id: true,
+        email: true,
+        role: true,
+        name: true,
+      },
+    },
+  },
 });
 
 if(!requestedCompany){
-  return {status: 400, message: 'company does not exist'};
+  return {status: 404, message: 'Company not found'};
 }
 
 if(requestedCompany.company_id !== requestingUser.company_id){
-  return {status: 401, message: 'user is not a part of this company, admins have been informed of this incident(wip)'};
+  return {status: 401, message: 'User is not a part of this company'};
 }
 
 if(requestingUser.role !== 'admin' && requestingUser.role !== 'manager'){
-  return {status: 401, message: 'user does not have permission, your manager has been informed of this incident(wip, add intructions to make the user a manager)'};
+  return {status: 401, message: 'User does not have permission'};
 }
 
-
-
-return {status: 200, message: requestedCompany.users};
+return {status: 200, employees: requestedCompany.users, message: "Employees found"};
 }
 
 module.exports = {
