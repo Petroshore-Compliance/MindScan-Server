@@ -5,14 +5,14 @@ const {
 
 const getProfileMiddleware = (req, res, next) => {
   let { user_id } = req.body;
-
+  let result;
   let errors = [];
 
 
 
   result = validateNumber(user_id, 'User ID');
   if (result.error) errors.push(result.error)
-  else user_id = result.value
+  else req.body.user_id = result.value
 
   if(errors.length===0){
     next();

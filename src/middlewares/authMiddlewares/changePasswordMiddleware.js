@@ -6,7 +6,7 @@ const changePasswordMiddleware = (req, res, next) => {
   
   const { user_id, password, newPassword } = req.body;
 let errors = [];
-  
+  let result;
 if(password && password !== ''){
 
   if (typeof password !== 'string') {
@@ -16,24 +16,9 @@ if(password && password !== ''){
 }else{
   errors.push('Password cannot be empty.');
 }
-
-if(newPassword && newPassword !== ''){
-
-  if (typeof newPassword !== 'string') {
-    errors.push('New password must be a string.');
-  } else  if (!regexPass.test(newPassword)) {
-  
-      errors.push(
-        'Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit.'
-      );
-    
-  }
-
-
-  
-}else{
-  errors.push('New password cannot be empty.');
-}
+result = validateString(newPassword,'Password',regexPass);
+if(result.error) errors.push(result.error);
+else req.body.newPassword = result.value;
 
 if (user_id && user_id !== '') {
   if (isNaN(user_id) || parseInt(user_id) !== Number(user_id)) {

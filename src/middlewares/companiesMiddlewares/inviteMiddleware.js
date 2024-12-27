@@ -1,5 +1,4 @@
-const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{3,4}$/;
-
+const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const { 
   validateNumber,
   validateString
@@ -8,13 +7,13 @@ const {
 const inviteMiddleware = (req, res, next) => {
 
 let errors = [];
-
+let result;
 let {email, role, company_id} = req.body;
 
 
 result = validateString(email,'Email',regexEmail);
 if(result.error) errors.push(result.error);
-else email = result.value;
+else req.body.email = result.value;
 
 result = validateString(role,'Role');
 if(result.error) errors.push(result.error);

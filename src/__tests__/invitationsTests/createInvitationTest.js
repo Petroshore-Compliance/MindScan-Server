@@ -158,7 +158,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["company id cannot be empty."]);
+    expect(response.body.errors).toEqual(["Company ID cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
@@ -201,7 +201,7 @@ email: 234,
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["company id must be a number.", "Email must be a string."]);
+    expect(response.body.errors).toEqual(["Company ID must be a number.", "Email must be a string."]);
     expect(response.status).toBe(400);
 
   });

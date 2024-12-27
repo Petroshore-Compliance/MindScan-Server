@@ -322,25 +322,7 @@ await prisma.user.update(
 
   });
 });
-/*
-aça
-a
-aa
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 
-*/
 
 describe('Auth Endpoints', () => {
   it('fail create invitation ; admin another company ; status 400', async () => {

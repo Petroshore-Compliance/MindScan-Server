@@ -1,22 +1,16 @@
+const { validateString } = require("../../tools/validations.js");
 const loginUserMiddleware = (req, res, next) => {
   let { email, password } = req.body;
 
   const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
   const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-
+let result;
   let errors = [];  
 
-if(email && email !== ''){
-
-  if (typeof email !== 'string') {
-    errors.push('Email must be a string.');
-  } else {
-    email = email.trim().toLowerCase();
-  }
-  
-}else{
-  errors.push('Email cannot be empty.');
-}
+  result = validateString(email,'Email',regexEmail);
+    if(result.error) errors.push(result.error);
+    else req.body.email = result.value;
+    
 
 if(password && password !== ''){
 
