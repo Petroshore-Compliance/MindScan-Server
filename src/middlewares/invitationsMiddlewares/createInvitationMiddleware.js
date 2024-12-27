@@ -1,36 +1,23 @@
-
+const { 
+  validateNumber,
+  validateString
+} = require("../../tools/validations.js");
 
 const createInvitationMiddleware = (req, res, next) => {
 let errors = [];
-
+let result;
 let { company_id,email } = req.body;
 
 const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
 
-if (company_id && company_id !== '') {
-  if (typeof company_id !== 'number' ) {
-    errors.push('company id must be a number.');
-  }
-} else {
-  errors.push('company id cannot be empty.');
-}
+
+result = validateNumber(company_id, 'Company ID');
+if (result.error) errors.push(result.error);
 
 
-if(email && email !== ''){
-
-  if (typeof email !== 'string') {
-    errors.push('Email must be a string.');
-  } else {
-  if (!regexEmail.test(email)) {
-    errors.push('Invalid email format.');
-  }else{    
-    email = email.trim().toLowerCase();
-    }
-  }
-  
-}else{
-  errors.push('Email cannot be empty.');
-}
+result = validateString(email,'Email',regexEmail);
+if(result.error) errors.push(result.error);
+else req.body.email = result.value;
 
 
 if(errors.length===0){

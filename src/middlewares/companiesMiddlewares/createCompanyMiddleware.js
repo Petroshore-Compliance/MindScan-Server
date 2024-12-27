@@ -6,7 +6,7 @@ const {
 const createCompanyMiddleware = (req, res, next) => {
 
 let errors = [];
-
+let result;
 let { name, email, user_id } = req.body;
 
 const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
@@ -15,18 +15,18 @@ const regexName = /^[A-Za-zÀ-ÿ\s]+$/;
 
 result = validateNumber(user_id, 'User ID');
 if (result.error) errors.push(result.error);
-else user_id = result.value;
+else req.body.user_id = result.value;
 
 
 
 
 result = validateString(email,'Email',regexEmail);
 if(result.error) errors.push(result.error);
-else email = result.value;
+else req.body.email = result.value;
 
 result = validateString(name,'Name',regexName);
 if(result.error) errors.push(result.error);
-else name = result.value;
+else req.body.name = result.value;
 
 if (errors.length === 0) {
   next();

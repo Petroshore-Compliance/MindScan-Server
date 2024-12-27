@@ -26,24 +26,22 @@ const registerUserMiddleware = (req, res, next) => {
   if(role){
     result = validateString(role,'Role');
     if(result.error) errors.push(result.error);
-    else if (role !== 'employee' && role !== 'manager' && role!== 'admin'){
-    errors.push("Role not recognised")
-    }
+    
     
   }
 
   result = validateString(email,'Email',regexEmail);
   if(result.error) errors.push(result.error);
-  else email = result.value;
+  else req.body.email = result.value;
 
   result = validateString(password,'Password',regexPass);
   if(result.error) errors.push(result.error);
-  else password = result.value;
+  else req.body.password = result.value;
 
 
   result = validateString(name,'Name',regexName);
   if(result.error) errors.push(result.error);
-  else name = result.value;
+  else req.body.name = result.value;
 
   // Return errors if any fields are invalid
   if (errors.length > 0) {
