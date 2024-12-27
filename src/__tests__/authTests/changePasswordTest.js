@@ -42,9 +42,7 @@ UserId = userData.user_id;
           }
       
           token=response3.body.token;
-          console.log(response3.status)
-console.log(response3.body,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-});
+          });
 
 describe('Auth Endpoints', () => {
   it('change password; status 200 ', async () => {
@@ -109,7 +107,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
 
-    expect(response.body.errors).toEqual(["Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]);
+    expect(response.body.errors).toEqual(["Invalid new password format."]);
     expect(response.status).toBe(400);
 
   });
