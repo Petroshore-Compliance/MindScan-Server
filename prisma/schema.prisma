@@ -105,24 +105,30 @@ model UserResponses {
   question_id       Int
   questionAnswer    QuestionAnswer @relation(fields: [questionAnswer_id], references: [questionAnswer_id])
   questionAnswer_id Int
+  created_at        DateTime       @default(now())
+  updated_at        DateTime?      @updatedAt
 }
 
 model Form {
-  form_id  Int    @id @default(autoincrement())
-  name     String
-  email    String
-  phone    String
-  language String
-  message  String
-  state    State  @default(new)
+  form_id    Int       @id @default(autoincrement())
+  name       String
+  email      String
+  phone      String
+  language   String
+  message    String
+  state      State     @default(new)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
 }
 
 model PetroAdmin {
-  petroAdmin_id Int     @id @default(autoincrement())
+  petroAdmin_id Int       @id @default(autoincrement())
   name          String
   email         String
   password      String
   notifications Boolean
+  created_at    DateTime  @default(now())
+  updated_at    DateTime? @updatedAt
 }
 
 model Result {
@@ -170,6 +176,9 @@ model Result {
   openness_to_experience            Int
   agreeableness_or_amiability       Int
   perseverance_or_responsibility    Int
+
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
 }
 
 enum Role {

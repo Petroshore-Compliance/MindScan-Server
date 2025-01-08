@@ -1,12 +1,25 @@
 
-const validateNumber = (value, fieldName) => {
+
+const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+const regexName = /^[A-Za-zÀ-ÿ\s]+$/;
+const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+const regexPhone = /^\+\d{7,19}$/;
+
+const validateNumber = (value, fieldName, regex) => {
   if (value === undefined || value === null || value === '') {
     return { error: `${fieldName} cannot be empty.` };
   }
+  
   const numberValue = Number(value);
   if (isNaN(numberValue)) {
     return { error: `${fieldName} must be a number.` };
   }
+  
+  // If a regex is provided, validate against it
+  if (regex && !regex.test(value)) {
+    return { error: `Invalid ${fieldName.toLowerCase()} format.` };
+  }
+  
   return { value: numberValue };
 };
 
@@ -71,4 +84,8 @@ module.exports = {
   validateBoolean,
   validateArray,
   validateObject,
+  regexEmail,
+  regexName,
+  regexPass,
+  regexPhone
 };

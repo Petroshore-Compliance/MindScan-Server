@@ -12,10 +12,9 @@ const { getFormHandler } = require("../handlers/formHandlers/getFormHandler.js")
 const { updateFormHandler } = require("../handlers/formHandlers/updateFormHandler.js");
 const { deleteFormHandler } = require("../handlers/formHandlers/deleteFormHandler.js");
 
-router.post("/create-form", authMiddleware, createFormMiddleware, createFormHandler);
+router.post("/create-form", createFormMiddleware, createFormHandler);
 router.get("/get-form", authMiddleware, getFormMiddleware, getFormHandler);
 router.patch("/update-form", authMiddleware, updateFormMiddleware, updateFormHandler);
 router.delete("/delete-form", authMiddleware, deleteFormMiddleware, deleteFormHandler);
-
 
 module.exports = router;

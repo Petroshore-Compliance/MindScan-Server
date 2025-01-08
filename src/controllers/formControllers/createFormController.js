@@ -1,5 +1,9 @@
 const prisma = require("../../db.js");
 
+//pendiente de implementar
+//const { createVerificationScript } = require("../../tools/createVerificationScript.js");
+
+
 const createFormController = async (data) => {
   const form = await prisma.form.create({
     data: {
@@ -13,3 +17,5 @@ const createFormController = async (data) => {
 
   return { status: 201, message: "Form created successfully", form: form };
 };
+
+module.exports = { createFormController };
