@@ -1,19 +1,37 @@
 const { 
   validateNumber,
-  validateString
-} = require("../../tools/validations.js");
+  validateString,
+  regexEmail,
+  regexName,  
+regexPhone} = require("../../tools/validations.js");
+
 
 const createFormMiddleware = async (req, res, next) => {
-  let errors = [];
-
+let errors = [];
+let result;
 let {email,name,phone,language,message} = req.body;
 
 
-let result = validateNumber(email, 'Email');
+ result = validateString(email, 'Email',regexEmail);
 if (result.error) errors.push(result.error)
 else req.body.email = result.value
 
 
+result = validateString(name, 'Name',regexName);
+if (result.error) errors.push(result.error)
+else req.body.name = result.value
+
+
+result = validateNumber(phone, 'Phone',regexPhone);
+if (result.error) errors.push(result.error)
+
+result = validateString(language, 'Language');
+if (result.error) errors.push(result.error);
+else req.body.language = result.value;
+
+result = validateString(message, 'Message');
+if (result.error) errors.push(result.error);
+else req.body.message = result.value;
 
 
 if(errors.length > 0){

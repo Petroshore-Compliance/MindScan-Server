@@ -1,14 +1,14 @@
 const { 
   validateNumber,
-  validateString
+  validateString,
+  regexEmail,
+  regexName,  
+  regexPass
 } = require("../../tools/validations.js");
 
 const updateProfileMiddleware = (req, res, next) => {
 
 
-  const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
-  const regexName = /^[A-Za-zÀ-ÿ\s]+$/;
-  const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 
   let errors = [];
