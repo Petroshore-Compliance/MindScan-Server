@@ -79,6 +79,6 @@ describe('Auth Endpoints', () => {
 
 // borrado de lo creado
 afterAll(async () => {
-  
+  prisma.form.deleteMany(); // borrar todos los registros de formularios
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

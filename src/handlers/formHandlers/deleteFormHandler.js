@@ -1,4 +1,4 @@
-const {deleteFormController} = require("../../controllers/formControllers/updateFormController.js");
+const {deleteFormController} = require("../../controllers/formControllers/deleteFormController.js");
 
 const deleteFormHandler = async (req, res) => {
 try {
@@ -11,3 +11,4 @@ return res.status(response.status).json(response.message);
 }
 
 module.exports = {deleteFormHandler};
+
