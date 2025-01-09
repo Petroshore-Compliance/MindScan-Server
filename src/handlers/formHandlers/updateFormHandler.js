@@ -4,9 +4,9 @@ const updateFormHandler = async (req, res) => {
 try {
   const response = await updateFormController(req.body);
   
-return res.status(response.status).json(response.message);
+return res.status(response.status).json({message: response.message});
 } catch (error) {
-  res.status(500).json({ message: "Error al crear la invitación", error: error.message });
+  res.status(500).json({ message: "unhandled error updating form", error: error.message });
 }
 }
 

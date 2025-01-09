@@ -10,12 +10,12 @@ const updateProfileMiddleware = (req, res, next) => {
 
 
 
-
+let result;
   let errors = [];
   let {company_id,user_id,name,email,role,password} = req.body;
 
   if(company_id){
-result = validateNumber(company_id, 'Company ID');
+ result = validateNumber(company_id, 'Company ID');
 if (result.error) errors.push(result.error);
   }
 
@@ -26,13 +26,13 @@ if (result.error) errors.push(result.error);
   if(name){
     result = validateString(name, 'Name',regexName);
     if (result.error) errors.push(result.error) ;
-    else name = result.value;
+    else req.body.name = result.value;
       }
 
   if(email){
     result = validateString(email, 'Email',regexEmail);
     if (result.error) errors.push(result.error) ;
-    else email = result.value;
+    else req.body.email = result.value;
     }
 
   if(password){
