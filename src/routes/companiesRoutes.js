@@ -5,7 +5,6 @@ const { authMiddleware } = require("../middlewares/authMiddleware.js");
 const { createCompanyMiddleware } = require("../middlewares/companiesMiddlewares/createCompanyMiddleware.js");
 const {getCompanyEmployeesMiddleware} = require("../middlewares/companiesMiddlewares/getCompanyEmployeesMiddleware.js");
 const {getCompanyMiddleware} = require("../middlewares/companiesMiddlewares/getCompanyMiddleware.js");
-
 const { inviteMiddleware } = require("../middlewares/companiesMiddlewares/inviteMiddleware.js");
 
 const { createCompanyHandler } = require("../handlers/companiesHandlers/createCompanyHandler.js");
