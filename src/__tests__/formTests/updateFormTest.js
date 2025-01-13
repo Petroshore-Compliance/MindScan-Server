@@ -53,7 +53,7 @@ const userData = await prisma.user.findUnique({
     };
 
     const response = await request(app)
-      .post('/form/create-form')
+      .post('/contact/create')
       .send(formData);
 formId=response.body.form.form_id;
 });
@@ -68,7 +68,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .patch('/form/update-form')
+      .patch('/contact/update')
       .set('Authorization', `Bearer ${token}`)
       .send(updateFormData);
 
@@ -81,8 +81,6 @@ describe('Auth Endpoints', () => {
   });
 });
 
-
-
 describe('Auth Endpoints', () => {
   it('fail update form; trying to update message ;status 200 ', async () => {
 
@@ -92,7 +90,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .patch('/form/update-form')
+      .patch('/contact/update')
       .set('Authorization', `Bearer ${token}`)
       .send(updateFormData);
 
@@ -112,7 +110,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .patch('/form/update-form')
+      .patch('/contact/update')
       .set('Authorization', `Bearer ${token}`)
       .send(updateFormData);
 
@@ -133,7 +131,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .patch('/form/update-form')
+      .patch('/contact/update')
       .set('Authorization', `Bearer ${token}`)
       .send(updateFormData);
 
@@ -159,7 +157,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .patch('/form/update-form')
+      .patch('/contact/update')
       .set('Authorization', `Bearer ${token}`)
       .send(updateFormData);
 
@@ -180,5 +178,5 @@ describe('Auth Endpoints', () => {
 
 afterAll(async () => {
   await prisma.user.deleteMany();
-  await prisma.form.deleteMany();
+  await prisma.contactForm.deleteMany();
 });

@@ -8,7 +8,7 @@ const { EMAIL_TESTER } = process.env;
 
 
 describe('Auth Endpoints', () => {
-  it('success create form; status 201', async () => {
+  it('success create contact; status 201', async () => {
 
     const formData = {
       name: "name",
@@ -19,7 +19,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .post('/form/create-form')
+      .post('/contact/create')
       .send(formData);
 
     if (response.status !== 201) {
@@ -33,14 +33,14 @@ describe('Auth Endpoints', () => {
 
 
 describe('Auth Endpoints', () => {
-  it('fail create form; missing fields ;status 201', async () => {
+  it('fail create contact; missing fields ;status 201', async () => {
 
     const formData = {
       
     };
 
     const response = await request(app)
-      .post('/form/create-form')
+      .post('/contact/create')
       .send(formData);
 
     if (response.status !== 400) {
@@ -54,7 +54,7 @@ describe('Auth Endpoints', () => {
 
 
 describe('Auth Endpoints', () => {
-  it('fail create form; wrong typeof ;status 201', async () => {
+  it('fail create contact; wrong typeof ;status 201', async () => {
 
     const formData = {
       name: 3,
@@ -65,7 +65,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .post('/form/create-form')
+      .post('/contact/create')
       .send(formData);
 
     if (response.status !== 400) {
@@ -79,6 +79,6 @@ describe('Auth Endpoints', () => {
 
 // borrado de lo creado
 afterAll(async () => {
-  prisma.form.deleteMany(); // borrar todos los registros de formularios
+  prisma.contactForm.deleteMany(); // borrar todos los registros de formularios
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

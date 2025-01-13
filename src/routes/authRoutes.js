@@ -3,7 +3,7 @@ const router = Router();
 
 const { authMiddleware } = require("../middlewares/authMiddleware.js");
 const { registerUserMiddleware } = require("../middlewares/authMiddlewares/putUserMiddleware.js");
-const {changePasswordMiddleware} = require("../middlewares/authMiddlewares/changePasswordMiddleware.js");
+const { changePasswordMiddleware } = require("../middlewares/authMiddlewares/changePasswordMiddleware.js");
 const { forgotPasswordMiddleware } = require("../middlewares/authMiddlewares/forgotPasswordMiddleware.js");
 const { loginUserMiddleware } = require("../middlewares/authMiddlewares/loginUserMiddleware.js");
 const { setPasswordMiddleware } = require("../middlewares/authMiddlewares/setPasswordMiddleware.js");

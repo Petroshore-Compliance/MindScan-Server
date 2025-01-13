@@ -53,7 +53,7 @@ const userData = await prisma.user.findUnique({
     };
 
     const response = await request(app)
-      .post('/form/create-form')
+      .post('/contact/create')
       .send(formData);
 formId=response.body.form.form_id;
 });
@@ -67,7 +67,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .delete('/form/delete-form')
+      .delete('/contact/delete')
       .set('Authorization', `Bearer ${token}`)
       .send(deleteFormData);
 
@@ -88,7 +88,7 @@ describe('Auth Endpoints', () => {
     }
 
     const response = await request(app)
-      .delete('/form/delete-form')
+      .delete('/contact/delete')
       .set('Authorization', `Bearer ${token}`)
       .send(deleteFormData);
 
@@ -111,7 +111,7 @@ describe('Auth Endpoints', () => {
     }
 
     const response = await request(app)
-      .delete('/form/delete-form')
+      .delete('/contact/delete')
       .set('Authorization', `Bearer ${token}`)
       .send(deleteFormData);
 
@@ -126,5 +126,5 @@ describe('Auth Endpoints', () => {
 
 afterAll(async () => {
   await prisma.user.deleteMany();
-  await prisma.form.deleteMany();
+  await prisma.contactForm.deleteMany();
 });
