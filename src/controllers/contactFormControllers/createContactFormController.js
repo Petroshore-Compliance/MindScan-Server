@@ -1,12 +1,28 @@
 const prisma = require("../../db.js");
 
-//pendiente de implementar
 //comprobación de si hace falta la creación del contactform
-//const { createVerificationScript } = require("../../tools/createVerificationScript.js");
+const { createVerificationScript } = require("../../tools/createVerificationScript.js");
 
 
 
 const createContactFormController = async (data) => {
+
+  const alreadyExist = await prisma.contactForm.findFirst({
+    where: {
+      email: data.email,
+    },
+    orderBy: {
+      created_at: "desc",
+    },
+  });
+if (alreadyExist) {
+  const noSeDebeEnviar = await createVerificationScript(alreadyExist.state);
+  if(noSeDebeEnviar.reason){
+    console.log("noSeDebeEnviar", noSeDebeEnviar.reason);
+    return { status: 400, message: noSeDebeEnviar.reason };
+  }
+}
+
   const form = await prisma.contactForm.create({
     data: {
       name: data.name,

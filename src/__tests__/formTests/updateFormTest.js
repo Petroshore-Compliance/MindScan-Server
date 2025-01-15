@@ -1,6 +1,5 @@
 require("dotenv").config();
 
-
 const request = require('supertest');
 const app = require('../../app');
 const prisma = require('../../db.js'); 
@@ -9,7 +8,6 @@ const { EMAIL_TESTER } = process.env;
 let userId;
 let token;
 let formId;
-
 
 beforeAll(async () => {
   const registrationData = {
@@ -178,5 +176,6 @@ describe('Auth Endpoints', () => {
 
 afterAll(async () => {
   await prisma.user.deleteMany();
-  await prisma.contactForm.deleteMany();
+  await prisma.contactForm.deleteMany(); // borrar todos los registros de formularios
+
 });

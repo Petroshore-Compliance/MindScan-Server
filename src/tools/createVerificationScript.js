@@ -3,31 +3,29 @@ const sendEmail = require("./nodemailer.js");
 const fs = require("fs");
 const path = require("path");
 
+//recibe contactForm y comprueba si debe enviar el correo, esto solo sucede si ya existe un contactform con el mismo email
+// si no debe enviar el correo, devuelve un objeto con la razón
+const createVerificationScript = async (contactFormState) => {
 
-const createVerificationScript = async (id_to_link, emailToVerify, htmlPath,companyName) => {
-  const newCode = 1000 + Math.floor(Math.random() * 9000);
-   await prisma.VerificationCode.create({
-    data: {
-      user_id: id_to_link,
-      code: newCode,
-    },
+console.log("contactFormState", contactFormState);
+
+  const validStates = ["new", "inProgress", "accepted", "rejected"];
+
+  console.log("validStates", validStates);
+  console.log("includes", validStates.includes(contactFormState));
+  if (!validStates.includes(contactFormState)) {
+    return { reason: "Invalid state" };
   }
-);
-const subject = "Verification code";
 
-const htmlTemplatePath = path.join(__dirname, htmlPath);
-let htmlTemplate;
+  const reasons = {
+    new: "already new",
+    inProgress: "already in progress",
+    accepted: null, 
+    rejected: null, 
+  };
+console.log("reasons", reasons);
 
-
-  htmlTemplate = fs.readFileSync(htmlTemplatePath, "utf8");
-
-  const htmlContent2 = htmlTemplate.replace(/{{verificationCode}}/g, newCode);
-  const htmlContent = htmlContent2.replace(/{{company}}/g,companyName? companyName : "Petroshore Compliance");
-
-
-sendEmail(emailToVerify,subject, htmlContent);
-
-  return `The User with id: "${id_to_link}" now has a verification code and an email sent to verify it. The code is: ${newCode}`;
+console.log("return", reasons[contactFormState]);
+  return reasons[contactFormState] ? { reason: reasons[contactFormState] } : undefined;
 };
-
 module.exports = { createVerificationScript };
