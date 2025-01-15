@@ -33,6 +33,32 @@ describe('Auth Endpoints', () => {
 
 
 describe('Auth Endpoints', () => {
+  it('fail create contact; contactForm with state new already exists; status 400', async () => {
+
+    const formData = {
+      name: "name",
+      email: "email@email.email",
+      phone: "+3434623456234",
+      language: "es",
+      message: "ayuda"
+    };
+
+    const response = await request(app)
+      .post('/contact/create')
+      .send(formData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.message).toEqual("already new");
+    expect(response.status).toBe(400);
+
+  });
+});
+
+
+
+describe('Auth Endpoints', () => {
   it('fail create contact; missing fields ;status 201', async () => {
 
     const formData = {
@@ -79,6 +105,7 @@ describe('Auth Endpoints', () => {
 
 // borrado de lo creado
 afterAll(async () => {
-  prisma.contactForm.deleteMany(); // borrar todos los registros de formularios
+  
+  await prisma.contactForm.deleteMany(); // borrar todos los registros de formularios
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });
