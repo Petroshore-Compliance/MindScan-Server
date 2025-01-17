@@ -18,8 +18,7 @@ const createContactFormController = async (data) => {
 if (alreadyExist) {
   const noSeDebeEnviar = await createVerificationScript(alreadyExist.state);
   if(noSeDebeEnviar.reason){
-    console.log("noSeDebeEnviar", noSeDebeEnviar.reason);
-    return { status: 400, message: noSeDebeEnviar.reason };
+    return { status: noSeDebeEnviar.status, message: noSeDebeEnviar.reason };
   }
 }
 
