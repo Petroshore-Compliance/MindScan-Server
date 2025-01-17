@@ -6,6 +6,8 @@ const updateContactFormController = async (data) => {
     return { status: 400, message: 'form cannot be updated with only form_id', form: data };
 }
 
+
+
 const formExists = await prisma.contactForm.findUnique({
   
   where: {

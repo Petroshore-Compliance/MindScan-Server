@@ -14,7 +14,7 @@ describe('Auth Endpoints', () => {
       name: "name",
       email: "email@email.email",
       phone: "+3434623456234",
-      language: "es",
+      language: "ES",
       message: "ayuda"
     };
 
@@ -33,7 +33,7 @@ describe('Auth Endpoints', () => {
 
 
 describe('Auth Endpoints', () => {
-  it('fail create contact; contactForm with state new already exists; status 400', async () => {
+  it('fail create contact; contactForm with state new already exists; status 409', async () => {
 
     const formData = {
       name: "name",
@@ -47,16 +47,48 @@ describe('Auth Endpoints', () => {
       .post('/contact/create')
       .send(formData);
 
-    if (response.status !== 400) {
+    if (response.status !== 409) {
       console.log('Response body:', response.body);
     }
     expect(response.body.message).toEqual("already new");
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(409);
 
   });
 });
 
 
+describe('Auth Endpoints', () => {
+  it('fail create contact; contactForm with state inProgress already exists; status 423', async () => {
+
+  await  prisma.contactForm.updateMany({
+      where: {
+        state: "new"
+      },
+      data: {
+        state: "inProgress"
+      }
+    });
+
+    const formData = {
+      name: "name",
+      email: "email@email.email",
+      phone: "+3434623456234",
+      language: "ES",
+      message: "ayuda"
+    };
+
+    const response = await request(app)
+      .post('/contact/create')
+      .send(formData);
+
+    if (response.status !== 423) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.message).toEqual("inProgress");
+    expect(response.status).toBe(423);
+
+  });
+});
 
 describe('Auth Endpoints', () => {
   it('fail create contact; missing fields ;status 201', async () => {
