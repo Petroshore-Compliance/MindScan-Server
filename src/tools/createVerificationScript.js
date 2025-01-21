@@ -7,7 +7,8 @@ const path = require("path");
 const createVerificationScript = async (contactFormState) => {
   const statusCodes = {
     new: { status: 409, reason: "already new" },
-    inProgress: { status: 423, reason: "inProgress" },
+    inProgress: { status: 406, reason: "inProgress" },
+    contacted: { status: 423, reason: "contacted" },
     accepted: null,
     rejected: null,
   };
