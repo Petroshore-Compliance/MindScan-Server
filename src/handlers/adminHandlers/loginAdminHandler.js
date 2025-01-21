@@ -1,15 +1,16 @@
-const {loginAdminController} = require("../../controllers/adminControllers/loginAdminController.js");
+const { token } = require("morgan");
+const { loginAdminController } = require("../../controllers/adminControllers/loginAdminController.js");
 
 
 const loginAdminHandler = async (req, res) => {
   try {
-    const { email } = req.body;
-    const response = await loginAdminController(email);
+    const { email, password } = req.body;
+    const response = await loginAdminController(email, password);
 
-    res.status(response.status).json({  message: response.message });
+    return res.status(response.status).json({ message: response.message, token: response.token });
 
-  }catch (error) {
-    res.status(500).json({ message: `Unsuported error login admin ${error}` });
+  } catch (error) {
+    return res.status(500).json({ message: `Unsuported error login admin ${error}` });
   }
 }
 module.exports = { loginAdminHandler };

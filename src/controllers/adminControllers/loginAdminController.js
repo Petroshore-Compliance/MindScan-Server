@@ -8,9 +8,9 @@ const prisma = require('../../db.js');
 
 const loginAdminController = async (email, password) => {
 
-  let user;
+  let petroAdmin;
   try {
-    user = await prisma.user.update({
+    petroAdmin = await prisma.petroAdmin.update({
     where: { email: email.toLowerCase() },
     data: { connected_at: new Date() },
   });
@@ -23,10 +23,9 @@ return {status: 400, message: "Wrong Email or Password"};
   throw error;
 };
 
-  
 
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(password, petroAdmin.password);
 
   if (!isPasswordValid) {
     return {status: 400, message: "Wrong Email or Password"};
@@ -34,9 +33,9 @@ return {status: 400, message: "Wrong Email or Password"};
 
   const token = jwt.sign(
     {
-      id: user.user_id,
-      email: user.email,
-      role: user.role,
+      id: petroAdmin.petroAdmin_id,
+      email: petroAdmin.email,
+      role: petroAdmin.role,
     },
     process.env.JWT_SECRET,
     {
@@ -46,15 +45,15 @@ return {status: 400, message: "Wrong Email or Password"};
 
   return {
     token,
-    user: {
-      id: user.user_id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      user_type: user.user_type,
+    petroAdmin: {
+      id: petroAdmin.petroAdmin_id,
+      name: petroAdmin.name,
+      email: petroAdmin.email,
+      role: petroAdmin.role,
+      petroAdmin_type: petroAdmin.petroAdmin_type,
     },
     status: 200,
-    message: "User logged in successfully",
+    message: "petroAdmin logged in successfully",
   };
 
 }

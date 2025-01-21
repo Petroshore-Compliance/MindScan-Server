@@ -3,11 +3,11 @@ require("dotenv").config();
 
 const request = require('supertest');
 const app = require('../../app');
-const prisma = require('../../db.js'); 
+const prisma = require('../../db.js');
 const { EMAIL_TESTER } = process.env;
 
-describe('Auth Endpoints', () => {
-  it('success register user; status 201', async () => {
+describe('admin Endpoints', () => {
+  it('success create petroAdmin; status 201', async () => {
     const registrationData = {
       name: "Alice Smith",
       email: EMAIL_TESTER,
@@ -15,7 +15,7 @@ describe('Auth Endpoints', () => {
     };
 
     const response = await request(app)
-      .post('/auth/register')
+      .post('/admin/create')
       .send(registrationData);
 
     if (response.status !== 201) {
@@ -23,20 +23,17 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(201);
-    expect(response.body.message).toEqual("User registered successfully");
+    expect(response.body.message).toEqual("petroAdmin registered successfully");
 
   });
 });
 
 
 
-describe('Auth Endpoints', () => {
-  it('login user; status 200', async () => {
+describe('admin Endpoints', () => {
+  it('login petroAdmin; status 200', async () => {
 
-const userData = await prisma.user.findUnique({
-  where: {       email: EMAIL_TESTER},
-  
-})
+
 
     const loginData = {
       "email": EMAIL_TESTER,
@@ -44,31 +41,31 @@ const userData = await prisma.user.findUnique({
     }
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/admin/login')
       .send(loginData);
 
     if (response.status !== 200) {
       console.log('Response body:', response.body);
     }
 
+    expect(response.body.message).toEqual("petroAdmin logged in successfully");
     expect(response.status).toBe(200);
-    expect(response.body.message).toEqual("User logged in successfully");
-console.log(response.body);
-    let token=response.body.token;
+    console.log(response.body);
+    token = response.body.token;
 
   });
 });
 
 
-describe('Auth Endpoints', () => {
-  it('fail login user; not email; status 400', async () => {
+describe('admin Endpoints', () => {
+  it('fail login petroAdmin; not email; status 400', async () => {
 
     const loginData = {
       "password": "secureHashedPassword123"
     }
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/admin/login')
       .send(loginData);
 
     if (response.status !== 400) {
@@ -78,21 +75,21 @@ describe('Auth Endpoints', () => {
     expect(response.status).toBe(400);
     expect(response.body.errors).toEqual(["Email cannot be empty."]);
 
-    token=response.body.token;
+    token = response.body.token;
 
   });
 });
 
 
-describe('Auth Endpoints', () => {
-  it('fail login user; not password; status 400', async () => {
+describe('admin Endpoints', () => {
+  it('fail login petroAdmin; not password; status 400', async () => {
 
     const loginData = {
       "email": EMAIL_TESTER
     }
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/admin/login')
       .send(loginData);
 
     if (response.status !== 400) {
@@ -103,13 +100,13 @@ describe('Auth Endpoints', () => {
     expect(response.body.errors).toEqual(["Password cannot be empty."]);
 
 
-    token=response.body.token;
+    token = response.body.token;
 
   });
 });
 
-describe('Auth Endpoints', () => {
-  it('fail login user; wrong email; status 400', async () => {
+describe('admin Endpoints', () => {
+  it('fail login petroAdmin; wrong email; status 400', async () => {
 
     const verificationData = {
       "email": "wrongEmail@petroshorecompliance.com",
@@ -117,7 +114,7 @@ describe('Auth Endpoints', () => {
     }
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/admin/login')
       .send(verificationData);
 
     if (response.status !== 400) {
@@ -130,8 +127,8 @@ describe('Auth Endpoints', () => {
 });
 
 
-describe('Auth Endpoints', () => {
-  it('fail login user; wrong password; status 400', async () => {
+describe('admin Endpoints', () => {
+  it('fail login petroAdmin; wrong password; status 400', async () => {
 
     const verificationData = {
       "email": EMAIL_TESTER,
@@ -139,7 +136,7 @@ describe('Auth Endpoints', () => {
     }
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/admin/login')
       .send(verificationData);
 
     if (response.status !== 400) {
@@ -152,8 +149,8 @@ describe('Auth Endpoints', () => {
 });
 
 
-describe('Auth Endpoints', () => {
-  it('fail login user; invalid password; status 400', async () => {
+describe('admin Endpoints', () => {
+  it('fail login petroAdmin; invalid password; status 400', async () => {
 
     const verificationData = {
       "email": EMAIL_TESTER,
@@ -161,7 +158,7 @@ describe('Auth Endpoints', () => {
     }
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/admin/login')
       .send(verificationData);
 
     if (response.status !== 400) {
@@ -173,8 +170,8 @@ describe('Auth Endpoints', () => {
   });
 });
 
-describe('Auth Endpoints', () => {
-  it('fail login user; invalid email; status 400', async () => {
+describe('admin Endpoints', () => {
+  it('fail login petroAdmin; invalid email; status 400', async () => {
 
     const verificationData = {
       "email": "aaaaaasdfsadfasdfa",
@@ -182,7 +179,7 @@ describe('Auth Endpoints', () => {
     }
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/admin/login')
       .send(verificationData);
 
     if (response.status !== 400) {
@@ -197,8 +194,8 @@ describe('Auth Endpoints', () => {
 
 
 
-describe('Auth Endpoints', () => {
-  it('login user; wrong typeofs ;status 400', async () => {
+describe('admin Endpoints', () => {
+  it('login petroAdmin; wrong typeofs ;status 400', async () => {
 
 
     const verificationData = {
@@ -207,7 +204,7 @@ describe('Auth Endpoints', () => {
     }
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/admin/login')
       .send(verificationData);
 
     if (response.status !== 400) {
@@ -222,18 +219,18 @@ describe('Auth Endpoints', () => {
 });
 
 
-// borrado de lo creado
+// borrado de todo lo creado
 afterAll(async () => {
   if (EMAIL_TESTER) {
     try {
       // Comprobar la existencia del usuario antes de intentar borrarlo
-      const user = await prisma.user.findUnique({ where: { email: EMAIL_TESTER } });
+      const petroAdmin = await prisma.petroAdmin.findUnique({ where: { email: EMAIL_TESTER } });
 
-      if (user) {
-        await prisma.user.delete({ where: { email: EMAIL_TESTER } });
-      } 
+      if (petroAdmin) {
+        await prisma.petroAdmin.delete({ where: { email: EMAIL_TESTER } });
+      }
     } catch (error) {
-      console.error('Failed to delete test user:', error);
+      console.error('Failed to delete test petroAdmin:', error);
     }
   }
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión

@@ -1,15 +1,14 @@
-const {updateAdminController} = require("../../controllers/adminControllers/updateAdminController.js");
+const { updateAdminController } = require("../../controllers/adminControllers/updateAdminController.js");
 
 
 const updateAdminHandler = async (req, res) => {
   try {
-    const { email } = req.body;
-    const response = await updateAdminController(email);
+    const response = await updateAdminController(req.body);
 
-    res.status(response.status).json({  message: response.message});
+    return res.status(response.status).json({ message: response.message });
 
-  }catch (error) {
-    res.status(500).json({ message: `Unsuported error updating admin ${error}` });
+  } catch (error) {
+    return res.status(500).json({ message: `Unsuported error updating admin ${error}` });
   }
 }
 module.exports = { updateAdminHandler };
