@@ -1,25 +1,33 @@
 const prisma = require('../../db.js');
 
-//devuelve el perfil del usuario con el id que se le pasa
-//recibe el user_id
-//devuelve todo menos el password
-const getAdminsController = async (userID) => {
-    const user = await prisma.user.findUnique({
-        where: { user_id: userID },
-        include: {
-            company: true,
-            userResponses:true,
-            userResult: true,
-            access: true
-        }
+// Devuelve todos los perfiles de los petroAdmins sin el password
+const getAdminsController = async (data) => {
+
+if(data.petroAdmin_id){
+
+    const petroAdmin = await prisma.petroAdmin.findUnique({
+        where: { petroAdmin_id: data.petroAdmin_id },
+        
     })
 
-    if (!user) {
-        return {status: 404, message: 'User not found'};
+    if (!petroAdmin) {
+        return {status: 404, message: 'petroAdmin not found'};
     }
 
-    const { password, ...userData } = user;
-    return {status: 200, message: 'User profile found', user: userData};
+    const { password, ...petroAdminData } = petroAdmin;
+    return {status: 200, message: 'petroAdmin found', petroAdmin: petroAdminData};
+}
+
+    const petroAdmins = await prisma.petroAdmin.findMany();
+
+    if (!petroAdmins || petroAdmins.length === 0) {
+        return { status: 404, message: 'petroAdmins not found' };
+    }
+
+    // Remove passwords from all admins
+    const petroAdminsData = petroAdmins.map(({ password, ...adminData }) => adminData);
+
+    return { status: 200, message: 'petroAdmins found', petroAdmins: petroAdminsData };
 };
 
 module.exports = { getAdminsController };

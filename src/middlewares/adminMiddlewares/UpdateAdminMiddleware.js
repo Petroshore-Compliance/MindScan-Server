@@ -12,14 +12,14 @@ const updateAdminMiddleware = (req, res, next) => {
 
 let result;
   let errors = [];
-  let {company_id,user_id,name,email,role,password} = req.body;
+  let {company_id,petroAdmin_id,name,email,role,password} = req.body;
 
   if(company_id){
  result = validateNumber(company_id, 'Company ID');
 if (result.error) errors.push(result.error);
   }
 
-    result = validateNumber(user_id, 'User ID');
+    result = validateNumber(petroAdmin_id, 'petroAdmin ID');
     if (result.error) errors.push(result.error);
       
 

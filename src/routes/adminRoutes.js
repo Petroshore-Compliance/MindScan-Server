@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
-const { authMiddleware } = require("../middlewares/authMiddleware.js");
+const { adminMiddleware } = require("../middlewares/adminMiddleware.js");
 const { getAdminsMiddleware } = require("../middlewares/adminMiddlewares/getAdminsMiddleware.js");
 const { updateAdminMiddleware } = require("../middlewares/adminMiddlewares/updateAdminMiddleware.js");
 const { deleteAdminMiddleware } = require("../middlewares/adminMiddlewares/deleteAdminMiddleware.js");
@@ -21,12 +21,12 @@ const { setPasswordAdminHandler } = require("../handlers/adminHandlers/setPasswo
 const { changePasswordAdminHandler } = require("../handlers/adminHandlers/changePasswordAdminHandler.js");
 
 router.post("/create", createAdminMiddleware, createAdminHandler);
-router.post("/login", loginAdminMiddleware,loginAdminHandler);
-router.patch("/update", authMiddleware, updateAdminMiddleware, updateAdminHandler);
-router.patch("/set-password",setPasswordAdminMiddleware, setPasswordAdminHandler);
-router.patch("/change-password",authMiddleware, changePasswordAdminMiddleware,changePasswordAdminHandler);
-router.get("/forgot-password", forgotPasswordAdminMiddleware,forgotPasswordAdminHandler);
-router.get("/get", authMiddleware, getAdminsMiddleware, getAdminsHandler);
-router.delete("/delete", authMiddleware, deleteAdminMiddleware, deleteAdminHandler);
+router.post("/login", loginAdminMiddleware, loginAdminHandler);
+router.patch("/update", adminMiddleware, updateAdminMiddleware, updateAdminHandler);
+router.patch("/set-password", setPasswordAdminMiddleware, setPasswordAdminHandler);
+router.patch("/change-password", adminMiddleware, changePasswordAdminMiddleware, changePasswordAdminHandler);
+router.get("/forgot-password", forgotPasswordAdminMiddleware, forgotPasswordAdminHandler);
+router.get("/get", adminMiddleware, getAdminsMiddleware, getAdminsHandler);
+router.delete("/delete", adminMiddleware, deleteAdminMiddleware, deleteAdminHandler);
 
 module.exports = router;

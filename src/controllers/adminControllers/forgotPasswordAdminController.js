@@ -5,13 +5,13 @@ const prisma = require("../../db.js");
 const sendEmail = require("../../tools/nodemailer.js");
 
 const forgotPasswordAdminController = async (email) =>{
-  const user = await prisma.User.findUnique({
+  const petroAdmin = await prisma.petroAdmin.findUnique({
     where: {
       email: email.toLowerCase(),
     },
   });
 
-if(!user) return {status:404, message: "Email not found."};
+if(!petroAdmin) return {status:404, message: "Email not found."};
 
 //setup para enviar el email
 
@@ -22,11 +22,11 @@ let htmlTemplate;
 
   htmlTemplate = fs.readFileSync(htmlTemplatePath, "utf8");
 
-  const htmlContent = htmlTemplate.replace(/{{resetURL}}/g, `localhost:4000/reset-password/${user.user_id}}`);
+  const htmlContent = htmlTemplate.replace(/{{resetURL}}/g, `localhost:4000/reset-password/${petroAdmin.petroAdmin_id}}`);
 
-sendEmail(user.email,subject, htmlContent);
+sendEmail(petroAdmin.email,subject, htmlContent);
 
-return {status:200, URL: `localhost:4000/reset-password/${user.user_id}`};
+return {status:200, URL: `localhost:4000/reset-password/${petroAdmin.petroAdmin_id}`};
 }
 
 module.exports = { forgotPasswordAdminController };

@@ -126,9 +126,10 @@ model PetroAdmin {
   name          String
   email         String    @unique
   password      String
-  notifications Boolean
+  notifications Boolean   @default(true)
   created_at    DateTime  @default(now())
   updated_at    DateTime? @updatedAt
+  connected_at  DateTime?
 }
 
 model Result {

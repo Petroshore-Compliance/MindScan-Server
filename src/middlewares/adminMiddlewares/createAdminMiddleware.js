@@ -18,17 +18,7 @@ const createAdminMiddleware = (req, res, next) => {
   let result;
   // Check that all fields are strings, not empty, and apply regex
 
-  if(company_id){
-    result = validateNumber(company_id, 'Company ID');
-    if(result.error) errors.push(result.error);
-  }
 
-  if(role){
-    result = validateString(role,'Role');
-    if(result.error) errors.push(result.error);
-    
-    
-  }
 
   result = validateString(email,'Email',regexEmail);
   if(result.error) errors.push(result.error);

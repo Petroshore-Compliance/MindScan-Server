@@ -3,7 +3,7 @@ const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 const setPasswordAdminMiddleware = (req, res, next) => {
 
-  const { user_id, newPassword } = req.body;
+  const { petroAdmin_id, newPassword } = req.body;
   let errors = [];
 
   if(newPassword && newPassword !== ''){
@@ -16,12 +16,12 @@ const setPasswordAdminMiddleware = (req, res, next) => {
     errors.push('Password cannot be empty.');
   }
 
-  if (user_id && user_id !== '') {
-    if (isNaN(user_id) || parseInt(user_id) !== Number(user_id)) {
-      errors.push('User id must be a number.');
+  if (petroAdmin_id && petroAdmin_id !== '') {
+    if (isNaN(petroAdmin_id) || parseInt(petroAdmin_id) !== Number(petroAdmin_id)) {
+      errors.push('petroAdmin id must be a number.');
     }
   } else {
-    errors.push('User id cannot be empty.');
+    errors.push('petroAdmin id cannot be empty.');
   }
   
   if (!regexPass.test(newPassword)) {
