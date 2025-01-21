@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const request = require('supertest');
 const app = require('../../app');
-const prisma = require('../../db.js'); 
+const prisma = require('../../db.js');
 const { EMAIL_TESTER } = process.env;
 
 
@@ -60,7 +60,7 @@ describe('Auth Endpoints', () => {
 describe('Auth Endpoints', () => {
   it('fail create contact; contactForm with state inProgress already exists; status 423', async () => {
 
-  await  prisma.contactForm.updateMany({
+    await prisma.contactForm.updateMany({
       where: {
         state: "new"
       },
@@ -81,11 +81,11 @@ describe('Auth Endpoints', () => {
       .post('/contact/create')
       .send(formData);
 
-    if (response.status !== 423) {
+    if (response.status !== 406) {
       console.log('Response body:', response.body);
     }
     expect(response.body.message).toEqual("inProgress");
-    expect(response.status).toBe(423);
+    expect(response.status).toBe(406);
 
   });
 });
@@ -94,7 +94,7 @@ describe('Auth Endpoints', () => {
   it('fail create contact; missing fields ;status 201', async () => {
 
     const formData = {
-      
+
     };
 
     const response = await request(app)
@@ -135,9 +135,43 @@ describe('Auth Endpoints', () => {
   });
 });
 
+
+describe('Auth Endpoints', () => {
+  it('fail create contact; contactForm with state contacted already exists; status 423', async () => {
+
+    await prisma.contactForm.updateMany({
+      where: {
+        state: "inProgress"
+      },
+      data: {
+        state: "contacted"
+      }
+    });
+
+    const formData = {
+      name: "name",
+      email: "email@email.email",
+      phone: "+3434623456234",
+      language: "ES",
+      message: "ayuda"
+    };
+
+    const response = await request(app)
+      .post('/contact/create')
+      .send(formData);
+
+    if (response.status !== 423) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.message).toEqual("contacted");
+    expect(response.status).toBe(423);
+
+  });
+});
+
 // borrado de lo creado
 afterAll(async () => {
-  
+
   await prisma.contactForm.deleteMany(); // borrar todos los registros de formularios
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

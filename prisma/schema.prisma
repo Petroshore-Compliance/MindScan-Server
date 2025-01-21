@@ -201,6 +201,7 @@ enum State {
   inProgress
   accepted
   rejected
+  contacted
 }
 
 //apuntar si ha usado una licencia, 
