@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const request = require('supertest');
 const app = require('../../app');
-const prisma = require('../../db.js'); 
+const prisma = require('../../db.js');
 const { EMAIL_TESTER } = process.env;
 
 let UserId;
@@ -21,28 +21,28 @@ beforeAll(async () => {
   const response = await request(app)
     .post('/auth/register')
     .send(registrationData);
-    
-const userData = await prisma.user.findUnique({
-  where: {email: EMAIL_TESTER},
-})
 
-UserId = userData.user_id;
+  const userData = await prisma.user.findUnique({
+    where: { email: EMAIL_TESTER },
+  })
 
-          const loginData = {
-            "email": EMAIL_TESTER,
-            "password": "secureHashedPassword123"
-          }
-      
-          const response3 = await request(app)
-            .post('/auth/login')
-            .send(loginData);
-      
-          if (response3.status !== 200) {
-            console.log('Response body:', response3.body);
-          }
-      
-          token=response3.body.token;
-          });
+  UserId = userData.user_id;
+
+  const loginData = {
+    "email": EMAIL_TESTER,
+    "password": "secureHashedPassword123"
+  }
+
+  const response3 = await request(app)
+    .post('/auth/login')
+    .send(loginData);
+
+  if (response3.status !== 200) {
+    console.log('Response body:', response3.body);
+  }
+
+  token = response3.body.token;
+});
 
 describe('Auth Endpoints', () => {
   it('change password; status 200 ', async () => {
@@ -51,7 +51,7 @@ describe('Auth Endpoints', () => {
       "password": "secureHashedPassword123",
       "newPassword": "secureHashedPasswor1231"
     };
-    
+
     const response = await request(app)
       .patch('/auth/change-password')
       .set('Authorization', `Bearer ${token}`)
@@ -68,24 +68,24 @@ describe('Auth Endpoints', () => {
 });
 
 describe('Auth Endpoints', () => {
-  it('fail change password; wrong old password; status 400 ', async () => {
+  it('fail change password; wrong old password; status 401 ', async () => {
     const registrationData = {
       "user_id": UserId,
       "password": "secureHashedPassword123",
       "newPassword": "secureHashedPasswor1231"
     };
-    
+
     const response = await request(app)
       .patch('/auth/change-password')
       .set('Authorization', `Bearer ${token}`)
       .send(registrationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 401) {
       console.log('Response body:', response.body);
     }
 
     expect(response.body.message).toBe("Old password is incorrect.");
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
 
   });
 });
@@ -97,7 +97,7 @@ describe('Auth Endpoints', () => {
       "password": "secureHashedPasswor1231",
       "newPassword": "a"
     };
-    
+
     const response = await request(app)
       .patch('/auth/change-password')
       .set('Authorization', `Bearer ${token}`)
@@ -114,24 +114,24 @@ describe('Auth Endpoints', () => {
 });
 
 describe('Auth Endpoints', () => {
-  it('fail change password; same new password; status 400 ', async () => {
+  it('fail change password; same new password; status 422 ', async () => {
     const registrationData = {
       "user_id": UserId,
       "password": "secureHashedPasswor1231",
       "newPassword": "secureHashedPasswor1231"
     };
-    
+
     const response = await request(app)
       .patch('/auth/change-password')
       .set('Authorization', `Bearer ${token}`)
       .send(registrationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 422) {
       console.log('Response body:', response.body);
     }
 
     expect(response.body.message).toBe("New password cannot be the same as the old password.");
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(422);
 
   });
 });
@@ -142,7 +142,7 @@ describe('Auth Endpoints', () => {
       "password": "secureHashedPasswor1231",
       "newPassword": "secureHashedPasswor123"
     };
-    
+
     const response = await request(app)
       .patch('/auth/change-password')
       .set('Authorization', `Bearer ${token}`)
@@ -162,9 +162,9 @@ describe('Auth Endpoints', () => {
 describe('Auth Endpoints', () => {
   it('fail change password; no parameters; status 400 ', async () => {
     const registrationData = {
-    
+
     };
-    
+
     const response = await request(app)
       .patch('/auth/change-password')
       .set('Authorization', `Bearer ${token}`)
@@ -176,7 +176,7 @@ describe('Auth Endpoints', () => {
 
     expect(response.body.errors).toEqual(["Password cannot be empty.",
       "New password cannot be empty.",
-       "User id cannot be empty."]);
+      "User id cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
@@ -190,7 +190,7 @@ describe('Auth Endpoints', () => {
       "password": 2,
       "newPassword": 2
     };
-    
+
     const response = await request(app)
       .patch('/auth/change-password')
       .set('Authorization', `Bearer ${token}`)
@@ -201,8 +201,8 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.body.errors).toEqual(["Password must be a string.",
-       "New password must be a string.",
-       "User id must be a number."]);
+      "New password must be a string.",
+      "User id must be a number."]);
     expect(response.status).toBe(400);
 
   });
@@ -217,7 +217,7 @@ afterAll(async () => {
 
       if (user) {
         await prisma.user.delete({ where: { email: EMAIL_TESTER } });
-      } 
+      }
     } catch (error) {
       console.error('Failed to delete test user:', error);
     }
