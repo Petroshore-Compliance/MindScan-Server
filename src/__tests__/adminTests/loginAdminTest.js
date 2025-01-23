@@ -106,7 +106,7 @@ describe('admin Endpoints', () => {
 });
 
 describe('admin Endpoints', () => {
-  it('fail login petroAdmin; wrong email; status 400', async () => {
+  it('fail login petroAdmin; wrong email; status 404', async () => {
 
     const verificationData = {
       "email": "wrongEmail@petroshorecompliance.com",
@@ -117,18 +117,18 @@ describe('admin Endpoints', () => {
       .post('/admin/login')
       .send(verificationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 404) {
       console.log('Response body:', response.body);
     }
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
     expect(response.body).toEqual({ message: 'Wrong Email or Password' });
   });
 });
 
 
 describe('admin Endpoints', () => {
-  it('fail login petroAdmin; wrong password; status 400', async () => {
+  it('fail login petroAdmin; wrong password; status 401', async () => {
 
     const verificationData = {
       "email": EMAIL_TESTER,
@@ -139,11 +139,11 @@ describe('admin Endpoints', () => {
       .post('/admin/login')
       .send(verificationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 401) {
       console.log('Response body:', response.body);
     }
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
     expect(response.body).toEqual({ message: 'Wrong Email or Password' });
   });
 });
@@ -221,17 +221,7 @@ describe('admin Endpoints', () => {
 
 // borrado de todo lo creado
 afterAll(async () => {
-  if (EMAIL_TESTER) {
-    try {
-      // Comprobar la existencia del usuario antes de intentar borrarlo
-      const petroAdmin = await prisma.petroAdmin.findUnique({ where: { email: EMAIL_TESTER } });
+  await prisma.petroAdmin.deleteMany();
 
-      if (petroAdmin) {
-        await prisma.petroAdmin.delete({ where: { email: EMAIL_TESTER } });
-      }
-    } catch (error) {
-      console.error('Failed to delete test petroAdmin:', error);
-    }
-  }
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

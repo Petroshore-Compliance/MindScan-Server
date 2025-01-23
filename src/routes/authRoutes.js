@@ -17,12 +17,11 @@ const { setPasswordHandler } = require("../handlers/authHandlers/setPasswordHand
 const { verificateUserHandler } = require("../handlers/authHandlers/verificateUserHandler.js");
 
 router.post("/register", registerUserMiddleware, registerUserHandler);
-router.post("/login", loginUserMiddleware,loginUserHandler);
-//router.get("/verificate-user", verificateUserMiddleware,verificateUserHandler);
-router.get("/forgot-password", forgotPasswordMiddleware,forgotPasswordHandler);
-router.patch("/set-password",setPasswordMiddleware, setPasswordHandler);
+router.post("/login", loginUserMiddleware, loginUserHandler);
+router.get("/forgot-password", forgotPasswordMiddleware, forgotPasswordHandler);
+router.patch("/set-password", setPasswordMiddleware, setPasswordHandler);
 
-router.patch("/change-password",authMiddleware, changePasswordMiddleware,changePasswordHandler);
+router.patch("/change-password", authMiddleware, changePasswordMiddleware, changePasswordHandler);
 
 
 

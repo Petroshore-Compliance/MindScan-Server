@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const prisma = require('../../db.js');
 
-// Solicita el petroAdmin_id e email, lo demás se actualiza si se le ha pasado como parámetro
+// Solicita el petroAdmin_id, lo demás se actualiza si se le ha pasado como parámetro
 
 const updateAdminController = async (data) => {
     if (!data.petroAdmin_id) {
@@ -9,7 +9,7 @@ const updateAdminController = async (data) => {
     }
 
     // quitar email del update
-    const { petroAdmin_id, email, ...fieldsToUpdate } = data;
+    const { petroAdmin_id, ...fieldsToUpdate } = data;
 
     if (Object.keys(fieldsToUpdate).length === 0) {
         return { status: 400, message: "No fields to update" };

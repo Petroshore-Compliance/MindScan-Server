@@ -3,7 +3,8 @@ const { updateAdminController } = require("../../controllers/adminControllers/up
 
 const updateAdminHandler = async (req, res) => {
   try {
-    const response = await updateAdminController(req.body);
+    const { adminEmail, ...dataWithoutAdminEmail } = req.body;
+    const response = await updateAdminController(dataWithoutAdminEmail);
 
     return res.status(response.status).json({ message: response.message });
 

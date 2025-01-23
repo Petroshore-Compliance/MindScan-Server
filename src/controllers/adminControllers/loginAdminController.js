@@ -11,24 +11,24 @@ const loginAdminController = async (email, password) => {
   let petroAdmin;
   try {
     petroAdmin = await prisma.petroAdmin.update({
-    where: { email: email.toLowerCase() },
-    data: { connected_at: new Date() },
-  });
+      where: { email: email.toLowerCase() },
+      data: { connected_at: new Date() },
+    });
 
-} catch (error) {
-  //error p2025 es porque no existe usuario con este email
-  if(error.code === "P2025"){
-return {status: 400, message: "Wrong Email or Password"};
-  }
-  throw error;
-};
+  } catch (error) {
+    //error p2025 es porque no existe usuario con este email
+    if (error.code === "P2025") {
+      return { status: 404, message: "Wrong Email or Password" };
+    }
+    throw error;
+  };
 
 
 
   const isPasswordValid = await bcrypt.compare(password, petroAdmin.password);
 
   if (!isPasswordValid) {
-    return {status: 400, message: "Wrong Email or Password"};
+    return { status: 401, message: "Wrong Email or Password" };
   }
 
   const token = jwt.sign(
