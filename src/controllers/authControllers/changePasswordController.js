@@ -14,22 +14,22 @@ const changePasswordController = async (user_id, password, newPassword) => {
     where: { user_id: parsed_user_id },
   });
 
-  if(!user){
+  if (!user) {
     return { status: 404, message: 'User not found.' };
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
-  if(!isPasswordValid){
-    return { status: 400, message: 'Old password is incorrect.' };
+  if (!isPasswordValid) {
+    return { status: 401, message: 'Old password is incorrect.' };
   }
 
   const isPasswordSameAsBefore = await bcrypt.compare(newPassword, user.password);
   if (isPasswordSameAsBefore) {
-    return { status:400, message: 'New password cannot be the same as the old password.' };
+    return { status: 422, message: 'New password cannot be the same as the old password.' };
   }
 
-  
+
   user.password = await bcrypt.hash(newPassword, 10);
 
   await prisma.user.update({
@@ -37,7 +37,7 @@ const changePasswordController = async (user_id, password, newPassword) => {
     data: { password: user.password },
   });
 
-  return { status:200, message: 'Password changed successfully.' };
+  return { status: 200, message: 'Password changed successfully.' };
 
 }
 

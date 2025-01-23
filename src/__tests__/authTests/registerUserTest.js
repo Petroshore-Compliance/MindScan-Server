@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const request = require('supertest');
 const app = require('../../app');
-const prisma = require('../../db.js'); 
+const prisma = require('../../db.js');
 const { EMAIL_TESTER } = process.env;
 
 
@@ -28,7 +28,7 @@ describe('Auth Endpoints', () => {
 });
 
 describe('Auth Endpoints', () => {
-  it('should try to register a user with an email that already is in use', async () => {
+  it('fail register user; email already in use; status 409', async () => {
     const registrationData = {
       name: "Alice Smith",
       email: EMAIL_TESTER,
@@ -39,11 +39,11 @@ describe('Auth Endpoints', () => {
       .post('/auth/register')
       .send(registrationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 409) {
       console.log('Response body:', response.body);
     }
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(409);
     expect(response.body.message).toEqual('Email already in use');
 
   });
@@ -65,7 +65,7 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({errors: ["Email cannot be empty."]});
+    expect(response.body).toEqual({ errors: ["Email cannot be empty."] });
 
   });
 });
@@ -86,7 +86,7 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({errors: ["Name cannot be empty."]});
+    expect(response.body).toEqual({ errors: ["Name cannot be empty."] });
 
   });
 });
@@ -94,7 +94,7 @@ describe('Auth Endpoints', () => {
 describe('Auth Endpoints', () => {
   it('fail register user; no password; status 400', async () => {
     const registrationData = {
-          name: "Alice Smith",
+      name: "Alice Smith",
       email: EMAIL_TESTER
     };
 
@@ -107,7 +107,7 @@ describe('Auth Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({errors: ["Password cannot be empty."]});
+    expect(response.body).toEqual({ errors: ["Password cannot be empty."] });
 
   });
 });
@@ -128,14 +128,14 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
 
-    expect(response.body).toEqual({"errors": ["Email must be a string.", "Password must be a string.", "Name must be a string."]});
+    expect(response.body).toEqual({ "errors": ["Email must be a string.", "Password must be a string.", "Name must be a string."] });
     expect(response.status).toBe(400);
 
   });
 });
 
 
-// borrado de todo lo creado
+// borrado de lo creado
 afterAll(async () => {
   if (EMAIL_TESTER) {
     try {
@@ -144,7 +144,7 @@ afterAll(async () => {
 
       if (user) {
         await prisma.user.delete({ where: { email: EMAIL_TESTER } });
-      } 
+      }
     } catch (error) {
       console.error('Failed to delete test user:', error);
     }
