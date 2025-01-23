@@ -31,7 +31,7 @@ describe('admin Endpoints', () => {
 });
 
 describe('admin Endpoints', () => {
-  it('should try to create a petroAdmin with an email that already is in use', async () => {
+  it('fail create petroadmin; email already in use; status 409', async () => {
     const registrationData = {
       name: "Alice Smith",
       email: EMAIL_TESTER,
@@ -42,11 +42,11 @@ describe('admin Endpoints', () => {
       .post('/admin/create')
       .send(registrationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 409) {
       console.log('Response body:', response.body);
     }
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(409);
     expect(response.body.message).toEqual('Email already in use');
 
   });

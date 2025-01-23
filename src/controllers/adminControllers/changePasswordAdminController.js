@@ -13,22 +13,22 @@ const changePasswordAdminController = async (petroAdmin_id, password, newPasswor
     where: { petroAdmin_id: petroAdmin_id },
   });
 
-  if(!petroAdmin){
+  if (!petroAdmin) {
     return { status: 404, message: 'petroAdmin not found.' };
   }
 
   const isPasswordValid = await bcrypt.compare(password, petroAdmin.password);
 
-  if(!isPasswordValid){
-    return { status: 400, message: 'Old password is incorrect.' };
+  if (!isPasswordValid) {
+    return { status: 401, message: 'Old password is incorrect.' };
   }
 
   const isPasswordSameAsBefore = await bcrypt.compare(newPassword, petroAdmin.password);
   if (isPasswordSameAsBefore) {
-    return { status:400, message: 'New password cannot be the same as the old password.' };
+    return { status: 422, message: 'New password cannot be the same as the old password.' };
   }
 
-  
+
   petroAdmin.password = await bcrypt.hash(newPassword, 10);
 
   await prisma.petroAdmin.update({
@@ -36,7 +36,7 @@ const changePasswordAdminController = async (petroAdmin_id, password, newPasswor
     data: { password: petroAdmin.password },
   });
 
-  return { status:200, message: 'Password changed successfully.' };
+  return { status: 200, message: 'Password changed successfully.' };
 
 }
 
