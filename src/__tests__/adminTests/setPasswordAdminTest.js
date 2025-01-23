@@ -183,17 +183,7 @@ describe('admin Endpoints', () => {
 
 // borrado de lo creado
 afterAll(async () => {
-  if (EMAIL_TESTER) {
-    try {
-      // Comprobar la existencia del usuario antes de intentar borrarlo
-      const petroAdmin = await prisma.petroAdmin.findUnique({ where: { email: EMAIL_TESTER } });
 
-      if (petroAdmin) {
-        await prisma.petroAdmin.delete({ where: { email: EMAIL_TESTER } });
-      }
-    } catch (error) {
-      console.error('Failed to delete test petroAdmin:', error);
-    }
-  }
+  await prisma.petroAdmin.deleteMany();
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

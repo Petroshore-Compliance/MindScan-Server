@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const request = require('supertest');
 const app = require('../../app');
-const prisma = require('../../db.js'); 
+const prisma = require('../../db.js');
 const { EMAIL_TESTER } = process.env;
 
 describe('Auth Endpoints', () => {
@@ -33,10 +33,10 @@ describe('Auth Endpoints', () => {
 describe('Auth Endpoints', () => {
   it('login user; status 200', async () => {
 
-const userData = await prisma.user.findUnique({
-  where: {       email: EMAIL_TESTER},
-  
-})
+    const userData = await prisma.user.findUnique({
+      where: { email: EMAIL_TESTER },
+
+    })
 
     const loginData = {
       "email": EMAIL_TESTER,
@@ -53,8 +53,8 @@ const userData = await prisma.user.findUnique({
 
     expect(response.status).toBe(200);
     expect(response.body.message).toEqual("User logged in successfully");
-console.log(response.body);
-    let token=response.body.token;
+    console.log(response.body);
+    let token = response.body.token;
 
   });
 });
@@ -78,7 +78,7 @@ describe('Auth Endpoints', () => {
     expect(response.status).toBe(400);
     expect(response.body.errors).toEqual(["Email cannot be empty."]);
 
-    token=response.body.token;
+    token = response.body.token;
 
   });
 });
@@ -103,13 +103,13 @@ describe('Auth Endpoints', () => {
     expect(response.body.errors).toEqual(["Password cannot be empty."]);
 
 
-    token=response.body.token;
+    token = response.body.token;
 
   });
 });
 
 describe('Auth Endpoints', () => {
-  it('fail login user; wrong email; status 400', async () => {
+  it('fail login user; wrong email; status 404', async () => {
 
     const verificationData = {
       "email": "wrongEmail@petroshorecompliance.com",
@@ -120,18 +120,18 @@ describe('Auth Endpoints', () => {
       .post('/auth/login')
       .send(verificationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 404) {
       console.log('Response body:', response.body);
     }
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
     expect(response.body).toEqual({ message: 'Wrong Email or Password' });
   });
 });
 
 
 describe('Auth Endpoints', () => {
-  it('fail login user; wrong password; status 400', async () => {
+  it('fail login user; wrong password; status 401', async () => {
 
     const verificationData = {
       "email": EMAIL_TESTER,
@@ -142,11 +142,11 @@ describe('Auth Endpoints', () => {
       .post('/auth/login')
       .send(verificationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 401) {
       console.log('Response body:', response.body);
     }
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
     expect(response.body).toEqual({ message: 'Wrong Email or Password' });
   });
 });
@@ -231,7 +231,7 @@ afterAll(async () => {
 
       if (user) {
         await prisma.user.delete({ where: { email: EMAIL_TESTER } });
-      } 
+      }
     } catch (error) {
       console.error('Failed to delete test user:', error);
     }

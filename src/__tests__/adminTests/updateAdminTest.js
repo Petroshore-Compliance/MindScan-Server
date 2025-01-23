@@ -52,7 +52,7 @@ describe('admin Endpoints', () => {
 
 
     const updateadminData = {
-      email: EMAIL_TESTER,
+      "adminEmail": EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
       name: "roman",
@@ -80,7 +80,7 @@ describe('admin Endpoints', () => {
 
 
     const updateadminData = {
-      email: EMAIL_TESTER,
+      "adminEmail": EMAIL_TESTER,
 
       name: "roman",
       password: "secureHashedPassword123"
@@ -107,7 +107,7 @@ describe('admin Endpoints', () => {
 
 
     const updateadminData = {
-      email: EMAIL_TESTER,
+      "adminEmail": EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
       name: "roman",
@@ -134,7 +134,7 @@ describe('admin Endpoints', () => {
   it('fail update admin;invalid email; status 400 ', async () => {
 
     const updateadminData = {
-      email: EMAIL_TESTER,
+      "adminEmail": EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
       name: "roman",
@@ -162,7 +162,7 @@ describe('admin Endpoints', () => {
 
 
     const updateadminData = {
-      email: EMAIL_TESTER,
+      "adminEmail": EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
       name: " h!$·,.",
@@ -188,7 +188,7 @@ describe('admin Endpoints', () => {
 
 
     const updateadminData = {
-      email: EMAIL_TESTER,
+      "adminEmail": EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId
     }
@@ -213,10 +213,12 @@ describe('admin Endpoints', () => {
 
 
     const updateadminData = {
+      "adminEmail": EMAIL_TESTER,
+
       petroAdmin_id: "petroAdminId",
       company_id: "companyId",
       name: 33,
-      email: EMAIL_TESTER,
+      email: 22,
       role: 33,
       password: 33
     }
@@ -231,7 +233,7 @@ describe('admin Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body.errors).toEqual(["Company ID must be a number.", "petroAdmin ID must be a number.", "Name must be a string.", "Password must be a string.", "Invalid role"]);
+    expect(response.body.errors).toEqual(["Company ID must be a number.", "petroAdmin ID must be a number.", "Name must be a string.", "Email must be a string.", "Password must be a string.", "Invalid role"]);
 
   });
 
@@ -240,7 +242,7 @@ describe('admin Endpoints', () => {
     it('fail update admin;no token; status 400 ', async () => {
 
       const petroAdminData = {
-        email: EMAIL_TESTER,
+        "adminEmail": EMAIL_TESTER,
 
         petroAdmin_id: 'petroAdminId',
 
