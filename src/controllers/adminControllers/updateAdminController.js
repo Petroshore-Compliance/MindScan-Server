@@ -12,7 +12,7 @@ const updateAdminController = async (data) => {
     const { petroAdmin_id, ...fieldsToUpdate } = data;
 
     if (Object.keys(fieldsToUpdate).length === 0) {
-        return { status: 400, message: "No fields to update" };
+        return { status: 422, message: "No fields to update" };
     }
 
     if (fieldsToUpdate.password) {

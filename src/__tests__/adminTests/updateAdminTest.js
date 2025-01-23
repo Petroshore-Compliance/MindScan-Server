@@ -184,7 +184,7 @@ describe('admin Endpoints', () => {
 });
 
 describe('admin Endpoints', () => {
-  it('fail update admin;no data; status 400 ', async () => {
+  it('fail update admin;no data; status 422 ', async () => {
 
 
     const updateadminData = {
@@ -198,12 +198,12 @@ describe('admin Endpoints', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(updateadminData);
 
-    if (response.status !== 400) {
+    if (response.status !== 422) {
       console.log('Response body:', response.body);
     }
     expect(response.body.message).toEqual('No fields to update');
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(422);
 
   });
 });
@@ -239,7 +239,7 @@ describe('admin Endpoints', () => {
 
 
   describe('admin Endpoints', () => {
-    it('fail update admin;no token; status 400 ', async () => {
+    it('fail update admin;no token; status 401 ', async () => {
 
       const petroAdminData = {
         "adminEmail": EMAIL_TESTER,

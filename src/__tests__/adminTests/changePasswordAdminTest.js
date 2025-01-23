@@ -72,7 +72,7 @@ describe('admin Endpoints', () => {
 });
 
 describe('admin Endpoints', () => {
-  it('fail change password; wrong old password; status 400 ', async () => {
+  it('fail change password; wrong old password; status 401 ', async () => {
     const registrationData = {
       email: EMAIL_TESTER,
 
@@ -86,12 +86,12 @@ describe('admin Endpoints', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(registrationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 401) {
       console.log('Response body:', response.body);
     }
 
     expect(response.body.message).toBe("Old password is incorrect.");
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
 
   });
 });
@@ -122,7 +122,7 @@ describe('admin Endpoints', () => {
 });
 
 describe('admin Endpoints', () => {
-  it('fail change password; same new password; status 400 ', async () => {
+  it('fail change password; same new password; status 422 ', async () => {
     const registrationData = {
       email: EMAIL_TESTER,
 
@@ -136,12 +136,12 @@ describe('admin Endpoints', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(registrationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 422) {
       console.log('Response body:', response.body);
     }
 
     expect(response.body.message).toBe("New password cannot be the same as the old password.");
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(422);
 
   });
 });
