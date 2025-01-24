@@ -16,7 +16,7 @@ const createCompanyController = async (data) => {
     if (!userExists) {
       return { status: 404, message: `user does not exist` };
     }
-      
+
     const company = await prisma.company.create({
       data: {
         name: data.name,
@@ -32,22 +32,22 @@ const createCompanyController = async (data) => {
         role: 'admin',
         company_id: company.company_id,
       },
-      
+
     });
 
-    return {status: 201,  message: 'Company created successfully',company: company,admin: companyadmin};
+    return { status: 201, message: 'Company created successfully', company: company, admin: companyadmin };
   } catch (error) {
 
     // Check if the error is a Prisma known error
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       // Handle unique constraint violation (P2002)
-      if (error.code === 'P2002' &&  error.meta.target.includes('email')) {
-        return { status: 400, message: 'Email already in use' };
+      if (error.code === 'P2002' && error.meta.target.includes('email')) {
+        return { status: 409, message: 'Email already in use' };
       }
-      
+
     }
 
-    return {status: 500,  message: 'An error occurred while creating the company',  error: error.message };
+    return { status: 500, message: 'An error occurred while creating the company', error: error.message };
   }
 };
 

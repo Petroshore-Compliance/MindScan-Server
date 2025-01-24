@@ -5,7 +5,7 @@ CREATE TYPE "Role" AS ENUM ('admin', 'manager', 'employee');
 CREATE TYPE "Status" AS ENUM ('pending', 'cancelled', 'rejected', 'accepted', 'expired');
 
 -- CreateEnum
-CREATE TYPE "State" AS ENUM ('new', 'inProgress', 'accepted', 'rejected');
+CREATE TYPE "State" AS ENUM ('new', 'inProgress', 'accepted', 'rejected', 'contacted');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -121,6 +121,7 @@ CREATE TABLE "PetroAdmin" (
     "notifications" BOOLEAN NOT NULL DEFAULT true,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
+    "connected_at" TIMESTAMP(3),
 
     CONSTRAINT "PetroAdmin_pkey" PRIMARY KEY ("petroAdmin_id")
 );
@@ -172,6 +173,9 @@ CREATE TABLE "Result" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Company_email_key" ON "Company"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "CompanyInvitation_invitation_token_key" ON "CompanyInvitation"("invitation_token");

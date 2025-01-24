@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const request = require('supertest');
 const app = require('../../app');
-const prisma = require('../../db.js'); 
+const prisma = require('../../db.js');
 const { EMAIL_TESTER } = process.env;
 
 let userId;
@@ -19,31 +19,31 @@ beforeAll(async () => {
     password: "secureHashedPassword123"
   };
 
-  const response = await request(app)
+  await request(app)
     .post('/auth/register')
     .send(registrationData);
-    
-const userData = await prisma.user.findUnique({
-  where: {       email: EMAIL_TESTER},
-  
-})
 
-      userId = userData.user_id;
+  const userData = await prisma.user.findUnique({
+    where: { email: EMAIL_TESTER },
 
-          const loginData = {
-            "email": EMAIL_TESTER,
-            "password": "secureHashedPassword123"
-          }
-      
-          const response3 = await request(app)
-            .post('/auth/login')
-            .send(loginData);
-      
-          if (response3.status !== 200) {
-            console.log('Response body:', response3.body);
-          }
-      
-          token=response3.body.token;
+  })
+
+  userId = userData.user_id;
+
+  const loginData = {
+    "email": EMAIL_TESTER,
+    "password": "secureHashedPassword123"
+  }
+
+  const response3 = await request(app)
+    .post('/auth/login')
+    .send(loginData);
+
+  if (response3.status !== 200) {
+    console.log('Response body:', response3.body);
+  }
+
+  token = response3.body.token;
 
 });
 
@@ -51,7 +51,7 @@ describe('Auth Endpoints', () => {
   it('success create company; status 201 ', async () => {
     const registrationData = {
       name: "Test company name",
-      email: companyEmail+'   ',
+      email: companyEmail + '   ',
       user_id: userId
     };
 
@@ -64,7 +64,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     expect(response.status).toBe(201);
-expect(response.body.message).toBe('Company created successfully');
+    expect(response.body.message).toBe('Company created successfully');
 
   });
 });
@@ -104,7 +104,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response);
     }
     expect(response.status).toBe(400);
-expect(response.body.errors).toEqual(["Email cannot be empty."]);
+    expect(response.body.errors).toEqual(["Email cannot be empty."]);
 
   });
 });
@@ -125,7 +125,7 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     expect(response.status).toBe(400);
-expect(response.body.errors).toEqual(["User ID cannot be empty."]);
+    expect(response.body.errors).toEqual(["User ID cannot be empty."]);
 
   });
 });
@@ -148,14 +148,14 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     expect(response.status).toBe(404);
-  expect(response.body.message).toBe('user does not exist');
+    expect(response.body.message).toBe('user does not exist');
 
   });
 });
 
 
 describe('Auth Endpoints', () => {
-  it('success create company; but email already in use; status 400', async () => {
+  it('fail create company; email already in use; status 409', async () => {
     const registrationData = {
       name: "Test company name",
       email: companyEmail,
@@ -168,11 +168,11 @@ describe('Auth Endpoints', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(registrationData);
 
-    if (response.status !== 201) {
+    if (response.status !== 409) {
       console.log('Response body:', response.body);
     }
-    expect(response.status).toBe(201);
-  expect(response.body.message).toBe('Company created successfully');
+    expect(response.status).toBe(409);
+    expect(response.body.message).toBe("Email already in use");
 
   });
 });
@@ -195,15 +195,15 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     expect(response.status).toBe(400);
-  expect(response.body.errors).toEqual(["User ID must be a number.", "Email must be a string.", "Name must be a string."]);
+    expect(response.body.errors).toEqual(["User ID must be a number.", "Email must be a string.", "Name must be a string."]);
 
   });
 });
 
 
-// borrado de todo lo creado
+// borrado de lo creado
 afterAll(async () => {
-    
+
   await prisma.user.deleteMany();
   await prisma.company.deleteMany();
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión

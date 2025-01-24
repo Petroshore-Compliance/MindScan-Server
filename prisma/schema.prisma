@@ -27,23 +27,15 @@ model User {
   created_at        DateTime              @default(now())
   updated_at        DateTime?             @updatedAt
   connected_at      DateTime?
-  //VerificationCodes VerificationCode[]
   userResponses     UserResponses[]
   userResult        Result[]
   CompanyInvitation CompanyInvitation[]
 }
 
-//model VerificationCode {
-//  verificationcodes_id Int  @id @default(autoincrement())
-//  user                 User @relation(fields: [user_id], references: [user_id])
-//  user_id              Int  @unique
-//  code                 Int  @unique
-//}
-
 model Company {
   company_id   Int                 @id @default(autoincrement())
   name         String
-  email        String
+  email        String              @unique
   users        User[]
   licenses     Int                 @default(0)
   licensesUsed Int                 @default(0)
@@ -203,14 +195,3 @@ enum State {
   rejected
   contacted
 }
-
-//apuntar si ha usado una licencia, 
-//no pueda invitar mas usuarios que licencias, 
-//check if made or has licenses
-//reorganizar diagnosticos para el trato de datos
-//tabla admin, crear admin, log admin, get admins, change paswword admin, change email admin, delete admin, receptor de emails?
-//tabla preguntas, respuesta,respuestaDeUser, resultado
-//idioma en las preguntas y respuesta
-
-//listo 
-// quitar usertype, añadir contador licencias
