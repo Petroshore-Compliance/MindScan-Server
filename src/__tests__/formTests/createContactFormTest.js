@@ -58,7 +58,7 @@ describe('Auth Endpoints', () => {
 
 
 describe('Auth Endpoints', () => {
-  it('fail create contact; contactForm with state inProgress already exists; status 423', async () => {
+  it('fail create contact; contactForm with state inProgress already exists; status 403', async () => {
 
     await prisma.contactForm.updateMany({
       where: {

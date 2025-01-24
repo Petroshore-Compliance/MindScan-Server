@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const request = require('supertest');
 const app = require('../../app');
-const prisma = require('../../db.js'); 
+const prisma = require('../../db.js');
 const { EMAIL_TESTER } = process.env;
 
 let companyId = 0;
@@ -26,73 +26,73 @@ beforeAll(async () => {
     password: "secureHashedPassword123",
   };
 
-     await request(app)
+  await request(app)
     .post('/auth/register')
     .send(registrationData);
 
-    const registrationDataAux = {
-      name: "Alice Smith",
-      email: "aux@email.com",
-      password: "secureHashedPassword123"
-    };
-  
-     await request(app)
-      .post('/auth/register')
-      .send(registrationDataAux);
+  const registrationDataAux = {
+    name: "Alice Smith",
+    email: "aux@email.com",
+    password: "secureHashedPassword123"
+  };
 
-    
-      const auxuserData = await prisma.user.findUnique({
-        where: {       email: "aux@email.com"},
-        
-      })
-
-      auxUserId = auxuserData.user_id;
-
-const userData = await prisma.user.findUnique({
-  where: {       email: EMAIL_TESTER},
-
-})
+  await request(app)
+    .post('/auth/register')
+    .send(registrationDataAux);
 
 
-      userId = userData.user_id;
+  const auxuserData = await prisma.user.findUnique({
+    where: { email: "aux@email.com" },
 
-          const loginData = {
-            "email": EMAIL_TESTER,
-            "password": "secureHashedPassword123"
-          }
-      
-          const response3 = await request(app)
-            .post('/auth/login')
-            .send(loginData);
-      
-          if (response3.status !== 200) {
-            console.log('Response body:', response3.body);
-          }
-      
-          token=response3.body.token;
+  })
 
-          const companyData = {
-            name: "Test company name",
-            email: companyEmail,
-            subscription_plan_id: subscriptionPlanId,
-            user_id: userId
-          };
-      
-          const companyResponse = await request(app)
-            .post('/companies/create-company')
-            .set('Authorization', `Bearer ${token}`)
-            .send(companyData);
+  auxUserId = auxuserData.user_id;
 
-            const companyInviter = await prisma.company.findUnique({
-              where: {       company_id: companyResponse._body.company.company_id},
-              include: {
-                users: true
-              }
-            })
+  const userData = await prisma.user.findUnique({
+    where: { email: EMAIL_TESTER },
 
-           
+  })
 
-companyId = companyInviter.company_id;
+
+  userId = userData.user_id;
+
+  const loginData = {
+    "email": EMAIL_TESTER,
+    "password": "secureHashedPassword123"
+  }
+
+  const response3 = await request(app)
+    .post('/auth/login')
+    .send(loginData);
+
+  if (response3.status !== 200) {
+    console.log('Response body:', response3.body);
+  }
+
+  token = response3.body.token;
+
+  const companyData = {
+    name: "Test company name",
+    email: companyEmail,
+    subscription_plan_id: subscriptionPlanId,
+    user_id: userId
+  };
+
+  const companyResponse = await request(app)
+    .post('/companies/create-company')
+    .set('Authorization', `Bearer ${token}`)
+    .send(companyData);
+
+  const companyInviter = await prisma.company.findUnique({
+    where: { company_id: companyResponse._body.company.company_id },
+    include: {
+      users: true
+    }
+  })
+
+
+
+  companyId = companyInviter.company_id;
 
 
 
@@ -102,11 +102,11 @@ companyId = companyInviter.company_id;
 
 
 describe('Auth Endpoints', () => {
-  it('fail create invitation;invited is the company admin; status 400 ', async () => {
+  it('fail create invitation;invited is the company admin; status 409 ', async () => {
 
     const invitationData = {
       email: EMAIL_TESTER,
-      role:"manager",
+      role: "manager",
       company_id: companyId,
       companyName: "uwuntu"
     };
@@ -116,11 +116,11 @@ describe('Auth Endpoints', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(invitationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 409) {
       console.log('Response body:', response.body);
     }
     expect(response.body.message).toBe('This user is the administrator of this company.');
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(409);
 
   });
 });
@@ -130,7 +130,7 @@ describe('Auth Endpoints', () => {
 
     const invitationData = {
       email: "exito@invited.com",
-      role:"definitivamente esto no es un rol",
+      role: "definitivamente esto no es un rol",
       company_id: companyId,
       companyName: "uwuntu"
     };
@@ -155,7 +155,7 @@ describe('Auth Endpoints', () => {
 
     const invitationData = {
       email: 34,
-      role:22,
+      role: 22,
       company_id: "companyId",
       companyName: 2
     };
@@ -168,7 +168,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["Email must be a string.","Role must be a string.",  "Company ID must be a number."]);
+    expect(response.body.errors).toEqual(["Email must be a string.", "Role must be a string.", "Company ID must be a number."]);
     expect(response.status).toBe(400);
 
   });
@@ -180,7 +180,7 @@ describe('Auth Endpoints', () => {
 
     const invitationData = {
       email: "exito@invited.com",
-      role:"employee",
+      role: "employee",
       company_id: companyId
     };
 
@@ -209,7 +209,7 @@ describe('Auth Endpoints', () => {
 
     const invitationData = {
       email: "exito@invited.com",
-      role:"employee",
+      role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
     };
@@ -230,75 +230,75 @@ describe('Auth Endpoints', () => {
 
 
 describe('Auth Endpoints', () => {
-  it('fail create invitation ; already a member ; status 400', async () => {
-  
+  it('fail create invitation ; already a member ; status 409', async () => {
 
-const registerUserData = {
-  email: "exito@invited.com",
-  password: "secureHashedPassword123",
-  name: "exito",
-  surname: "exito",
-  company_id: companyId,
-        role:"employee",
 
-};
-console.log("bbbbbbdfsbsdfbvsdfbsdfbsefbsd",registerUserData)
+    const registerUserData = {
+      email: "exito@invited.com",
+      password: "secureHashedPassword123",
+      name: "exito",
+      surname: "exito",
+      company_id: companyId,
+      role: "employee",
+
+    };
+    console.log("bbbbbbdfsbsdfbvsdfbsdfbsefbsd", registerUserData)
     const invitationData = {
       email: "exito@invited.com",
-      role:"employee",
+      role: "employee",
       company_id: companyId
     };
 
     await request(app)
-    .post('/auth/register')
-    .send(registerUserData);
+      .post('/auth/register')
+      .send(registerUserData);
 
-await prisma.companyInvitation.deleteMany();
+    await prisma.companyInvitation.deleteMany();
 
     const response = await request(app)
       .post('/companies/invite')
       .set('Authorization', `Bearer ${token}`)
       .send(invitationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 409) {
       console.log('Response body:', response.body);
     }
 
-    
+
     expect(response.body.message).toBe('This user is already part of this company');
-    expect(response.status).toBe(400);
-    
+    expect(response.status).toBe(409);
+
 
   });
 });
 
 
 describe('Auth Endpoints', () => {
-  it('fail create invitation ; invited in last hour ; status 400', async () => {
-  
-    
-//simula sacar el usuario de la empresa
-await prisma.user.update(
-  {
-    where: {
-      email: "exito@invited.com",
-    },
-    data: {
-      company_id: null,
-    },
-  }
-)
+  it('fail create invitation ; invited in last hour ; status 429', async () => {
+
+
+    //simula sacar el usuario de la empresa
+    await prisma.user.update(
+      {
+        where: {
+          email: "exito@invited.com",
+        },
+        data: {
+          company_id: null,
+        },
+      }
+    )
 
     const invitationData = {
       email: "exito@invited.com",
-      role:"employee",
+      role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
     };
     await request(app)
-    .post('/companies/invite')
-    .set('Authorization', `Bearer ${token}`)
-    .send(invitationData);
+      .post('/companies/invite')
+      .set('Authorization', `Bearer ${token}`)
+      .send(invitationData);
 
     await prisma.companyInvitation.updateMany({
       where: {
@@ -314,35 +314,35 @@ await prisma.user.update(
       .set('Authorization', `Bearer ${token}`)
       .send(invitationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 429) {
       console.log('Response body:', response.body);
     }
     expect(response.body.message).toBe('Email invited within hour');
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(429);
 
   });
 });
 
 
 describe('Auth Endpoints', () => {
-  it('fail create invitation ; admin another company ; status 400', async () => {
-  
+  it('fail create invitation ; admin another company ; status 403', async () => {
+
     //simula que el usuario es admin en otra empresa
-await prisma.user.update(
-  {
-    where: {
-      email: "exito@invited.com",
-    },
-    data: {
-      company_id: null,
-      role: "admin",
-    },
-  }
-)
+    await prisma.user.update(
+      {
+        where: {
+          email: "exito@invited.com",
+        },
+        data: {
+          company_id: null,
+          role: "admin",
+        },
+      }
+    )
 
     const invitationData = {
       email: "exito@invited.com",
-      role:"employee",
+      role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
     };
@@ -352,11 +352,11 @@ await prisma.user.update(
       .set('Authorization', `Bearer ${token}`)
       .send(invitationData);
 
-    if (response.status !== 400) {
+    if (response.status !== 403) {
       console.log('Response body:', response.body);
     }
     expect(response.body.message).toBe('This user is the administrator of a company, you cant invite him to another company');
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(403);
 
   });
 });
@@ -366,7 +366,7 @@ describe('Auth Endpoints', () => {
   it('fail create invitation; not logged in ;status 401 ', async () => {
 
     const invitationData = {
-      role:"employee",
+      role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
     };
@@ -390,7 +390,7 @@ describe('Auth Endpoints', () => {
 
     const invitationData = {
       email: undefined,
-      role:"employee",
+      role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
     };
@@ -414,7 +414,7 @@ describe('Auth Endpoints', () => {
 
     const invitationData = {
       email: "exito@invited.com",
-      role:undefined,
+      role: undefined,
       company_id: companyId,
       companyName: "uwuntu"
     };
@@ -437,7 +437,7 @@ describe('Auth Endpoints', () => {
   it('fail create invitation; missing all data;status 400 ', async () => {
 
     const invitationData = {
-      
+
     };
 
     const response = await request(app)
@@ -449,10 +449,10 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     expect(response.body.errors).toEqual([
-         "Email cannot be empty.",
-          "Role cannot be empty.",
-         "Company ID cannot be empty.",
-        ]);
+      "Email cannot be empty.",
+      "Role cannot be empty.",
+      "Company ID cannot be empty.",
+    ]);
     expect(response.status).toBe(400);
 
   });
@@ -464,7 +464,7 @@ describe('Auth Endpoints', () => {
 
     const invitationData = {
       email: "exito@invited.com",
-      role:"employee",
+      role: "employee",
       companyName: "uwuntu"
     };
 
@@ -486,11 +486,11 @@ describe('Auth Endpoints', () => {
 
 // borrado de lo creado
 afterAll(async () => {
-      await prisma.user.deleteMany();
-      
-      await prisma.companyInvitation.deleteMany();
-      await prisma.company.deleteMany();
-  
+  await prisma.user.deleteMany();
+
+  await prisma.companyInvitation.deleteMany();
+  await prisma.company.deleteMany();
+
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });
 
