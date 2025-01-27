@@ -7,7 +7,7 @@ const prisma = require("../../db.js");
 
 
 //este método se encarga de crear un nuevo usuario en la base de datos
-// recibe como parámetros el email, la contraseña, el nombre, el tipo de usuario, el rol y el id de la compañía
+// recibe como parámetros el email, la contraseña, el nombrey el id de la compañía
 // y devuelve un objeto con la respuesta del registro del usuario
 const createAdminController = async (
   email,

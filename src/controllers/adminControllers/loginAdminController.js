@@ -35,7 +35,6 @@ const loginAdminController = async (email, password) => {
     {
       id: petroAdmin.petroAdmin_id,
       email: petroAdmin.email,
-      role: petroAdmin.role,
     },
     process.env.JWT_SECRET,
     {
@@ -49,8 +48,7 @@ const loginAdminController = async (email, password) => {
       id: petroAdmin.petroAdmin_id,
       name: petroAdmin.name,
       email: petroAdmin.email,
-      role: petroAdmin.role,
-      petroAdmin_type: petroAdmin.petroAdmin_type,
+      notifications: petroAdmin.notifications,
     },
     status: 200,
     message: "petroAdmin logged in successfully",

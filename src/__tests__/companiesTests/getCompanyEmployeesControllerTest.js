@@ -67,6 +67,8 @@ describe('Auth Endpoints', () => {
   it('success get company; status 200 ', async () => {
 
     const copmanyData = {
+      email: EMAIL_TESTER,
+      neededRole: "manager",
       company_id: companyId,
       user_id: userId
     };
@@ -91,6 +93,8 @@ describe('Auth Endpoints', () => {
   it('fail get company; not found; status 404 ', async () => {
 
     const copmanyData = {
+      email: EMAIL_TESTER,
+      neededRole: "manager",
       company_id: 1,
       user_id: userId
     };
@@ -115,6 +119,8 @@ describe('Auth Endpoints', () => {
   it('fail get company; not company_id; status 400 ', async () => {
 
     const copmanyData = {
+      email: EMAIL_TESTER,
+      neededRole: "manager",
 
       user_id: userId
     };
@@ -137,6 +143,8 @@ describe('Auth Endpoints', () => {
   it('fail get company; not user_id; status 400 ', async () => {
 
     const copmanyData = {
+      email: EMAIL_TESTER,
+      neededRole: "manager",
       company_id: 1
     };
 
@@ -160,6 +168,8 @@ describe('Auth Endpoints', () => {
   it('fail get company; wrong typeof; status 400 ', async () => {
 
     const copmanyData = {
+      email: EMAIL_TESTER,
+      neededRole: "manager",
       company_id: "definitivamente esto es un id",
       user_id: "definitivamente esto es un userId"
     };
@@ -175,6 +185,81 @@ describe('Auth Endpoints', () => {
 
     expect(response.body.errors).toEqual(["User ID must be a number.", "Company ID must be a number."]);
     expect(response.status).toBe(400);
+
+  });
+});
+
+describe('Auth Endpoints', () => {
+  it('fail get company; missing neededRole; status 400 ', async () => {
+
+    const copmanyData = {
+      email: EMAIL_TESTER,
+      company_id: "definitivamente esto es un id",
+      user_id: "definitivamente esto es un userId"
+    };
+
+    const response = await request(app)
+      .get('/companies/get-employees')
+      .set('Authorization', `Bearer ${token}`)
+      .send(copmanyData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.body.errors).toEqual("no valid role");
+    expect(response.status).toBe(400);
+
+  });
+});
+
+describe('Auth Endpoints', () => {
+  it('fail get company; missing email; status 400 ', async () => {
+
+    const copmanyData = {
+      neededRole: "manager",
+      company_id: "definitivamente esto es un id",
+      user_id: "definitivamente esto es un userId"
+    };
+
+    const response = await request(app)
+      .get('/companies/get-employees')
+      .set('Authorization', `Bearer ${token}`)
+      .send(copmanyData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.body.errors).toEqual("no valid email");
+    expect(response.status).toBe(400);
+
+  });
+});
+
+describe('Auth Endpoints', () => {
+  it('fail get company; not permission; status 403 ', async () => {
+    await prisma.user.updateMany({
+      data: { role: "employee" }
+    });
+    const copmanyData = {
+      email: EMAIL_TESTER,
+      neededRole: "admin",
+      company_id: "definitivamente esto es un id",
+      user_id: "definitivamente esto es un userId"
+    };
+
+    const response = await request(app)
+      .get('/companies/get-employees')
+      .set('Authorization', `Bearer ${token}`)
+      .send(copmanyData);
+
+    if (response.status !== 403) {
+      console.log('Response body:', response.body);
+    }
+
+    expect(response.body.errors).toEqual("user not authorized");
+    expect(response.status).toBe(403);
 
   });
 });

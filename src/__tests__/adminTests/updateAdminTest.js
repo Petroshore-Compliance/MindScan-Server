@@ -233,7 +233,7 @@ describe('admin Endpoints', () => {
     }
 
     expect(response.status).toBe(400);
-    expect(response.body.errors).toEqual(["Company ID must be a number.", "petroAdmin ID must be a number.", "Name must be a string.", "Email must be a string.", "Password must be a string.", "Invalid role"]);
+    expect(response.body.errors).toEqual(["Company ID must be a number.", "petroAdmin ID must be a number.", "Name must be a string.", "Email must be a string.", "Password must be a string."]);
 
   });
 
