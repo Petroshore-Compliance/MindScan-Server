@@ -5,16 +5,22 @@ const { validateString, regexEmail } = require("../tools/validations.js");
 
 const roleCheck = async (data) => {
 
-  const { neededRole, email } = data;
+  const { neededRole, email, host, guest } = data;
 
 
 
   let result = validateString(neededRole, 'neededRole');
   if (result.error) return { error: "no valid role", status: 400, message: result.error };
 
+  if (host || guest) {
+    result = validateString(host, 'Host email', regexEmail);
+    if (result.error) return { error: "no valid host email", status: 400, message: result.error };
 
-  result = validateString(email, 'Email', regexEmail);
-  if (result.error) return { error: "no valid email", status: 400, message: result.error };
+  } else {
+    result = validateString(email, 'Email', regexEmail);
+    if (result.error) return { error: "no valid email", status: 400, message: result.error };
+
+  }
 
   let user = await prisma.user.findUnique({
     where: {

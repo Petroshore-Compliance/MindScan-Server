@@ -13,10 +13,9 @@ const { getCompanyHandler } = require("../handlers/companiesHandlers/getCompanyH
 const { getCompanyEmployeesHandler } = require("../handlers/companiesHandlers/getCompanyEmployeesHandler.js");
 const { inviteHandler } = require("../handlers/companiesHandlers/inviteHandler.js");
 
-
 router.post("/create-company", authMiddleware, createCompanyMiddleware, createCompanyHandler);
-router.post("/invite", authMiddleware, inviteMiddleware, inviteHandler);
-router.get("/get-company", roleMiddleware, authMiddleware, getCompanyMiddleware, getCompanyHandler);
+router.post("/invite", authMiddleware, roleMiddleware, inviteMiddleware, inviteHandler);
+router.get("/get-company", authMiddleware, roleMiddleware, getCompanyMiddleware, getCompanyHandler);
 router.get("/get-employees", authMiddleware, roleMiddleware, getCompanyEmployeesMiddleware, getCompanyEmployeesHandler);
 
 module.exports = router;

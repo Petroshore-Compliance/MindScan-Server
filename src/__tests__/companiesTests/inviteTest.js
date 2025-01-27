@@ -105,7 +105,10 @@ describe('Auth Endpoints', () => {
   it('fail create invitation;invited is the company admin; status 409 ', async () => {
 
     const invitationData = {
-      email: EMAIL_TESTER,
+      host: EMAIL_TESTER,
+      guest: EMAIL_TESTER,
+      neededRole: "manager",
+
       role: "manager",
       company_id: companyId,
       companyName: "uwuntu"
@@ -129,7 +132,9 @@ describe('Auth Endpoints', () => {
   it('fail create invitation;role not exists ;status 200 ', async () => {
 
     const invitationData = {
-      email: "exito@invited.com",
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
       role: "definitivamente esto no es un rol",
       company_id: companyId,
       companyName: "uwuntu"
@@ -154,7 +159,9 @@ describe('Auth Endpoints', () => {
   it('fail create invitation;wrong typeof; status 200 ', async () => {
 
     const invitationData = {
-      email: 34,
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: 34,
       role: 22,
       company_id: "companyId",
       companyName: 2
@@ -168,7 +175,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["Email must be a string.", "Role must be a string.", "Company ID must be a number."]);
+    expect(response.body.errors).toEqual(["Guest email must be a string.", "Role must be a string.", "Company ID must be a number."]);
     expect(response.status).toBe(400);
 
   });
@@ -179,7 +186,9 @@ describe('Auth Endpoints', () => {
   it('success create invitation; status 200 ', async () => {
 
     const invitationData = {
-      email: "exito@invited.com",
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
       role: "employee",
       company_id: companyId
     };
@@ -208,7 +217,9 @@ describe('Auth Endpoints', () => {
   it('fail create invitation;already pending invitation; status 400', async () => {
 
     const invitationData = {
-      email: "exito@invited.com",
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
       role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
@@ -222,7 +233,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.message).toBe('This email already has a pending invitation');
+    expect(response.body.message).toBe('This Guest email already has a pending invitation');
     expect(response.status).toBe(400);
 
   });
@@ -244,7 +255,9 @@ describe('Auth Endpoints', () => {
     };
     console.log("bbbbbbdfsbsdfbvsdfbsdfbsefbsd", registerUserData)
     const invitationData = {
-      email: "exito@invited.com",
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
       role: "employee",
       company_id: companyId
     };
@@ -290,7 +303,9 @@ describe('Auth Endpoints', () => {
     )
 
     const invitationData = {
-      email: "exito@invited.com",
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
       role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
@@ -317,7 +332,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 429) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.message).toBe('Email invited within hour');
+    expect(response.body.message).toBe('Guest email invited within hour');
     expect(response.status).toBe(429);
 
   });
@@ -341,7 +356,9 @@ describe('Auth Endpoints', () => {
     )
 
     const invitationData = {
-      email: "exito@invited.com",
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
       role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
@@ -366,6 +383,8 @@ describe('Auth Endpoints', () => {
   it('fail create invitation; not logged in ;status 401 ', async () => {
 
     const invitationData = {
+      host: EMAIL_TESTER,
+      neededRole: "manager",
       role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
@@ -386,10 +405,12 @@ describe('Auth Endpoints', () => {
 
 
 describe('Auth Endpoints', () => {
-  it('fail create invitation; missing email;status 400 ', async () => {
+  it('fail create invitation; missing Guest email;status 400 ', async () => {
 
     const invitationData = {
-      email: undefined,
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: undefined,
       role: "employee",
       company_id: companyId,
       companyName: "uwuntu"
@@ -403,7 +424,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["Email cannot be empty."]);
+    expect(response.body.errors).toEqual(["Guest email cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
@@ -413,7 +434,9 @@ describe('Auth Endpoints', () => {
   it('fail create invitation; missing role;status 400 ', async () => {
 
     const invitationData = {
-      email: "exito@invited.com",
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
       role: undefined,
       company_id: companyId,
       companyName: "uwuntu"
@@ -437,6 +460,9 @@ describe('Auth Endpoints', () => {
   it('fail create invitation; missing all data;status 400 ', async () => {
 
     const invitationData = {
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
 
     };
 
@@ -449,7 +475,6 @@ describe('Auth Endpoints', () => {
       console.log('Response body:', response.body);
     }
     expect(response.body.errors).toEqual([
-      "Email cannot be empty.",
       "Role cannot be empty.",
       "Company ID cannot be empty.",
     ]);
@@ -463,7 +488,9 @@ describe('Auth Endpoints', () => {
   it('fail create invitation; missing company_id;status 400 ', async () => {
 
     const invitationData = {
-      email: "exito@invited.com",
+      host: EMAIL_TESTER,
+      neededRole: "manager",
+      guest: "exito@invited.com",
       role: "employee",
       companyName: "uwuntu"
     };
@@ -482,6 +509,64 @@ describe('Auth Endpoints', () => {
   });
 });
 
+describe('Auth Endpoints', () => {
+  it('fail create invitation; missing host;status 400 ', async () => {
+
+    const invitationData = {
+      neededRole: "manager",
+      guest: "exito@invited.com",
+      role: "employee",
+      company_id: companyId
+    };
+
+    const response = await request(app)
+      .post('/companies/invite')
+      .set('Authorization', `Bearer ${token}`)
+      .send(invitationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.errors).toBe("no valid host email");
+    expect(response.status).toBe(400);
+
+    await request(app)
+      .post('/auth/registerUser')
+      .send(invitationData);
+
+
+  });
+});
+
+
+describe('Auth Endpoints', () => {
+  it('fail create invitation; missing neededRole; status 400', async () => {
+
+    const invitationData = {
+      host: EMAIL_TESTER,
+      guest: "exito@invited.com",
+      role: "employee",
+      company_id: companyId
+    };
+
+    const response = await request(app)
+      .post('/companies/invite')
+      .set('Authorization', `Bearer ${token}`)
+      .send(invitationData);
+
+    if (response.status !== 400) {
+      console.log('Response body:', response.body);
+    }
+    expect(response.body.errors).toBe("no valid role");
+    expect(response.status).toBe(400);
+
+    await request(app)
+      .post('/auth/registerUser')
+      .send(invitationData);
+
+
+  });
+});
 
 
 // borrado de lo creado
