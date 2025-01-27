@@ -6,7 +6,7 @@ const { emailCreateNewUserScript } = require("../../tools/emailCreateNewUserScri
 const { createInvitationController } = require("../../controllers/invitationsControllers/createInvitationController.js");
 
 // crea una invitación para el usuario y envia un email
-//recibe email, role, company_id
+//recibe guest, role, company_id
 const inviteController = async (data) => {
 
   let isNew = false;
@@ -23,7 +23,7 @@ const inviteController = async (data) => {
 
   const user = await prisma.user.findUnique({
     where: {
-      email: data.email.toLowerCase(),
+      email: data.guest.toLowerCase(),
     },
   });
 
@@ -50,7 +50,7 @@ const inviteController = async (data) => {
     // Check if there's any active (pending) invitation
     const activeInvitation = await prisma.companyInvitation.findFirst({
       where: {
-        email: data.email.toLowerCase(),
+        email: data.guest.toLowerCase(),
         company_id: parseInt(company.company_id),
         // Adjust this condition based on how you define 'active'
         status: 'pending'
@@ -58,7 +58,7 @@ const inviteController = async (data) => {
     });
 
     if (activeInvitation) {
-      return { status: 423, message: "This email already has a pending invitation" };
+      return { status: 423, message: "This Guest email already has a pending invitation" };
     }
 
     // No active invitations, now check if any invitation was created in the last hour
@@ -66,7 +66,7 @@ const inviteController = async (data) => {
 
     const recentInvitation = await prisma.companyInvitation.findFirst({
       where: {
-        email: data.email.toLowerCase(),
+        email: data.guest.toLowerCase(),
         company_id: parseInt(company.company_id),
         created_at: { gte: oneHourAgo }
         // No status filter here, we consider all statuses.
@@ -76,7 +76,7 @@ const inviteController = async (data) => {
     if (recentInvitation) {
       return {
         status: 429,
-        message: "Email invited within hour"
+        message: "Guest email invited within hour"
       };
     }
 
@@ -91,13 +91,13 @@ const inviteController = async (data) => {
 
   let alreadyInvited = await prisma.companyInvitation.findMany({
     where: {
-      email: data.email.toLowerCase(),
+      email: data.guest.toLowerCase(),
       company_id: parseInt(company.company_id),
     },
   });
 
   if (alreadyInvited.length !== 0) {
-    return { status: 400, message: `This email already has a pending invitation` };
+    return { status: 400, message: `This Guest email already has a pending invitation` };
   }
   if ((company.invitations.length) > company.licenses) {
     return { status: 422, message: "Not enough licenses" };
@@ -107,10 +107,10 @@ const inviteController = async (data) => {
   //send email to user
   if (isNew) {
 
-    emailCreateNewUserScript(data.email, "../templates/invitationEmailNewAccount.html", company.companyName, response.invitation.invitation_token);
+    emailCreateNewUserScript(data.guest, "../templates/invitationEmailNewAccount.html", company.companyName, response.invitation.invitation_token);
 
   } else {
-    emailChangeCompanySenderScript(user.user_id, user.email, "../templates/invitationEmailExistingAccount.html", company.companyName, response.invitation.invitation_token);
+    emailChangeCompanySenderScript(user.user_id, user.guest, "../templates/invitationEmailExistingAccount.html", company.companyName, response.invitation.invitation_token);
   };
   return { status: response.status, message: response.message, invitation: response.invitation };
 }
