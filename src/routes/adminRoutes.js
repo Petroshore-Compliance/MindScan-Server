@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
+
 const { adminMiddleware } = require("../middlewares/adminMiddleware.js");
 const { getAdminsMiddleware } = require("../middlewares/adminMiddlewares/getAdminsMiddleware.js");
 const { updateAdminMiddleware } = require("../middlewares/adminMiddlewares/updateAdminMiddleware.js");

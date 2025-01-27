@@ -1,12 +1,18 @@
-const roleMiddleware = (req, res, next) => {
-  const { userRole, neededRole } = req.body;
+const { roleCheck } = require("../tools/roleCheck");
 
-  if (userRole === neededRole) {
-    res.status(200).json({ message: "Access granted" });
-    return next(); 
-  } else {
-    res.status(403).json({ message: "Access denied, role requirement not met" });
-  }
+
+const roleMiddleware = async (req, res, next) => {
+
+  const result = await roleCheck(req.body);
+
+  if (result.error) {
+
+    return res.status(result.status).json({ errors: result.error });
+  } else { next(); }
+
+
+
+
 };
 
 module.exports = { roleMiddleware };
