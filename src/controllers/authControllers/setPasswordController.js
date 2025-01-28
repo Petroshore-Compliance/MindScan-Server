@@ -9,7 +9,7 @@ const setPasswordController = async (email, newPassword) => {
 
 
   const user = await prisma.user.findUnique({
-    where: { email: email },
+    where: { email: email.toLowerCase() },
   });
 
   if (!user) {
@@ -18,7 +18,7 @@ const setPasswordController = async (email, newPassword) => {
 
   await prisma.user.update({
     where: {
-      email: email,
+      email: email.toLowerCase(),
     },
     data: {
       password: await bcrypt.hash(newPassword, 10),
