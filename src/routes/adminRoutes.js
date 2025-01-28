@@ -11,6 +11,7 @@ const { loginAdminMiddleware } = require("../middlewares/adminMiddlewares/loginA
 const { forgotPasswordAdminMiddleware } = require("../middlewares/adminMiddlewares/forgotPasswordAdminMiddleware.js");
 const { setPasswordAdminMiddleware } = require("../middlewares/adminMiddlewares/setPasswordAdminMiddleware.js");
 const { changePasswordAdminMiddleware } = require("../middlewares/adminMiddlewares/changePasswordAdminMiddleware.js");
+const { getCompaniesMiddleware } = require("../middlewares/adminMiddlewares/getCompaniesMiddleware.js");
 
 const { getAdminsHandler } = require("../handlers/adminHandlers/getAdminsHandler.js");
 const { updateAdminHandler } = require("../handlers/adminHandlers/updateAdminHandler.js");
@@ -20,6 +21,7 @@ const { loginAdminHandler } = require("../handlers/adminHandlers/loginAdminHandl
 const { forgotPasswordAdminHandler } = require("../handlers/adminHandlers/forgotPasswordAdminHandler.js");
 const { setPasswordAdminHandler } = require("../handlers/adminHandlers/setPasswordAdminHandler.js");
 const { changePasswordAdminHandler } = require("../handlers/adminHandlers/changePasswordAdminHandler.js");
+const { getCompaniesHandler } = require("../handlers/adminHandlers/getCompaniesHandler.js");
 
 router.post("/create", createAdminMiddleware, createAdminHandler);
 router.post("/login", loginAdminMiddleware, loginAdminHandler);
@@ -29,10 +31,11 @@ router.patch("/change-password", adminMiddleware, changePasswordAdminMiddleware,
 router.get("/forgot-password", forgotPasswordAdminMiddleware, forgotPasswordAdminHandler);
 router.get("/get", adminMiddleware, getAdminsMiddleware, getAdminsHandler);
 router.delete("/delete", adminMiddleware, deleteAdminMiddleware, deleteAdminHandler);
+router.get("/get-companies", adminMiddleware, getCompaniesMiddleware, getCompaniesHandler);
 
 
 // Ruta para verificar si el token es válido (Solo para pruebas)
-router.post("/verify-user", adminMiddleware, (req, res) => {
+router.post("/verify-admin", adminMiddleware, (req, res) => {
   res.json({
     message: "Token válido",
     user: req.user,
