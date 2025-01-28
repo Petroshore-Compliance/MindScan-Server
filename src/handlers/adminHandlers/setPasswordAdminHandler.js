@@ -3,8 +3,8 @@ const { setPasswordAdminController } = require("../../controllers/adminControlle
 
 const setPasswordAdminHandler = async (req, res) => {
   try {
-    const { petroAdmin_id, newPassword } = req.body;
-    const response = await setPasswordAdminController(petroAdmin_id, newPassword);
+    const { email, newPassword } = req.body;
+    const response = await setPasswordAdminController(email, newPassword);
 
     return res.status(response.status).json({ message: response.message });
 

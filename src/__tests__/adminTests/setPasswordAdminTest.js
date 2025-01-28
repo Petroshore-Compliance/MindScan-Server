@@ -22,13 +22,9 @@ beforeAll(async () => {
 describe('admin Endpoints', () => {
   it('set petroAdmin password; status 200', async () => {
 
-    const petroAdminData = await prisma.petroAdmin.findUnique({
-      where: { email: EMAIL_TESTER },
-
-    })
     const verificationData = {
 
-      petroAdmin_id: petroAdminData.petroAdmin_id,
+      email: EMAIL_TESTER,
       newPassword: "secureHashedPassword123"
     }
 
@@ -47,7 +43,7 @@ describe('admin Endpoints', () => {
 });
 
 describe('admin Endpoints', () => {
-  it('fail set password; missing id; status 400', async () => {
+  it('fail set password; missing email; status 400', async () => {
 
     await prisma.petroAdmin.findUnique({
       where: { email: EMAIL_TESTER },
@@ -66,8 +62,7 @@ describe('admin Endpoints', () => {
       console.log('Response body:', response.body);
     }
     expect(response.body.errors).toEqual([
-      "petroAdmin id cannot be empty."
-    ]);
+      "Email cannot be empty."]);
     expect(response.status).toBe(400);
 
   });
@@ -93,7 +88,7 @@ describe('admin Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["Password cannot be empty.", "Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]);
+    expect(response.body.errors).toEqual(["New Password cannot be empty."]);
 
     expect(response.status).toBe(400);
 
@@ -109,7 +104,7 @@ describe('admin Endpoints', () => {
     })
     const verificationData = {
 
-      petroAdmin_id: 1,
+      email: "email@nonexistent.vom",
       newPassword: "secureHashedPassword123"
     }
 
@@ -130,13 +125,9 @@ describe('admin Endpoints', () => {
 describe('admin Endpoints', () => {
   it('fail set password; invalid password; status 400', async () => {
 
-    const petroAdminData = await prisma.petroAdmin.findUnique({
-      where: { email: EMAIL_TESTER },
-
-    })
     const verificationData = {
 
-      petroAdmin_id: petroAdminData.petroAdmin_id,
+      email: EMAIL_TESTER,
       newPassword: "a"
     }
 
@@ -147,7 +138,7 @@ describe('admin Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]);
+    expect(response.body.errors).toEqual(["Invalid new password format."]);
 
     expect(response.status).toBe(400);
 
@@ -163,7 +154,7 @@ describe('admin Endpoints', () => {
     })
     const verificationData = {
 
-      petroAdmin_id: "definitivamente esto es un id",
+      email: 3,
       newPassword: 3
     }
 
@@ -174,7 +165,8 @@ describe('admin Endpoints', () => {
     if (response.status !== 400) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toEqual(["Password must be a string.", "petroAdmin id must be a number.", "Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."]);
+    expect(response.body.errors).toEqual(["Email must be a string.",
+      "New Password must be a string.",]);
 
     expect(response.status).toBe(400);
 
