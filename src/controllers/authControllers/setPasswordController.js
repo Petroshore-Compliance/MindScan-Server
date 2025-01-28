@@ -3,28 +3,28 @@ const bcrypt = require("bcrypt");
 const prisma = require("../../db.js");
 
 //cambiar la contraseña de un usuario que ha olvidado su contraseña
-//recibe el user_id y la nueva contraseña
+//recibe el email y la nueva contraseña
 //y devuelve cambio de contraseña exitoso o fallido
-const setPasswordController = async (user_id, newPassword) => {
+const setPasswordController = async (email, newPassword) => {
 
 
-const user = await prisma.user.findUnique({
-  where: { user_id: parseInt(user_id) },
-});
+  const user = await prisma.user.findUnique({
+    where: { email: email },
+  });
 
-if(!user){
-  return {status:404, message: "User not found"}
-}
+  if (!user) {
+    return { status: 404, message: "User not found" }
+  }
 
-await prisma.user.update({
-  where: {
-    user_id: user.user_id,
-  },
-  data: {
-    password: await bcrypt.hash(newPassword, 10),
-  },
-});
-return {status: 200, message: "Password updated successfully"}
+  await prisma.user.update({
+    where: {
+      email: email,
+    },
+    data: {
+      password: await bcrypt.hash(newPassword, 10),
+    },
+  });
+  return { status: 200, message: "Password updated successfully" }
 }
 
 module.exports = { setPasswordController };

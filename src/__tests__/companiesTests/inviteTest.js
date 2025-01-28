@@ -122,7 +122,7 @@ describe('Auth Endpoints', () => {
     if (response.status !== 409) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.message).toBe('This user is the administrator of this company.');
+    expect(response.body.message).toBe('This user is already part of this company');
     expect(response.status).toBe(409);
 
   });

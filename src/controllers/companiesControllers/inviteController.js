@@ -37,6 +37,9 @@ const inviteController = async (data) => {
 
 
   } else { //Comprobar si es necesario invitar
+    if (user.company_id == parseInt(company.company_id)) {
+      return { status: 409, message: "This user is already part of this company" };
+    }
     if (user.role == 'admin') {
       if (company.company_id == user.company_id) {
         return { status: 409, message: "This user is the administrator of this company." };
@@ -44,9 +47,7 @@ const inviteController = async (data) => {
         return { status: 403, message: "This user is the administrator of a company, you cant invite him to another company" };
       }
     }
-    if (user.company_id == parseInt(company.company_id)) {
-      return { status: 409, message: "This user is already part of this company" };
-    }
+
     // Check if there's any active (pending) invitation
     const activeInvitation = await prisma.companyInvitation.findFirst({
       where: {

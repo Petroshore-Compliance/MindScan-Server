@@ -22,11 +22,11 @@ const forgotPasswordController = async (email) => {
 
   htmlTemplate = fs.readFileSync(htmlTemplatePath, "utf8");
 
-  const htmlContent = htmlTemplate.replace(/{{resetURL}}/g, `localhost:4000/reset-password/${user.user_id}}`);
+  const htmlContent = htmlTemplate.replace(/{{resetURL}}/g, `localhost:4000/auth/reset-password}`);
 
   sendEmail(user.email, subject, htmlContent);
 
-  return { status: 200, URL: `localhost:4000/reset-password/${user.user_id}` };
+  return { status: 200, URL: `localhost:4000/reset-password` };
 }
 
 module.exports = { forgotPasswordController };

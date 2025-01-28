@@ -30,4 +30,13 @@ router.get("/forgot-password", forgotPasswordAdminMiddleware, forgotPasswordAdmi
 router.get("/get", adminMiddleware, getAdminsMiddleware, getAdminsHandler);
 router.delete("/delete", adminMiddleware, deleteAdminMiddleware, deleteAdminHandler);
 
+
+// Ruta para verificar si el token es válido (Solo para pruebas)
+router.post("/verify-user", adminMiddleware, (req, res) => {
+  res.json({
+    message: "Token válido",
+    user: req.user,
+  });
+});
+
 module.exports = router;

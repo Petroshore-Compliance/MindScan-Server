@@ -2,9 +2,6 @@ const bcrypt = require("bcrypt");
 
 const prisma = require("../../db.js");
 
-//pendiente de eliminar
-//const { createVerificationScript } = require("../../tools/createVerificationScript.js");
-
 
 //este método se encarga de crear un nuevo usuario en la base de datos
 // recibe como parámetros el email, la contraseña, el nombrey el id de la compañía
@@ -34,9 +31,6 @@ const createAdminController = async (
 
     },
   });
-  //pendiente de eliminar
-  //llamada al script que envía el corrreo de verificación (tools/createVerificationScript.js)
-  //createVerificationScript(newpetroAdmin.petroAdmin_id, newpetroAdmin.email,"../templates/verificationEmail.html");
 
   return { status: 201, message: 'petroAdmin registered successfully', petroAdmin: newpetroAdmin };
 };
