@@ -3,7 +3,7 @@ const {
   validateNumber,
   regexEmail,
   regexName,
-  regexPhone
+  regexPhone,
 } = require("../../tools/validations.js");
 
 const updateContactFormMiddleware = async (req, res, next) => {
@@ -19,30 +19,29 @@ const updateContactFormMiddleware = async (req, res, next) => {
     errors.push("message cannot be updated");
   }
 
-  result = validateNumber(form_id, 'Form ID');
+  result = validateNumber(form_id, "Form ID");
   if (result.error) errors.push(result.error);
 
-
   if (name) {
-    result = validateString(name, 'Name', regexName);
+    result = validateString(name, "Name", regexName);
     if (result.error) errors.push(result.error);
     else req.body.name = result.value;
   }
 
   if (email) {
-    result = validateString(email, 'Email', regexEmail);
+    result = validateString(email, "Email", regexEmail);
     if (result.error) errors.push(result.error);
     else req.body.email = result.value;
   }
 
   if (phone) {
-    result = validateString(phone, 'Phone', regexPhone);
+    result = validateString(phone, "Phone", regexPhone);
     if (result.error) errors.push(result.error);
     else req.body.phone = result.value;
   }
 
   if (language) {
-    result = validateString(language, 'Language');
+    result = validateString(language, "Language");
     if (result.error) errors.push(result.error);
     else req.body.language = result.value;
   }

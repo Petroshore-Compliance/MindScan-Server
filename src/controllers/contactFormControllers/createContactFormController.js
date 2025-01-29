@@ -5,10 +5,7 @@ const { createVerificationScript } = require("../../tools/createVerificationScri
 
 const { emailContactFormCreatedScript } = require("../../tools/emailContactFormCreatedScript.js");
 
-
-
 const createContactFormController = async (data) => {
-
   const alreadyExist = await prisma.contactForm.findFirst({
     where: {
       email: data.email,
@@ -34,8 +31,14 @@ const createContactFormController = async (data) => {
     },
   });
 
-
-  await emailContactFormCreatedScript(form.name, form.email, form.phone, form.language, form.message, "../templates/ContactFormCreatedEmail.html");
+  await emailContactFormCreatedScript(
+    form.name,
+    form.email,
+    form.phone,
+    form.language,
+    form.message,
+    "../templates/ContactFormCreatedEmail.html"
+  );
 
   return { status: 201, message: "Form created successfully", form: form };
 };

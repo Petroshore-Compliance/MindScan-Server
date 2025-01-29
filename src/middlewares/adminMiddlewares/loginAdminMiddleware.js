@@ -4,23 +4,20 @@ const loginAdminMiddleware = (req, res, next) => {
 
   const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
   const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-let result;
-  let errors = [];  
+  let result;
+  let errors = [];
 
-  result = validateString(email,'Email',regexEmail);
-    if(result.error) errors.push(result.error);
-    else req.body.email = result.value;
-    
+  result = validateString(email, "Email", regexEmail);
+  if (result.error) errors.push(result.error);
+  else req.body.email = result.value;
 
-if(password && password !== ''){
-
-  if (typeof password !== 'string') {
-    errors.push('Password must be a string.');
-  } 
-  
-}else{
-  errors.push('Password cannot be empty.');
-}
+  if (password && password !== "") {
+    if (typeof password !== "string") {
+      errors.push("Password must be a string.");
+    }
+  } else {
+    errors.push("Password cannot be empty.");
+  }
 
   // si hay errores, los devuelve
   if (errors.length > 0) {
@@ -29,12 +26,12 @@ if(password && password !== ''){
 
   // regex
   if (!regexEmail.test(email)) {
-    errors.push('Invalid email format.');
+    errors.push("Invalid email format.");
   }
 
   if (!regexPass.test(password)) {
     errors.push(
-      'Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit.'
+      "Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one digit."
     );
   }
 

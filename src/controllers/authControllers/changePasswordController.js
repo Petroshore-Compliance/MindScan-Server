@@ -1,13 +1,11 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
-const prisma = require('../../db.js');
-
+const prisma = require("../../db.js");
 
 //cambiar la contraseña de un usuario
 //recibe el user_id, la contraseña actual y la nueva contraseña
 //y devuelve cambio de contraseña exitoso o porque ha fallado
 const changePasswordController = async (user_id, password, newPassword) => {
-
   const parsed_user_id = parseInt(user_id);
 
   const user = await prisma.user.findUnique({
@@ -15,20 +13,19 @@ const changePasswordController = async (user_id, password, newPassword) => {
   });
 
   if (!user) {
-    return { status: 404, message: 'User not found.' };
+    return { status: 404, message: "User not found." };
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    return { status: 401, message: 'Old password is incorrect.' };
+    return { status: 401, message: "Old password is incorrect." };
   }
 
   const isPasswordSameAsBefore = await bcrypt.compare(newPassword, user.password);
   if (isPasswordSameAsBefore) {
-    return { status: 422, message: 'New password cannot be the same as the old password.' };
+    return { status: 422, message: "New password cannot be the same as the old password." };
   }
-
 
   user.password = await bcrypt.hash(newPassword, 10);
 
@@ -37,8 +34,7 @@ const changePasswordController = async (user_id, password, newPassword) => {
     data: { password: user.password },
   });
 
-  return { status: 200, message: 'Password changed successfully.' };
-
-}
+  return { status: 200, message: "Password changed successfully." };
+};
 
 module.exports = { changePasswordController };

@@ -1,14 +1,9 @@
-const {
-  validateNumber,
-  validateString
-} = require("../../tools/validations.js");
-
+const { validateNumber, validateString } = require("../../tools/validations.js");
 
 const createAdminMiddleware = (req, res, next) => {
   let { email, password, name } = req.body;
 
   // Default missing fields to empty strings to avoid `typeof` errors
-
 
   const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
   const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -18,18 +13,15 @@ const createAdminMiddleware = (req, res, next) => {
   let result;
   // Check that all fields are strings, not empty, and apply regex
 
-
-
-  result = validateString(email, 'Email', regexEmail);
+  result = validateString(email, "Email", regexEmail);
   if (result.error) errors.push(result.error);
   else req.body.email = result.value;
 
-  result = validateString(password, 'Password', regexPass);
+  result = validateString(password, "Password", regexPass);
   if (result.error) errors.push(result.error);
   else req.body.password = result.value;
 
-
-  result = validateString(name, 'Name', regexName);
+  result = validateString(name, "Name", regexName);
   if (result.error) errors.push(result.error);
   else req.body.name = result.value;
 

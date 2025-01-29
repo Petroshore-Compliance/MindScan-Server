@@ -1,8 +1,7 @@
-const e = require('express');
-const prisma = require('../../db.js');
+const e = require("express");
+const prisma = require("../../db.js");
 
 const getCompanyEmployeesController = async (data) => {
-
   const requestingUser = await prisma.user.findUnique({
     where: {
       user_id: data.user_id,
@@ -10,7 +9,7 @@ const getCompanyEmployeesController = async (data) => {
   });
 
   if (!requestingUser) {
-    return { status: 404, message: 'User not found' };
+    return { status: 404, message: "User not found" };
   }
 
   const requestedCompany = await prisma.company.findUnique({
@@ -32,20 +31,20 @@ const getCompanyEmployeesController = async (data) => {
   });
 
   if (!requestedCompany) {
-    return { status: 404, message: 'Company not found' };
+    return { status: 404, message: "Company not found" };
   }
 
   if (requestedCompany.company_id !== requestingUser.company_id) {
-    return { status: 403, message: 'User is not a part of this company' };
+    return { status: 403, message: "User is not a part of this company" };
   }
 
-  if (requestingUser.role !== 'admin' && requestingUser.role !== 'manager') {
-    return { status: 403, message: 'User does not have permission' };
+  if (requestingUser.role !== "admin" && requestingUser.role !== "manager") {
+    return { status: 403, message: "User does not have permission" };
   }
 
   return { status: 200, employees: requestedCompany.users, message: "Employees found" };
-}
+};
 
 module.exports = {
-  getCompanyEmployeesController
-}
+  getCompanyEmployeesController,
+};
