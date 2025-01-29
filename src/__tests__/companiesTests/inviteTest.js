@@ -7,7 +7,6 @@ const { EMAIL_TESTER } = process.env;
 
 let companyId = 0;
 let userId;
-let auxUserId;
 let companyEmail = "test@test.com";
 let subscriptionPlanId = 4;
 let token;
@@ -82,8 +81,41 @@ beforeAll(async () => {
   companyId = companyInviter.company_id;
 });
 
+
+describe("Auth Endpoints", () => {
+  it("fail create invitation;not enough licenses; status 402 ", async () => {
+    const invitationData = {
+      host: EMAIL_TESTER,
+      guest: EMAIL_TESTER,
+      neededRole: "manager",
+
+      role: "manager",
+      company_id: companyId,
+      companyName: "uwuntu",
+    };
+
+    const response = await request(app)
+      .post("/companies/invite")
+      .set("Authorization", `Bearer ${token}`)
+      .send(invitationData);
+
+    if (response.status !== 402) {
+      console.log("Response body:", response.body);
+    }
+    expect(response.body.message).toBe("Not enough licenses");
+    expect(response.status).toBe(402);
+  });
+});
+
 describe("Auth Endpoints", () => {
   it("fail create invitation;invited is the company admin; status 409 ", async () => {
+
+    await prisma.company.updateMany({
+      data: {
+        licenses: 1000,
+      },
+    });
+
     const invitationData = {
       host: EMAIL_TESTER,
       guest: EMAIL_TESTER,
