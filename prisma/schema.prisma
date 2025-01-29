@@ -33,15 +33,14 @@ model User {
 }
 
 model Company {
-  company_id   Int                 @id @default(autoincrement())
-  name         String
-  email        String              @unique
-  users        User[]
-  licenses     Int                 @default(0)
-  licensesUsed Int                 @default(0)
-  invitations  CompanyInvitation[]
-  created_at   DateTime            @default(now())
-  updated_at   DateTime?           @default(now()) @updatedAt
+  company_id  Int                 @id @default(autoincrement())
+  name        String
+  email       String              @unique
+  users       User[]
+  licenses    Int                 @default(0)
+  invitations CompanyInvitation[]
+  created_at  DateTime            @default(now())
+  updated_at  DateTime?           @default(now()) @updatedAt
 }
 
 //esta tabla es para dar permisos a los usuarios para que vean los diágnosticos de otros usuarios

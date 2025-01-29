@@ -8,7 +8,6 @@ const { EMAIL_TESTER } = process.env;
 
 let petroAdminId;
 
-let subscriptionPlanId = 4;
 let token;
 
 beforeAll(async () => {
