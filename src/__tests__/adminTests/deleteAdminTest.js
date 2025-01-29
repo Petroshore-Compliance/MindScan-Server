@@ -122,7 +122,7 @@ describe('Auth Endpoints', () => {
 
 
 describe('Auth Endpoints', () => {
-  it('fauk delete petroAdmin;already deleted; status 200 ', async () => {
+  it('fauk delete petroAdmin;not petroadmin; status 403 ', async () => {
 
     const deleteFormData = {
       email: EMAIL_TESTER,
@@ -135,11 +135,11 @@ describe('Auth Endpoints', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(deleteFormData);
 
-    if (response.status !== 400) {
+    if (response.status !== 403) {
       console.log('Response body:', response.body);
     }
-    expect(response.body.errors).toBe('wrong email');
-    expect(response.status).toBe(400);
+    expect(response.body.errors).toBe('Forbidden');
+    expect(response.status).toBe(403);
 
   });
 });

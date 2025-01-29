@@ -44,7 +44,7 @@ const adminMiddleware = async (req, res, next) => {
     return
   }
 
-  return res.status(400).json({ errors: "wrong email" });
+  return res.status(403).json({ errors: "Forbidden" });
 };
 
 module.exports = { adminMiddleware };

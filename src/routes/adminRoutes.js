@@ -12,6 +12,7 @@ const { forgotPasswordAdminMiddleware } = require("../middlewares/adminMiddlewar
 const { setPasswordAdminMiddleware } = require("../middlewares/adminMiddlewares/setPasswordAdminMiddleware.js");
 const { changePasswordAdminMiddleware } = require("../middlewares/adminMiddlewares/changePasswordAdminMiddleware.js");
 const { getCompaniesMiddleware } = require("../middlewares/adminMiddlewares/getCompaniesMiddleware.js");
+const { addLicensesMiddleware } = require("../middlewares/adminMiddlewares/addLicensesMiddleware.js");
 
 const { getAdminsHandler } = require("../handlers/adminHandlers/getAdminsHandler.js");
 const { updateAdminHandler } = require("../handlers/adminHandlers/updateAdminHandler.js");
@@ -22,6 +23,7 @@ const { forgotPasswordAdminHandler } = require("../handlers/adminHandlers/forgot
 const { setPasswordAdminHandler } = require("../handlers/adminHandlers/setPasswordAdminHandler.js");
 const { changePasswordAdminHandler } = require("../handlers/adminHandlers/changePasswordAdminHandler.js");
 const { getCompaniesHandler } = require("../handlers/adminHandlers/getCompaniesHandler.js");
+const { addLicensesHandler } = require("../handlers/adminHandlers/addLicensesHandler.js");
 
 router.post("/create", createAdminMiddleware, createAdminHandler);
 router.post("/login", loginAdminMiddleware, loginAdminHandler);
@@ -32,6 +34,7 @@ router.get("/forgot-password", forgotPasswordAdminMiddleware, forgotPasswordAdmi
 router.get("/get", adminMiddleware, getAdminsMiddleware, getAdminsHandler);
 router.delete("/delete", adminMiddleware, deleteAdminMiddleware, deleteAdminHandler);
 router.get("/get-companies", adminMiddleware, getCompaniesMiddleware, getCompaniesHandler);
+router.patch("/add-licenses", adminMiddleware, addLicensesMiddleware, addLicensesHandler);
 
 
 // Ruta para verificar si el token es válido (Solo para pruebas)
