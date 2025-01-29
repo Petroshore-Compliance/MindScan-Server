@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
 // recibe como parámetros el email del destinatario, el asunto y el contenido del email()
 // y devuelve un objeto con la respuesta del envío del email
 
-async function sendEmail(recipientEmail,subject, htmlContent) {
+async function sendEmail(recipientEmail, subject, htmlContent) {
 
   //estas dos líneas "simulan" el envío de un email
 
@@ -36,11 +36,11 @@ async function sendEmail(recipientEmail,subject, htmlContent) {
   }
 
   const mailOptions = {
-    from: `"Petroshore Compliance" <${EMAIL_SENDER}>`, 
-    to: recipientEmail, 
-    subject: subject, 
-    text: ``, 
-    html: htmlContent, 
+    from: `"Petroshore Compliance" <${EMAIL_SENDER}>`,
+    to: recipientEmail,
+    subject: subject,
+    text: ``,
+    html: htmlContent,
   };
 
   try {
