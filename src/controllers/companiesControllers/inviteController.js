@@ -21,6 +21,8 @@ const inviteController = async (data) => {
     },
   });
 
+
+
   const user = await prisma.user.findUnique({
     where: {
       email: data.guest.toLowerCase(),
@@ -30,6 +32,14 @@ const inviteController = async (data) => {
   if (!company) {
     return { status: 404, message: "Company not found" };
   }
+
+  //comprobar si hay espacio disponible para invitar
+  const availableLicenses = company.licenses - company.invitations.length;
+
+  if (availableLicenses < 1) {
+    return { status: 402, message: "Not enough licenses" };
+  }
+
   if (!user) {
     isNew = true;
   } else {
@@ -101,9 +111,7 @@ const inviteController = async (data) => {
   if (alreadyInvited.length !== 0) {
     return { status: 400, message: `This Guest email already has a pending invitation` };
   }
-  if (company.invitations.length > company.licenses) {
-    return { status: 422, message: "Not enough licenses" };
-  }
+
   const response = await createInvitationController(data, company.companyName);
 
   //send email to user
