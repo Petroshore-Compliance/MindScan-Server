@@ -1,4 +1,4 @@
-const prisma = require('../../db.js');
+const prisma = require("../../db.js");
 
 const getCompaniesController = async (data) => {
   let companies;
@@ -13,11 +13,10 @@ const getCompaniesController = async (data) => {
   }
 
   if (companies.length === 0) {
-    return { status: 404, message: 'Companies not found' };
+    return { status: 404, message: "Companies not found" };
   } else {
-    return { status: 200, message: 'Companies found', companies };
+    return { status: 200, message: "Companies found", companies };
   }
-
 };
 
 module.exports = { getCompaniesController };

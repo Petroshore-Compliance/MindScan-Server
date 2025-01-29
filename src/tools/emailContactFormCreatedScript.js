@@ -34,7 +34,6 @@ const emailContactFormCreatedScript = async (
     await sendEmail(receiver.email, subject, htmlTemplate);
   }
 
-
   return "Contact form notification email sent successfully.";
 };
 

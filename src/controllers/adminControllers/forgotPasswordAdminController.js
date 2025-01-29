@@ -27,6 +27,6 @@ const forgotPasswordAdminController = async (email) => {
   sendEmail(petroAdmin.email, subject, htmlContent);
 
   return { status: 200, URL: `localhost:4000/admin/reset-password` };
-}
+};
 
 module.exports = { forgotPasswordAdminController };

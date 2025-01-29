@@ -1,35 +1,30 @@
-const {
-  validateString,
-  regexEmail
-} = require("../tools/validations.js");
-const prisma = require('../db.js');
+const { validateString, regexEmail } = require("../tools/validations.js");
+const prisma = require("../db.js");
 
-
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const adminMiddleware = async (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ message: 'Acceso denegado' });
+    return res.status(401).json({ message: "Acceso denegado" });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-
   } catch (error) {
-    return res.status(401).json({ message: 'Acceso denegado, token inválido' });
+    return res.status(401).json({ message: "Acceso denegado, token inválido" });
   }
 
   const { email, adminEmail } = req.body;
   let result;
   if (adminEmail) {
-    result = validateString(adminEmail, 'Email', regexEmail);
+    result = validateString(adminEmail, "Email", regexEmail);
     if (result.error) return res.status(400).json({ errors: [result.error] });
   } else {
-    result = validateString(email, 'Email', regexEmail);
+    result = validateString(email, "Email", regexEmail);
     if (result.error) return res.status(400).json({ errors: [result.error] });
   }
 
@@ -37,11 +32,11 @@ const adminMiddleware = async (req, res, next) => {
     where: {
       email: result.value,
     },
-  })
+  });
 
   if (user) {
     next();
-    return
+    return;
   }
 
   return res.status(403).json({ errors: "Forbidden" });

@@ -8,7 +8,7 @@ const deleteAdminMiddleware = (req, res, next) => {
   if (result.error) errors.push(result.error);
 
   if (errors.length > 0) {
-    return res.status(400).json({ errors: errors }); 
+    return res.status(400).json({ errors: errors });
   }
 
   next();

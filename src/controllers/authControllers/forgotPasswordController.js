@@ -27,6 +27,6 @@ const forgotPasswordController = async (email) => {
   sendEmail(user.email, subject, htmlContent);
 
   return { status: 200, URL: `localhost:4000/reset-password` };
-}
+};
 
 module.exports = { forgotPasswordController };
