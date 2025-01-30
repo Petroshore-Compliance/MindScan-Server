@@ -54,7 +54,7 @@ router.patch(
   changePasswordAdminMiddleware,
   changePasswordAdminHandler
 );
-router.get("/forgot-password", forgotPasswordAdminMiddleware, forgotPasswordAdminHandler);
+router.post("/forgot-password", forgotPasswordAdminMiddleware, forgotPasswordAdminHandler);
 router.get("/get", adminMiddleware, getAdminsMiddleware, getAdminsHandler);
 router.delete("/delete", adminMiddleware, deleteAdminMiddleware, deleteAdminHandler);
 router.get("/get-companies", adminMiddleware, getCompaniesMiddleware, getCompaniesHandler);

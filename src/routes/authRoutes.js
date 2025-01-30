@@ -22,7 +22,7 @@ const { setPasswordHandler } = require("../handlers/authHandlers/setPasswordHand
 
 router.post("/register", registerUserMiddleware, registerUserHandler);
 router.post("/login", loginUserMiddleware, loginUserHandler);
-router.get("/forgot-password", forgotPasswordMiddleware, forgotPasswordHandler);
+router.post("/forgot-password", forgotPasswordMiddleware, forgotPasswordHandler);
 router.patch("/set-password", setPasswordMiddleware, setPasswordHandler);
 router.patch("/change-password", authMiddleware, changePasswordMiddleware, changePasswordHandler);
 
