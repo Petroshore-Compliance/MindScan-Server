@@ -40,7 +40,7 @@ describe("admin Endpoints", () => {
       email: EMAIL_TESTER,
     };
 
-    const response = await request(app).get("/admin/forgot-password").send(registrationData);
+    const response = await request(app).post("/admin/forgot-password").send(registrationData);
 
     if (response.status !== 200) {
       console.log("Response body:", response.body);
@@ -56,7 +56,7 @@ describe("admin Endpoints", () => {
       email: "wrongEmail@petroshorecompliance.com",
     };
 
-    const response = await request(app).get("/admin/forgot-password").send(registrationData);
+    const response = await request(app).post("/admin/forgot-password").send(registrationData);
 
     if (response.status !== 404) {
       console.log("Response body:", response.body);
@@ -73,7 +73,7 @@ describe("admin Endpoints", () => {
       email: "invalidEmail",
     };
 
-    const response = await request(app).get("/admin/forgot-password").send(registrationData);
+    const response = await request(app).post("/admin/forgot-password").send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
@@ -88,7 +88,7 @@ describe("admin Endpoints", () => {
   it("fail forgot password;no email; status 400", async () => {
     const registrationData = {};
 
-    const response = await request(app).get("/admin/forgot-password").send(registrationData);
+    const response = await request(app).post("/admin/forgot-password").send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
@@ -105,7 +105,7 @@ describe("admin Endpoints", () => {
       email: 33,
     };
 
-    const response = await request(app).get("/admin/forgot-password").send(registrationData);
+    const response = await request(app).post("/admin/forgot-password").send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);

@@ -40,7 +40,7 @@ describe("Auth Endpoints", () => {
       email: EMAIL_TESTER,
     };
 
-    const response = await request(app).get("/auth/forgot-password").send(registrationData);
+    const response = await request(app).post("/auth/forgot-password").send(registrationData);
 
     if (response.status !== 200) {
       console.log("Response body:", response.body);
@@ -56,7 +56,7 @@ describe("Auth Endpoints", () => {
       email: "wrongEmail@petroshorecompliance.com",
     };
 
-    const response = await request(app).get("/auth/forgot-password").send(registrationData);
+    const response = await request(app).post("/auth/forgot-password").send(registrationData);
 
     if (response.status !== 404) {
       console.log("Response body:", response.body);
@@ -73,7 +73,7 @@ describe("Auth Endpoints", () => {
       email: "invalidEmail",
     };
 
-    const response = await request(app).get("/auth/forgot-password").send(registrationData);
+    const response = await request(app).post("/auth/forgot-password").send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
@@ -88,7 +88,7 @@ describe("Auth Endpoints", () => {
   it("fail forgot password;no email; status 400", async () => {
     const registrationData = {};
 
-    const response = await request(app).get("/auth/forgot-password").send(registrationData);
+    const response = await request(app).post("/auth/forgot-password").send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
@@ -105,7 +105,7 @@ describe("Auth Endpoints", () => {
       email: 33,
     };
 
-    const response = await request(app).get("/auth/forgot-password").send(registrationData);
+    const response = await request(app).post("/auth/forgot-password").send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
