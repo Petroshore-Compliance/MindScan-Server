@@ -41,7 +41,7 @@ describe("Auth Endpoints", () => {
       email: EMAIL_TESTER,
     };
 
-    const response = await request(app).get("/auth/forgot-password").send(registrationData);
+    const response = await request(app).post("/auth/forgot-password").send(registrationData);
 
     if (response.status !== 200) {
       console.log("Response body:", response.body);
@@ -49,4 +49,11 @@ describe("Auth Endpoints", () => {
 
     expect(response.status).toBe(200);
   });
+});
+
+// borrado de lo creado
+afterAll(async () => {
+  await prisma.petroAdmin.deleteMany();
+  await prisma.contactForm.deleteMany(); // borrar todos los registros de formularios
+  await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });
