@@ -19,9 +19,8 @@ const forgotPasswordAdminController = async (email) => {
 
   const token = jwt.sign(
     {
-      id: user.user_id,
-      email: user.email,
-      role: user.role,
+      id: petroAdmin.petroAdmin_id,
+      email: petroAdmin.email,
     },
     process.env.JWT_SECRET,
     {
