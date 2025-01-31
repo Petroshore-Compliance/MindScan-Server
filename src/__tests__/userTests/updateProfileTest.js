@@ -38,6 +38,7 @@ beforeAll(async () => {
   token = response3.body.token;
 });
 
+
 describe("Auth Endpoints", () => {
   it("success update profile; status 200 ", async () => {
     const updateProfileData = {
@@ -146,25 +147,7 @@ describe("Auth Endpoints", () => {
   });
 });
 
-describe("Auth Endpoints", () => {
-  it("fail update profile;no data; status 400 ", async () => {
-    const updateProfileData = {
-      user_id: userId,
-    };
 
-    const response = await request(app)
-      .patch("/users/update-profile")
-      .set("Authorization", `Bearer ${token}`)
-      .send(updateProfileData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.body.message).toEqual("User profile cannot be updated with only user_id");
-
-    expect(response.status).toBe(400);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail update profile;wrong typeof; status 400 ", async () => {
@@ -214,6 +197,31 @@ describe("Auth Endpoints", () => {
     });
   });
 });
+
+
+
+
+
+describe("Auth Endpoints", () => {
+  it("fail update profile;no data; status 400 ", async () => {
+    const updateProfileData = {
+      user_id: userId,
+    };
+
+    const response = await request(app)
+      .patch("/users/update-profile")
+      .set("Authorization", `Bearer ${token}`)
+      .send(updateProfileData);
+
+    if (response.status !== 400) {
+      console.log("Response body:", response.body);
+    }
+    expect(response.body.message).toEqual("User profile cannot be updated with only user_id");
+
+    expect(response.status).toBe(400);
+  });
+});
+
 
 // borrado de todo lo creado
 afterAll(async () => {

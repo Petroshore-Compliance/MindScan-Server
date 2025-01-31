@@ -17,10 +17,7 @@ const adminMiddleware = async (req, res, next) => {
     const decryptedData = await decryptJWT(token);
     const decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
 
-
-
-    req.user = decoded;
-
+    //req.user = decoded;
 
   } catch (error) {
     return res.status(401).json({ message: "Acceso denegado, token inválido" });
