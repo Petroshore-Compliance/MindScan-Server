@@ -2,8 +2,9 @@ require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
+const { encryptJWT } = require("../../tools/auth.js");
 const prisma = require("../../db.js");
+
 
 const loginUserController = async (email, password) => {
   let user;
@@ -26,11 +27,12 @@ const loginUserController = async (email, password) => {
     return { status: 401, message: "Wrong Email or Password" };
   }
 
-  const token = jwt.sign(
+  const JWTtoken = jwt.sign(
     {
-      id: user.user_id,
+      user_id: user.user_id,
       email: user.email,
       role: user.role,
+
     },
     process.env.JWT_SECRET,
     {
@@ -38,10 +40,15 @@ const loginUserController = async (email, password) => {
     }
   );
 
+  const payload = { token: JWTtoken };
+
+  const token = await encryptJWT(payload);
+
+
   return {
     token,
     user: {
-      id: user.user_id,
+      user_id: user.user_id,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -53,3 +60,5 @@ const loginUserController = async (email, password) => {
 };
 
 module.exports = { loginUserController };
+
+

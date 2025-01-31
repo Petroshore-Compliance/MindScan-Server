@@ -1,11 +1,9 @@
 const { validateString, regexEmail, regexPass } = require("../../tools/validations.js");
 
 const setPasswordMiddleware = (req, res, next) => {
-  const { email, newPassword } = req.body;
+  const { newPassword } = req.body;
   let errors = [];
-  let result = validateString(email, "Email", regexEmail);
-  if (result.error) errors.push(result.error);
-  else req.body.email = result.value;
+  let result;
 
   result = validateString(newPassword, "New Password", regexPass);
   if (result.error) errors.push(result.error);

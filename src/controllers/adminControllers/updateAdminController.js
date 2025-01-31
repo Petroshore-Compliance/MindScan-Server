@@ -26,7 +26,6 @@ const updateAdminController = async (data) => {
 
   delete petroAdmin.password;
 
-  console.log(petroAdmin);
 
   return { status: 200, message: "petroAdmin updated successfully", petroAdmin: petroAdmin };
 };

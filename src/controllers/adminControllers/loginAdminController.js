@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { encryptJWT } = require("../../tools/auth.js");
 
 const prisma = require("../../db.js");
 
@@ -26,7 +27,7 @@ const loginAdminController = async (email, password) => {
     return { status: 401, message: "Wrong Email or Password" };
   }
 
-  const token = jwt.sign(
+  const JWTtoken = jwt.sign(
     {
       id: petroAdmin.petroAdmin_id,
       email: petroAdmin.email,
@@ -36,6 +37,11 @@ const loginAdminController = async (email, password) => {
       expiresIn: process.env.JWT_EXPIRES_IN || "8h",
     }
   );
+
+  const payload = { token: JWTtoken };
+
+  const token = await encryptJWT(payload);
+
 
   return {
     token,

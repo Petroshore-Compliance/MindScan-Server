@@ -165,27 +165,6 @@ describe("Auth Endpoints", () => {
   });
 });
 
-describe("Auth Endpoints", () => {
-  it("fail get company; no email; status 400 ", async () => {
-    const copmanyData = {
-      neededRole: "manager",
-
-      company_id: "definitivamente esto es un id",
-    };
-
-    const response = await request(app)
-      .get("/companies/get-company")
-      .set("Authorization", `Bearer ${token}`)
-      .send(copmanyData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.body.errors).toEqual("no valid email");
-    expect(response.status).toBe(400);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail get company; no neededRole; status 400 ", async () => {
