@@ -1,29 +1,28 @@
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
+const { decryptJWT } = require("../../tools/auth.js");
 const prisma = require("../../db.js");
 
 //cambiar la contraseña de un usuario que ha olvidado su contraseña
 //recibe el email y la nueva contraseña
 //y devuelve cambio de contraseña exitoso o fallido
-const setPasswordController = async (data) => {
+const setPasswordController = async (props) => {
+  const { token, password } = props;
 
+  if (!token || !password) {
+    return { status: 400, message: "Token and password are required" };
+  }
 
+  const decryptedData = await decryptJWT(token);
+  const decoded = jwt.verify(decryptedData, process.env.JWT_SECRET);
 
-  const user = await prisma.user.findUnique({
-    where: { email: data.email.toLowerCase() },
-  });
-
-  if (!user) {
+  if (!decoded) {
     return { status: 404, message: "User not found" };
   }
 
   await prisma.user.update({
-    where: {
-      email: data.email.toLowerCase(),
-    },
-    data: {
-      password: await bcrypt.hash(data.newPassword, 10),
-    },
+    where: { email: decoded.email.toLowerCase() },
+    data: { password: await bcrypt.hash(password, 10) },
   });
   return { status: 200, message: "Password updated successfully" };
 };
