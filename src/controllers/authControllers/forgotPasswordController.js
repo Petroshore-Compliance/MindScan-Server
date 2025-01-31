@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const jwt = require("jsonwebtoken");
-
+const { encryptJWT } = require("../../tools/auth.js");
 
 const prisma = require("../../db.js");
 const sendEmail = require("../../tools/nodemailer.js");
@@ -18,7 +18,7 @@ const forgotPasswordController = async (email) => {
 
   //setup para enviar el email
 
-  const token = jwt.sign(
+  const JWTtoken = jwt.sign(
     {
       id: user.user_id,
       email: user.email,
@@ -30,6 +30,8 @@ const forgotPasswordController = async (email) => {
     }
   );
 
+  const token = await encryptJWT(JWTtoken);
+
   const subject = "Reset confirmation";
 
   const htmlTemplatePath = path.join(__dirname, "../../templates/resetPassword.html");
@@ -37,11 +39,14 @@ const forgotPasswordController = async (email) => {
 
   htmlTemplate = fs.readFileSync(htmlTemplatePath, "utf8");
 
-  const htmlContent = htmlTemplate.replace(/{{resetURL}}/g, `localhost:5173/set-password?token=${token}`);
+  const htmlContent = htmlTemplate.replace(
+    /{{resetURL}}/g,
+    `localhost:5173/set-password?token=${token}`
+  );
 
   sendEmail(user.email, subject, htmlContent);
 
-  return { status: 200, URL: `localhost:4000/reset-password` };
+  return { status: 200, URL: `localhost:5173/set-password?token=${token}` };
 };
 
 module.exports = { forgotPasswordController };

@@ -26,8 +26,8 @@ const transporter = nodemailer.createTransport({
 async function sendEmail(recipientEmail, subject, htmlContent) {
   //estas dos líneas "simulan" el envío de un email
 
-  console.log("Email sending skipped in test environment (nodemailer.js)");
-  return { success: true, info: "Test environment - email not sent." };
+  //console.log("Email sending skipped in test environment (nodemailer.js)");
+  //return { success: true, info: "Test environment - email not sent." };
 
   if (!recipientEmail) {
     throw new Error("Recipient email is required.");

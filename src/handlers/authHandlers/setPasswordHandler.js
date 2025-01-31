@@ -4,7 +4,6 @@ const {
 
 const setPasswordHandler = async (req, res) => {
   try {
-
     const response = await setPasswordController(req.body);
     res.status(response.status).json({ message: response.message });
   } catch (error) {
