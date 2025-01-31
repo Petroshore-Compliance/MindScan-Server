@@ -160,9 +160,9 @@ describe("Auth Endpoints", () => {
     if (response.status !== 400) {
       console.log("Response body:", response.body);
     }
+    expect(response.body.message).toEqual("User profile cannot be updated with only user_id");
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toEqual("User profile cannot be updated with only user_id");
   });
 });
 
@@ -198,7 +198,7 @@ describe("Auth Endpoints", () => {
   });
 
   describe("Auth Endpoints", () => {
-    it("fail update profile;no token; status 400 ", async () => {
+    it("fail update profile;no token; status 401 ", async () => {
       const userData = {
         user_id: "userId",
       };

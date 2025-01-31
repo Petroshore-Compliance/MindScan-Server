@@ -28,8 +28,8 @@ beforeAll(async () => {
   };
 
   const loggedUser = await request(app).post("/auth/login").send(loginDataUser);
-
-  userId = loggedUser.body.user.id;
+  console.log(loggedUser.body);
+  userId = loggedUser.body.user.user_id;
 
   // Register an admin user
   const registrationDataAdmin = {
@@ -69,6 +69,8 @@ beforeAll(async () => {
     .set("Authorization", `Bearer ${token}`)
     .send(companyRegistrationData);
   console.log(company.body);
+  console.log(company.body.user);
+
   companyId = company.body.company.company_id;
   console.log(companyId);
 

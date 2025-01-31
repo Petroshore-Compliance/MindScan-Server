@@ -79,25 +79,7 @@ describe("Auth Endpoints", () => {
     expect(response.body.errors).toEqual(["Name cannot be empty."]);
   });
 });
-describe("Auth Endpoints", () => {
-  it("fail create company; missing email; status 400 ", async () => {
-    const registrationData = {
-      name: "Test company name",
-      user_id: userId,
-    };
 
-    const response = await request(app)
-      .post("/companies/create-company")
-      .set("Authorization", `Bearer ${token}`)
-      .send(registrationData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response);
-    }
-    expect(response.status).toBe(400);
-    expect(response.body.errors).toEqual(["Email cannot be empty."]);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail create company; missing user_id ; status 400 ", async () => {

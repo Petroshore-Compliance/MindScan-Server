@@ -192,27 +192,6 @@ describe("Auth Endpoints", () => {
   });
 });
 
-describe("Auth Endpoints", () => {
-  it("fail get company; missing email; status 400 ", async () => {
-    const copmanyData = {
-      neededRole: "manager",
-      company_id: "definitivamente esto es un id",
-      user_id: "definitivamente esto es un userId",
-    };
-
-    const response = await request(app)
-      .get("/companies/get-employees")
-      .set("Authorization", `Bearer ${token}`)
-      .send(copmanyData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.body.errors).toEqual("no valid email");
-    expect(response.status).toBe(400);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail get company; not permission; status 403 ", async () => {

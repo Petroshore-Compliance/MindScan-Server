@@ -5,9 +5,12 @@ const prisma = require("../../db.js");
 //cambiar la contraseña de un usuario que ha olvidado su contraseña
 //recibe el email y la nueva contraseña
 //y devuelve cambio de contraseña exitoso o fallido
-const setPasswordController = async (email, newPassword) => {
+const setPasswordController = async (data) => {
+
+
+
   const user = await prisma.user.findUnique({
-    where: { email: email.toLowerCase() },
+    where: { email: data.email.toLowerCase() },
   });
 
   if (!user) {
@@ -16,10 +19,10 @@ const setPasswordController = async (email, newPassword) => {
 
   await prisma.user.update({
     where: {
-      email: email.toLowerCase(),
+      email: data.email.toLowerCase(),
     },
     data: {
-      password: await bcrypt.hash(newPassword, 10),
+      password: await bcrypt.hash(data.newPassword, 10),
     },
   });
   return { status: 200, message: "Password updated successfully" };

@@ -4,9 +4,8 @@ const {
 
 const setPasswordHandler = async (req, res) => {
   try {
-    const { email, newPassword } = req.body;
 
-    const response = await setPasswordController(email, newPassword);
+    const response = await setPasswordController(req.body);
     res.status(response.status).json({ message: response.message });
   } catch (error) {
     res.status(500).json({ message: `Unsuported error setting password ${error}` });

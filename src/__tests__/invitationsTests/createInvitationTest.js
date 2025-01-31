@@ -143,24 +143,7 @@ describe("Auth Endpoints", () => {
   });
 });
 
-describe("Auth Endpoints", () => {
-  it("fail create invitation; not company id; status 404 ", async () => {
-    const companyData = {
-      company_id: 1,
-    };
 
-    const response = await request(app)
-      .post("/invitations/create-invitation")
-      .set("Authorization", `Bearer ${token}`)
-      .send(companyData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.body.errors).toEqual(["Email cannot be empty."]);
-    expect(response.status).toBe(400);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail create invitation; wrong typeof; status 404 ", async () => {

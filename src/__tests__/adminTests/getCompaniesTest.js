@@ -30,7 +30,7 @@ beforeAll(async () => {
 
   const loggedUser = await request(app).post("/auth/login").send(loginDataUser);
 
-  userId = loggedUser.body.user.id;
+  userId = loggedUser.body.user.user_id;
 
   // Register an admin user
   const registrationDataAdmin = {
