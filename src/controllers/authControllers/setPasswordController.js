@@ -16,10 +16,14 @@ const setPasswordController = async (props) => {
   const decryptedData = await decryptJWT(token);
   const decoded = jwt.verify(decryptedData, process.env.JWT_SECRET);
 
-  if (!decoded) {
+
+  const user = await prisma.user.findUnique({
+    where: { email: decoded.email.toLowerCase() },
+  });
+
+  if (!user) {
     return { status: 404, message: "User not found" };
   }
-
   await prisma.user.update({
     where: { email: decoded.email.toLowerCase() },
     data: { password: await bcrypt.hash(password, 10) },

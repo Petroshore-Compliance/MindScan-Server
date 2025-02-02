@@ -42,7 +42,7 @@ beforeAll(async () => {
 describe("Auth Endpoints", () => {
   it("success update profile; status 200 ", async () => {
     const updateProfileData = {
-      user_id: userId,
+      token: token,
       name: "roman",
       password: "secureHashedPassword123",
     };
@@ -56,37 +56,17 @@ describe("Auth Endpoints", () => {
       console.log("Response body:", response.body);
     }
 
-    expect(response.status).toBe(200);
     expect(response.body.message).toEqual("User profile updated successfully");
+    expect(response.status).toBe(200);
+
   });
 });
 
-describe("Auth Endpoints", () => {
-  it("fail update profile; no userId; status 400 ", async () => {
-    const updateProfileData = {
-      name: "roman",
-      password: "secureHashedPassword123",
-    };
-
-    const response = await request(app)
-      .patch("/users/update-profile")
-      .set("Authorization", `Bearer ${token}`)
-      .send(updateProfileData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.status).toBe(400);
-    expect(response.body.errors).toEqual(["User ID cannot be empty."]);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail update profile;invalid password; status 400 ", async () => {
     const updateProfileData = {
-      user_id: userId,
-      name: "roman",
+      token: token, name: "roman",
       password: "a",
     };
 
@@ -107,8 +87,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail update profile;invalid email; status 400 ", async () => {
     const updateProfileData = {
-      user_id: userId,
-      name: "roman",
+      token: token, name: "roman",
       email: "a",
     };
 
@@ -129,8 +108,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail update profile;invalid name; status 400 ", async () => {
     const updateProfileData = {
-      user_id: userId,
-      name: " h!$·,.",
+      token: token, name: " h!$·,.",
     };
 
     const response = await request(app)
@@ -152,7 +130,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail update profile;wrong typeof; status 400 ", async () => {
     const updateProfileData = {
-      user_id: "userId",
       company_id: "companyId",
       name: 33,
       email: 33,
@@ -172,7 +149,6 @@ describe("Auth Endpoints", () => {
     expect(response.status).toBe(400);
     expect(response.body.errors).toEqual([
       "Company ID must be a number.",
-      "User ID must be a number.",
       "Name must be a string.",
       "Email must be a string.",
       "Password must be a string.",
@@ -205,7 +181,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail update profile;no data; status 400 ", async () => {
     const updateProfileData = {
-      user_id: userId,
+      token: token,
     };
 
     const response = await request(app)
@@ -216,7 +192,7 @@ describe("Auth Endpoints", () => {
     if (response.status !== 400) {
       console.log("Response body:", response.body);
     }
-    expect(response.body.message).toEqual("User profile cannot be updated with only user_id");
+    expect(response.body.message).toEqual("No valid data to update");
 
     expect(response.status).toBe(400);
   });

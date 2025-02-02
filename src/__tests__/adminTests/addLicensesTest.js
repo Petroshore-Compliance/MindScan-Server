@@ -56,6 +56,7 @@ beforeAll(async () => {
   const responseAdminLogin = await request(app).post("/admin/login").send(loginDataAdmin);
 
   token = responseAdminLogin.body.token;
+  console.log("Token:", token);
 
   // Create a company associated with the regular user
   const companyRegistrationData = {
@@ -68,11 +69,11 @@ beforeAll(async () => {
     .post("/companies/create-company")
     .set("Authorization", `Bearer ${token}`)
     .send(companyRegistrationData);
-  console.log(company.body);
-  console.log(company.body.user);
 
+
+  console.log("Company Response:", company.body)
+  console.log("Company Response:", company.body.company_id)
   companyId = company.body.company.company_id;
-  console.log(companyId);
 
   const auxcompanyRegistrationData = {
     name: "Test company name",
@@ -109,6 +110,7 @@ describe("admin Endpoints", () => {
     expect(response.status).toBe(200);
   });
 });
+
 
 describe("admin Endpoints", () => {
   it("success adding licenses, again; status 200", async () => {
@@ -326,6 +328,7 @@ describe("admin Endpoints", () => {
     expect(response.status).toBe(400);
   });
 });
+
 
 // borrado de lo creado
 afterAll(async () => {
