@@ -10,16 +10,16 @@ const authMiddleware = async (req, res, next) => {
   }
 
   try {
-    const decryptedData = await decryptJWT(token);
+    let decryptedJwt = await decryptJWT(token);
+    if (decryptedJwt.token) { decryptedJwt = decryptedJwt.token }
+    const decoded = jwt.verify(decryptedJwt, process.env.JWT_SECRET);
 
-    const decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
-
-    //req.body.email = req.body.email || decoded.email;
-
+    req.body.user = decoded;
 
     next();
   } catch (error) {
-    res.status(401).json({ message: "Acceso denegado, token inválido" });
+    console.error("JWT Verification Error:", error.message);
+    res.status(401).json({ message: "Acceso denegado, token inválido", error: error.message });
   }
 };
 

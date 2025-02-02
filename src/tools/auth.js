@@ -1,10 +1,15 @@
 const fs = require("fs");
 const path = require("path");
 const jose = require("jose");
+require("dotenv").config(); // Load .env
 
-// Load keys
-const privateKey = fs.readFileSync(path.join(__dirname, "private.pem"), "utf8");
-const publicKey = fs.readFileSync(path.join(__dirname, "public.pem"), "utf8");
+const privateKeyPath = process.env.PRIVATE_KEY_PATH || "./config/private.pem";
+const publicKeyPath = process.env.PUBLIC_KEY_PATH || "./config/public.pem";
+
+// Read the keys securely
+const privateKey = fs.readFileSync(path.join(__dirname, "../", privateKeyPath), "utf8");
+const publicKey = fs.readFileSync(path.join(__dirname, "../", publicKeyPath), "utf8");
+
 
 // Encrypt a JWT using JWE
 async function encryptJWT(payload) {

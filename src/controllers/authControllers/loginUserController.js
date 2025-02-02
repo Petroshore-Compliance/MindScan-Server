@@ -47,7 +47,6 @@ const loginUserController = async (email, password) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      user_type: user.user_type,
     },
     status: 200,
     message: "User logged in successfully",

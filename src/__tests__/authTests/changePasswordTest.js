@@ -40,7 +40,7 @@ beforeAll(async () => {
 describe("Auth Endpoints", () => {
   it("change password; status 200 ", async () => {
     const registrationData = {
-      user_id: UserId,
+      token: token,
       password: "secureHashedPassword123",
       newPassword: "secureHashedPasswor1231",
     };
@@ -59,10 +59,10 @@ describe("Auth Endpoints", () => {
   });
 });
 
+
 describe("Auth Endpoints", () => {
   it("fail change password; wrong old password; status 401 ", async () => {
     const registrationData = {
-      user_id: UserId,
       password: "secureHashedPassword123",
       newPassword: "secureHashedPasswor1231",
     };
@@ -84,7 +84,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail change password; invalid new password; status 400 ", async () => {
     const registrationData = {
-      user_id: UserId,
       password: "secureHashedPasswor1231",
       newPassword: "a",
     };
@@ -106,7 +105,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail change password; same new password; status 422 ", async () => {
     const registrationData = {
-      user_id: UserId,
       password: "secureHashedPasswor1231",
       newPassword: "secureHashedPasswor1231",
     };
@@ -124,27 +122,7 @@ describe("Auth Endpoints", () => {
     expect(response.status).toBe(422);
   });
 });
-describe("Auth Endpoints", () => {
-  it("fail change password; user not found; status 404 ", async () => {
-    const registrationData = {
-      user_id: 1,
-      password: "secureHashedPasswor1231",
-      newPassword: "secureHashedPasswor123",
-    };
 
-    const response = await request(app)
-      .patch("/auth/change-password")
-      .set("Authorization", `Bearer ${token}`)
-      .send(registrationData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.body.message).toBe("User not found.");
-    expect(response.status).toBe(404);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail change password; no parameters; status 400 ", async () => {
@@ -162,7 +140,6 @@ describe("Auth Endpoints", () => {
     expect(response.body.errors).toEqual([
       "Password cannot be empty.",
       "New password cannot be empty.",
-      "User id cannot be empty.",
     ]);
     expect(response.status).toBe(400);
   });
@@ -171,7 +148,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail change password; wrong parameters typeof; status 400 ", async () => {
     const registrationData = {
-      user_id: "h",
       password: 2,
       newPassword: 2,
     };
@@ -188,9 +164,31 @@ describe("Auth Endpoints", () => {
     expect(response.body.errors).toEqual([
       "Password must be a string.",
       "New password must be a string.",
-      "User id must be a number.",
     ]);
     expect(response.status).toBe(400);
+  });
+});
+
+describe("Auth Endpoints", () => {
+  it("fail change password; user not found; status 404 ", async () => {
+    await prisma.user.deleteMany();
+
+    const registrationData = {
+      password: "secureHashedPasswor1231",
+      newPassword: "secureHashedPasswor123",
+    };
+
+    const response = await request(app)
+      .patch("/auth/change-password")
+      .set("Authorization", `Bearer ${token}`)
+      .send(registrationData);
+
+    if (response.status !== 400) {
+      console.log("Response body:", response.body);
+    }
+
+    expect(response.body.message).toBe("User not found.");
+    expect(response.status).toBe(404);
   });
 });
 

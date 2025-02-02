@@ -5,6 +5,8 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
+let token;
+
 beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",
@@ -13,13 +15,22 @@ beforeAll(async () => {
   };
 
   await request(app).post("/auth/register").send(registrationData);
+
+  const loginData = {
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  const response = await request(app).post("/auth/login").send(loginData);
+
+  token = response.body.token;
 });
 
 describe("Auth Endpoints", () => {
   it("success set user password; status 200", async () => {
     const verificationData = {
-      email: EMAIL_TESTER,
-      newPassword: "secureHashedPassword123",
+      token: token,
+      password: "secureHashedPassword123",
     };
 
     const response = await request(app).patch("/auth/set-password").send(verificationData);
@@ -33,30 +44,11 @@ describe("Auth Endpoints", () => {
   });
 });
 
-/*
-describe("Auth Endpoints", () => {
-  it("fail set password; missing email; status 400", async () => {
-    await prisma.user.findUnique({
-      where: { email: EMAIL_TESTER },
-    });
-    const verificationData = {
-      newPassword: "secureHashedPassword123",
-    };
 
-    const response = await request(app).patch("/auth/set-password").send(verificationData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.body.errors).toEqual(["Email cannot be empty."]);
-    expect(response.status).toBe(400);
-  });
-});
-*/
 describe("Auth Endpoints", () => {
   it("fail set password; missing password; status 400", async () => {
     const verificationData = {
-      email: EMAIL_TESTER,
+      token: token,
     };
 
     const response = await request(app).patch("/auth/set-password").send(verificationData);
@@ -72,12 +64,11 @@ describe("Auth Endpoints", () => {
 
 describe("Auth Endpoints", () => {
   it("fail set password; user not exist; status 404", async () => {
-    await prisma.user.findUnique({
-      where: { email: EMAIL_TESTER },
+    await prisma.user.deleteMany({
     });
     const verificationData = {
-      email: "juan@sindcuenta.xd",
-      newPassword: "secureHashedPassword123",
+      token: token,
+      password: "secureHashedPassword123",
     };
 
     const response = await request(app).patch("/auth/set-password").send(verificationData);
@@ -94,8 +85,8 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail set password; invalid password; status 400", async () => {
     const verificationData = {
-      email: EMAIL_TESTER,
-      newPassword: "a",
+      token: token,
+      password: "a",
     };
 
     const response = await request(app).patch("/auth/set-password").send(verificationData);
@@ -114,7 +105,7 @@ describe("Auth Endpoints", () => {
 
     const verificationData = {
       email: 2,
-      newPassword: 3,
+      password: 3,
     };
 
     const response = await request(app).patch("/auth/set-password").send(verificationData);

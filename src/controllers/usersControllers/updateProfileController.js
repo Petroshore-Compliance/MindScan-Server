@@ -6,9 +6,10 @@ const prisma = require("../../db.js");
 //devuelve el usuario tras las actualizaciones sin la contraseña
 const updateProfileController = async (data) => {
 
+  delete data.token;
   const userToUpdate = await prisma.user.findUnique({
     where: {
-      user_id: data.user_id,
+      email: data.user.email,
     },
   });
 
@@ -22,13 +23,16 @@ const updateProfileController = async (data) => {
   if (data.email === userToUpdate.email) {
     delete data.email;
   }
+  delete data.user;
+
   //esten metodo detecta que solo se ha pasado el user_id
-  if (Object.keys(data).length === 1 && data.hasOwnProperty("user_id")) {
-    return { status: 400, message: "User profile cannot be updated with only user_id", user: data };
+  if (Object.keys(data).length === 0) {
+    return { status: 400, message: "No valid data to update" };
   }
   console.log("data", data);
+
   const user = await prisma.user.update({
-    where: { user_id: data.user_id },
+    where: { email: userToUpdate.email },
     data: data,
   });
 

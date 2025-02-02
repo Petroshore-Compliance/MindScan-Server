@@ -4,9 +4,8 @@ const {
 
 const changePasswordHandler = async (req, res) => {
   try {
-    const { user_id, password, newPassword } = req.body;
 
-    const response = await changePasswordController(user_id, password, newPassword);
+    const response = await changePasswordController(req.body);
 
     res.status(response.status).json({ message: response.message });
   } catch (error) {
