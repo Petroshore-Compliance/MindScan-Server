@@ -3,11 +3,7 @@ const { validateString, validateNumber, regexEmail } = require("../../tools/vali
 const getCompaniesMiddleware = (req, res, next) => {
   let errors = [];
   let result;
-  const { company_id, email } = req.body;
-
-  result = validateString(email, "Email", regexEmail);
-  if (result.error) errors.push(result.error);
-  else req.body.email = result.value;
+  const { company_id } = req.body;
 
   if (company_id) {
     result = validateNumber(company_id, "Company ID");
