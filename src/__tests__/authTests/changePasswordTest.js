@@ -15,7 +15,7 @@ beforeAll(async () => {
     password: "secureHashedPassword123",
   };
 
-  const response = await request(app).post("/auth/register").send(registrationData);
+  await request(app).post("/auth/register").send(registrationData);
 
   const userData = await prisma.user.findUnique({
     where: { email: EMAIL_TESTER },
