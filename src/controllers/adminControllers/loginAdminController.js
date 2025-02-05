@@ -29,7 +29,7 @@ const loginAdminController = async (email, password) => {
 
   const JWTtoken = jwt.sign(
     {
-      id: petroAdmin.petroAdmin_id,
+      petroAdmin_id: petroAdmin.petroAdmin_id,
       email: petroAdmin.email,
     },
     process.env.JWT_SECRET,
