@@ -10,9 +10,8 @@ const authMiddleware = async (req, res, next) => {
   }
 
   try {
-    let decryptedJwt = await decryptJWT(token);
-    if (decryptedJwt.token) { decryptedJwt = decryptedJwt.token }
-    const decoded = jwt.verify(decryptedJwt, process.env.JWT_SECRET);
+    const decryptedData = await decryptJWT(token);
+    const decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
 
     req.body.user = decoded;
 

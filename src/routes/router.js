@@ -9,7 +9,7 @@ const formRoutes = require("./contactFormRoutes.js");
 const adminRoutes = require("./adminRoutes.js");
 
 router.use("/auth", authRoutes);
-router.use("/users", userRoutes);
+router.use("/user", userRoutes);
 router.use("/companies", companiesRoutes);
 router.use("/invitations", invitationsRoutes);
 router.use("/contact", formRoutes);

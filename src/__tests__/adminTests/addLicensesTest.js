@@ -10,6 +10,7 @@ let companyId;
 const userEmail = "user@user.pou";
 let userId;
 let token;
+let tokenUser;
 
 beforeAll(async () => {
   // Register a regular user
@@ -28,7 +29,7 @@ beforeAll(async () => {
   };
 
   const loggedUser = await request(app).post("/auth/login").send(loginDataUser);
-  console.log(loggedUser.body);
+  tokenUser = loggedUser.body.token;
   userId = loggedUser.body.user.user_id;
 
   // Register an admin user
@@ -45,6 +46,7 @@ beforeAll(async () => {
     where: { email: EMAIL_TESTER },
   });
 
+
   petroAdminId = petroAdminData.petroAdmin_id;
 
   // Log in the admin user
@@ -56,7 +58,6 @@ beforeAll(async () => {
   const responseAdminLogin = await request(app).post("/admin/login").send(loginDataAdmin);
 
   token = responseAdminLogin.body.token;
-  console.log("Token:", token);
 
   // Create a company associated with the regular user
   const companyRegistrationData = {
@@ -70,9 +71,6 @@ beforeAll(async () => {
     .set("Authorization", `Bearer ${token}`)
     .send(companyRegistrationData);
 
-
-  console.log("Company Response:", company.body)
-  console.log("Company Response:", company.body.company_id)
   companyId = company.body.company.company_id;
 
   const auxcompanyRegistrationData = {
@@ -90,7 +88,6 @@ beforeAll(async () => {
 describe("admin Endpoints", () => {
   it("success adding licenses; status 200", async () => {
     const licenseAddingData = {
-      email: EMAIL_TESTER,
       company_id: companyId,
       licensesNumber: 10,
     };
@@ -115,7 +112,6 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("success adding licenses, again; status 200", async () => {
     const licenseAddingData = {
-      email: EMAIL_TESTER,
       company_id: companyId,
       licensesNumber: 346,
     };
@@ -139,7 +135,6 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail adding licenses; decimal licensesNumber ;status 400", async () => {
     const licenseAddingData = {
-      email: EMAIL_TESTER,
       company_id: companyId,
       licensesNumber: 10.22,
     };
@@ -160,7 +155,6 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail adding licenses; decimal licensesNumber ;status 400", async () => {
     const licenseAddingData = {
-      email: EMAIL_TESTER,
       company_id: companyId,
       licensesNumber: 0,
     };
@@ -182,7 +176,6 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail adding licenses; negative licensesNumber ;status 400", async () => {
     const licenseAddingData = {
-      email: EMAIL_TESTER,
       company_id: companyId,
       licensesNumber: -10,
     };
@@ -204,7 +197,6 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail adding licenses; unoutharized ;status 401", async () => {
     const licenseAddingData = {
-      email: EMAIL_TESTER,
       company_id: companyId,
       licensesNumber: -10,
     };
@@ -223,14 +215,12 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail adding licenses; non-PetroAdmin ;status 403", async () => {
     const licenseAddingData = {
-      email: userEmail,
       company_id: companyId,
       licensesNumber: -10,
     };
-
     const response = await request(app)
       .patch("/admin/add-licenses")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${tokenUser}`)
       .send(licenseAddingData);
 
     if (response.status !== 403) {
@@ -242,34 +232,10 @@ describe("admin Endpoints", () => {
   });
 });
 
-describe("admin Endpoints", () => {
-  it("fail adding licenses;wrong email typeof; status 400", async () => {
-    const licenseAddingData = {
-      email: "EMAIL_TESTER",
-      company_id: companyId,
-      licensesNumber: 346,
-    };
-
-    const response = await request(app)
-      .patch("/admin/add-licenses")
-      .set("Authorization", `Bearer ${token}`)
-      .send(licenseAddingData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.body).toEqual({
-      errors: ["Invalid email format."],
-    });
-    expect(response.status).toBe(400);
-  });
-});
 
 describe("admin Endpoints", () => {
   it("fail adding licenses;wrong company_id and licensesNumber typeof; status 400", async () => {
     const licenseAddingData = {
-      email: EMAIL_TESTER,
       company_id: "companyId",
       licensesNumber: "3h46",
     };
@@ -289,29 +255,11 @@ describe("admin Endpoints", () => {
   });
 });
 
-describe("admin Endpoints", () => {
-  it("fail adding licenses;no emailf; status 400", async () => {
-    const licenseAddingData = {};
 
-    const response = await request(app)
-      .patch("/admin/add-licenses")
-      .set("Authorization", `Bearer ${token}`)
-      .send(licenseAddingData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.body).toEqual({
-      errors: ["Email cannot be empty."],
-    });
-    expect(response.status).toBe(400);
-  });
-});
 
 describe("admin Endpoints", () => {
   it("fail adding licenses;no company_id nor licensesNumber; status 400", async () => {
     const licenseAddingData = {
-      email: EMAIL_TESTER,
     };
 
     const response = await request(app)
