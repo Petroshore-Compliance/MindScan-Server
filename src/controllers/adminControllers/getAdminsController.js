@@ -11,8 +11,8 @@ const getAdminsController = async (data) => {
       return { status: 404, message: "petroAdmin not found" };
     }
 
-    const { password, ...petroAdminData } = petroAdmin;
-    return { status: 200, message: "petroAdmin found", petroAdmin: petroAdminData };
+    delete petroAdmin.password;
+    return { status: 200, message: "petroAdmin found", petroAdmin: petroAdmin };
   }
 
   const petroAdmins = await prisma.petroAdmin.findMany();
