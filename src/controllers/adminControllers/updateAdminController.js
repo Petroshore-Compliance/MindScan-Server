@@ -15,11 +15,15 @@ const updateAdminController = async (data) => {
   }
 
   const petroAdmin = await prisma.petroAdmin.update({
-    where: { email: auxEmail.toLowerCase() },
+    where: { email: auxEmail },
     data: data,
+    select: {
+      name: true,
+      email: true,
+    },
   });
+  console.log(petroAdmin)
 
-  delete petroAdmin.password;
 
 
   return { status: 200, message: "petroAdmin updated successfully", petroAdmin: petroAdmin };

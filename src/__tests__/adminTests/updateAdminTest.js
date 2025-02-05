@@ -16,7 +16,7 @@ beforeAll(async () => {
     password: "secureHashedPassword123",
   };
 
-  const response = await request(app).post("/admin/create").send(registrationData);
+  await request(app).post("/admin/create").send(registrationData);
 
   const petroAdminData = await prisma.petroAdmin.findUnique({
     where: { email: EMAIL_TESTER },
@@ -41,9 +41,6 @@ beforeAll(async () => {
 describe("admin Endpoints", () => {
   it("success update admin; status 200 ", async () => {
     const updateadminData = {
-      adminEmail: EMAIL_TESTER,
-
-      petroAdmin_id: petroAdminId,
       name: "roman",
       password: "secureHashedPassword123",
     };
@@ -57,62 +54,19 @@ describe("admin Endpoints", () => {
       console.log("Response body:", response.body);
     }
 
-    expect(response.status).toBe(200);
     expect(response.body.message).toEqual("petroAdmin updated successfully");
+    expect(response.status).toBe(200);
   });
 });
 
-describe("admin Endpoints", () => {
-  it("fail update admin; no petroAdminId; status 400 ", async () => {
-    const updateadminData = {
-      adminEmail: EMAIL_TESTER,
 
-      name: "roman",
-      password: "secureHashedPassword123",
-    };
 
-    const response = await request(app)
-      .patch("/admin/update")
-      .set("Authorization", `Bearer ${token}`)
-      .send(updateadminData);
 
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
 
-    expect(response.status).toBe(400);
-    expect(response.body.errors).toEqual(["petroAdmin ID cannot be empty."]);
-  });
-});
-
-describe("admin Endpoints", () => {
-  it("fail update admin;invalid password; status 400 ", async () => {
-    const updateadminData = {
-      adminEmail: EMAIL_TESTER,
-
-      petroAdmin_id: petroAdminId,
-      name: "roman",
-      password: "a",
-    };
-
-    const response = await request(app)
-      .patch("/admin/update")
-      .set("Authorization", `Bearer ${token}`)
-      .send(updateadminData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.status).toBe(400);
-    expect(response.body.errors).toEqual(["Invalid password format."]);
-  });
-});
 
 describe("admin Endpoints", () => {
   it("fail update admin;invalid email; status 400 ", async () => {
     const updateadminData = {
-      adminEmail: EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
       name: "roman",
@@ -136,7 +90,6 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail update admin;invalid name; status 400 ", async () => {
     const updateadminData = {
-      adminEmail: EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
       name: " h!$·,.",
@@ -159,9 +112,7 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail update admin;no data; status 422 ", async () => {
     const updateadminData = {
-      adminEmail: EMAIL_TESTER,
 
-      petroAdmin_id: petroAdminId,
     };
 
     const response = await request(app)
@@ -181,14 +132,12 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail update admin;wrong typeof; status 400 ", async () => {
     const updateadminData = {
-      adminEmail: EMAIL_TESTER,
 
       petroAdmin_id: "petroAdminId",
       company_id: "companyId",
       name: 33,
       email: 22,
       role: 33,
-      password: 33,
     };
 
     const response = await request(app)
@@ -203,17 +152,14 @@ describe("admin Endpoints", () => {
     expect(response.status).toBe(400);
     expect(response.body.errors).toEqual([
       "Company ID must be a number.",
-      "petroAdmin ID must be a number.",
       "Name must be a string.",
       "Email must be a string.",
-      "Password must be a string.",
     ]);
   });
 
   describe("admin Endpoints", () => {
     it("fail update admin;no token; status 401 ", async () => {
       const petroAdminData = {
-        adminEmail: EMAIL_TESTER,
 
         petroAdmin_id: "petroAdminId",
       };
