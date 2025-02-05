@@ -40,7 +40,6 @@ beforeAll(async () => {
 describe("Auth Endpoints", () => {
   it("change password; status 200 ", async () => {
     const registrationData = {
-      token: token,
       password: "secureHashedPassword123",
       newPassword: "secureHashedPasswor1231",
     };
@@ -192,7 +191,7 @@ describe("Auth Endpoints", () => {
   });
 });
 
-// borrado de todo lo creado
+// borrado de lo creado
 afterAll(async () => {
   await prisma.user.deleteMany();
 
