@@ -4,10 +4,7 @@ const getCompanyEmployeesMiddleware = async (req, res, next) => {
   let errors = [];
   let result;
 
-  let { company_id, user_id } = req.body;
-
-  result = validateNumber(user_id, "User ID");
-  if (result.error) errors.push(result.error);
+  let { company_id } = req.body;
 
   result = validateNumber(company_id, "Company ID");
   if (result.error) errors.push(result.error);

@@ -11,7 +11,7 @@ const roleCheck = async (data) => {
     result = validateString(host, "Host email", regexEmail);
     if (result.error) return { error: "no valid host email", status: 400, message: result.error };
   } else {
-    result = validateString(email, "Email", regexEmail);
+    result = validateString(data.user.email, "Email", regexEmail);
     if (result.error) return { error: "no valid email", status: 400, message: result.error };
   }
 
