@@ -78,10 +78,8 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; not found; status 404 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
       company_id: 1,
-      user_id: userId,
     };
 
     const response = await request(app)
@@ -101,10 +99,8 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; not company_id; status 400 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
 
-      user_id: userId,
     };
 
     const response = await request(app)
@@ -148,9 +144,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; missing neededRole; status 400 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       company_id: "definitivamente esto es un id",
-      user_id: "definitivamente esto es un userId",
     };
 
     const response = await request(app)
@@ -174,10 +168,8 @@ describe("Auth Endpoints", () => {
       data: { role: "employee" },
     });
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "admin",
       company_id: "definitivamente esto es un id",
-      user_id: "definitivamente esto es un userId",
     };
 
     const response = await request(app)
