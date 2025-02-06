@@ -19,7 +19,7 @@ const createCompanyController = async (data) => {
     const company = await prisma.company.create({
       data: {
         name: data.name,
-        email: data.email,
+        email: data.email.toLowerCase(),
       },
     });
 

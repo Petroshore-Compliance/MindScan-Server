@@ -32,7 +32,7 @@ const createInvitationController = async (data) => {
 
   const invitation = await prisma.companyInvitation.create({
     data: {
-      email: data.email,
+      email: data.email.toLowerCase(),
       company_id: data.company_id,
       invitation_token: invToken.toString(),
     },

@@ -8,7 +8,7 @@ const { emailContactFormCreatedScript } = require("../../tools/emailContactFormC
 const createContactFormController = async (data) => {
   const alreadyExist = await prisma.contactForm.findFirst({
     where: {
-      email: data.email,
+      email: data.email.toLowerCase(),
     },
     orderBy: {
       created_at: "desc",
