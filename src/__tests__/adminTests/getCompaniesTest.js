@@ -87,8 +87,7 @@ beforeAll(async () => {
 describe("admin Endpoints", () => {
   it("successfully retrieves one company; status 200", async () => {
     const getCompaniesData = {
-      email: EMAIL_TESTER,
-      companyId,
+      company_id: companyId,
     };
 
     const response = await request(app)
@@ -111,7 +110,6 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("successfully retrieves all companies; status 200", async () => {
     const getCompaniesData = {
-      email: EMAIL_TESTER,
     };
 
     const response = await request(app)
@@ -131,7 +129,6 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail retrieving companies;no token; status 401", async () => {
     const getCompaniesData = {
-      email: EMAIL_TESTER,
     };
 
     const response = await request(app).get("/admin/get-companies").send(getCompaniesData);
@@ -141,23 +138,6 @@ describe("admin Endpoints", () => {
     }
     expect(response.status).toBe(401);
     expect(response.body.message).toEqual("Acceso denegado");
-  });
-});
-
-describe("admin Endpoints", () => {
-  it("fail retrieving companies;no email; status 401", async () => {
-    const getCompaniesData = {};
-
-    const response = await request(app)
-      .get("/admin/get-companies")
-      .set("Authorization", `Bearer ${token}`)
-      .send(getCompaniesData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.status).toBe(400);
-    expect(response.body.errors).toEqual(["Email cannot be empty."]);
   });
 });
 

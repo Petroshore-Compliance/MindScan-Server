@@ -4,8 +4,7 @@ const {
 
 const updateAdminHandler = async (req, res) => {
   try {
-    const { adminEmail, ...dataWithoutAdminEmail } = req.body;
-    const response = await updateAdminController(dataWithoutAdminEmail);
+    const response = await updateAdminController(req.body);
 
     return res.status(response.status).json({ message: response.message });
   } catch (error) {

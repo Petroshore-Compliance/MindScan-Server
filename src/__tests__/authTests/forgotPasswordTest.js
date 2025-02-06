@@ -5,6 +5,9 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
+let UserId;
+let token;
+
 beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",
@@ -12,7 +15,7 @@ beforeAll(async () => {
     password: "secureHashedPassword123",
   };
 
-  const response = await request(app).post("/auth/register").send(registrationData);
+  await request(app).post("/auth/register").send(registrationData);
 
   const userData = await prisma.user.findUnique({
     where: { email: EMAIL_TESTER },
@@ -116,7 +119,7 @@ describe("Auth Endpoints", () => {
   });
 });
 
-// borrado de todo lo creado
+// borrado de lo creado
 afterAll(async () => {
   await prisma.user.deleteMany();
 

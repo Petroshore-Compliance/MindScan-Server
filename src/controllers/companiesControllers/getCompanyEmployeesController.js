@@ -4,7 +4,7 @@ const prisma = require("../../db.js");
 const getCompanyEmployeesController = async (data) => {
   const requestingUser = await prisma.user.findUnique({
     where: {
-      user_id: data.user_id,
+      user_id: data.user.user_id,
     },
   });
 

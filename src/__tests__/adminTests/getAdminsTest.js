@@ -47,9 +47,8 @@ beforeAll(async () => {
 });
 
 describe("admin Endpoints", () => {
-  it("success get admin; status 200 ", async () => {
+  it("success get all admin; status 200 ", async () => {
     const petroAdminData = {
-      email: EMAIL_TESTER,
     };
 
     const response = await request(app)
@@ -69,9 +68,8 @@ describe("admin Endpoints", () => {
 });
 
 describe("admin Endpoints", () => {
-  it("success get admin; status 200 ", async () => {
+  it("success get 1 admin; status 200 ", async () => {
     const petroAdminData = {
-      email: EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
     };
@@ -85,8 +83,8 @@ describe("admin Endpoints", () => {
       console.log("Response body:", response.body);
     }
 
-    expect(response.status).toBe(200);
     expect(response.body.petroAdmin.email).toEqual(EMAIL_TESTER);
+    expect(response.status).toBe(200);
 
     expect(response.body.message).toEqual("petroAdmin found");
   });

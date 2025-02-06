@@ -5,6 +5,9 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
+let petroAdminId
+let token
+
 beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",

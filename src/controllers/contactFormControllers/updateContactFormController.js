@@ -1,6 +1,7 @@
 const prisma = require("../../db.js");
 
 const updateContactFormController = async (data) => {
+  delete data.user;
   if (Object.keys(data).length === 1 && data.hasOwnProperty("form_id")) {
     return { status: 400, message: "form cannot be updated with only form_id", form: data };
   }
@@ -14,10 +15,11 @@ const updateContactFormController = async (data) => {
   if (!formExists) {
     return { status: 404, message: "Form not found", form: formExists };
   }
-
+  delete data.form_id;
+  delete data.user;
   const updatedForm = await prisma.contactForm.update({
     where: {
-      form_id: data.form_id,
+      form_id: formExists.form_id,
     },
     data: data,
   });

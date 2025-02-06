@@ -20,7 +20,7 @@ beforeAll(async () => {
     password: "secureHashedPassword123",
   };
 
-  const response = await request(app).post("/auth/register").send(registrationData);
+  await request(app).post("/auth/register").send(registrationData);
 
   const userData = await prisma.user.findUnique({
     where: { email: EMAIL_TESTER },
@@ -57,10 +57,8 @@ beforeAll(async () => {
 describe("Auth Endpoints", () => {
   it("success get company; status 200 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
       company_id: companyId,
-      user_id: userId,
     };
 
     const response = await request(app)
@@ -80,10 +78,8 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; not found; status 404 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
       company_id: 1,
-      user_id: userId,
     };
 
     const response = await request(app)
@@ -103,10 +99,8 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; not company_id; status 400 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
 
-      user_id: userId,
     };
 
     const response = await request(app)
@@ -122,35 +116,13 @@ describe("Auth Endpoints", () => {
     expect(response.status).toBe(400);
   });
 });
-describe("Auth Endpoints", () => {
-  it("fail get company; not user_id; status 400 ", async () => {
-    const copmanyData = {
-      email: EMAIL_TESTER,
-      neededRole: "manager",
-      company_id: 1,
-    };
 
-    const response = await request(app)
-      .get("/companies/get-employees")
-      .set("Authorization", `Bearer ${token}`)
-      .send(copmanyData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.body.errors).toEqual(["User ID cannot be empty."]);
-    expect(response.status).toBe(400);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail get company; wrong typeof; status 400 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
       company_id: "definitivamente esto es un id",
-      user_id: "definitivamente esto es un userId",
     };
 
     const response = await request(app)
@@ -163,7 +135,6 @@ describe("Auth Endpoints", () => {
     }
 
     expect(response.body.errors).toEqual([
-      "User ID must be a number.",
       "Company ID must be a number.",
     ]);
     expect(response.status).toBe(400);
@@ -173,9 +144,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; missing neededRole; status 400 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       company_id: "definitivamente esto es un id",
-      user_id: "definitivamente esto es un userId",
     };
 
     const response = await request(app)
@@ -199,10 +168,8 @@ describe("Auth Endpoints", () => {
       data: { role: "employee" },
     });
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "admin",
       company_id: "definitivamente esto es un id",
-      user_id: "definitivamente esto es un userId",
     };
 
     const response = await request(app)

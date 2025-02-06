@@ -6,16 +6,11 @@ const prisma = require("../../db.js");
 //cambiar la contraseña de un usuario que ha olvidado su contraseña
 //recibe el email y la nueva contraseña
 //y devuelve cambio de contraseña exitoso o fallido
-const setPasswordController = async (props) => {
-  const { token, password } = props;
-
-  if (!token || !password) {
-    return { status: 400, message: "Token and password are required" };
-  }
+const setPasswordController = async (data) => {
+  const { token, password } = data;
 
   const decryptedData = await decryptJWT(token);
-  const decoded = jwt.verify(decryptedData, process.env.JWT_SECRET);
-
+  const decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
 
   const user = await prisma.user.findUnique({
     where: { email: decoded.email.toLowerCase() },

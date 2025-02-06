@@ -7,7 +7,7 @@ const getAdminsMiddleware = (req, res, next) => {
   let result;
 
   if (req.petroAdmin_id) {
-    result = validateNumber(req.petroAdmin_id, "Company ID");
+    result = validateNumber(req.petroAdmin_id, "petroAdmin ID");
     if (result.error) errors.push(result.error);
   }
 

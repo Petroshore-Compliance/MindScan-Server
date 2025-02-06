@@ -57,7 +57,6 @@ beforeAll(async () => {
 describe("Auth Endpoints", () => {
   it("success get company; status 200 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
 
       company_id: companyId,
@@ -80,7 +79,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; not found; status 404 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
 
       company_id: 1,
@@ -103,7 +101,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; not id; status 400 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
     };
 
@@ -124,7 +121,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; not id; status 400 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
     };
 
@@ -145,7 +141,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail get company; wrong typeof; status 400 ", async () => {
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
 
       company_id: "definitivamente esto es un id",
@@ -193,7 +188,6 @@ describe("Auth Endpoints", () => {
     });
 
     const copmanyData = {
-      email: EMAIL_TESTER,
       neededRole: "manager",
 
       company_id: companyId,

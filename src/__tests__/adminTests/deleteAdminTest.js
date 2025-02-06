@@ -39,7 +39,6 @@ beforeAll(async () => {
 describe("Auth Endpoints", () => {
   it("fail delete petroAdmin; missing fields ;status 200 ", async () => {
     const deleteAdminData = {
-      email: EMAIL_TESTER,
 
       petroAdmin_id: "",
     };
@@ -60,7 +59,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail delete petroAdmin; wrong typeof ;status 200 ", async () => {
     const deleteAdminData = {
-      email: EMAIL_TESTER,
 
       petroAdmin_id: "petroAdminId",
     };
@@ -81,7 +79,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("success delete petroAdmin; status 200 ", async () => {
     const deleteFormData = {
-      email: EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
     };
@@ -100,9 +97,8 @@ describe("Auth Endpoints", () => {
 });
 
 describe("Auth Endpoints", () => {
-  it("fauk delete petroAdmin;not petroadmin; status 403 ", async () => {
+  it("fail delete petroAdmin;not petroadmin; status 403 ", async () => {
     const deleteFormData = {
-      email: EMAIL_TESTER,
 
       petroAdmin_id: petroAdminId,
     };

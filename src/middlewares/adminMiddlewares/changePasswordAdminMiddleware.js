@@ -11,13 +11,7 @@ const changePasswordAdminMiddleware = (req, res, next) => {
   result = validateString(newPassword, "New password", regexPass);
   if (result.error) errors.push(result.error);
 
-  if (petroAdmin_id && petroAdmin_id !== "") {
-    if (isNaN(petroAdmin_id) || parseInt(petroAdmin_id) !== Number(petroAdmin_id)) {
-      errors.push("petroAdmin id must be a number.");
-    }
-  } else {
-    errors.push("petroAdmin id cannot be empty.");
-  }
+
 
   if (errors.length === 0) {
     next();

@@ -104,7 +104,7 @@ describe("Auth Endpoints", () => {
   it("fail set password; wrong typeof; status 400", async () => {
 
     const verificationData = {
-      email: 2,
+      token: "s",
       password: 3,
     };
 

@@ -46,7 +46,7 @@ describe("Auth Endpoints", () => {
     };
 
     const response = await request(app)
-      .get("/users/me")
+      .get("/user/me")
       .set("Authorization", `Bearer ${token}`)
       .send(userData);
 
@@ -64,7 +64,7 @@ describe("Auth Endpoints", () => {
     const userData = {};
 
     const response = await request(app)
-      .get("/users/me")
+      .get("/user/me")
       .set("Authorization", `Bearer ${token}`)
       .send(userData);
 
@@ -83,7 +83,7 @@ describe("Auth Endpoints", () => {
     };
 
     const response = await request(app)
-      .get("/users/me")
+      .get("/user/me")
       .set("Authorization", `Bearer ${token}`)
       .send(userData);
 
@@ -102,7 +102,7 @@ describe("Auth Endpoints", () => {
       user_id: "userId",
     };
 
-    const response = await request(app).get("/users/me").send(userData);
+    const response = await request(app).get("/user/me").send(userData);
 
     if (response.status !== 401) {
       console.log("Response body:", response.body);

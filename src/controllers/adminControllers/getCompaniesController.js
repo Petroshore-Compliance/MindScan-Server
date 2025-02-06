@@ -15,6 +15,7 @@ const getCompaniesController = async (data) => {
   if (companies.length === 0) {
     return { status: 404, message: "Companies not found" };
   } else {
+    console.log(companies.length);
     return { status: 200, message: "Companies found", companies };
   }
 };

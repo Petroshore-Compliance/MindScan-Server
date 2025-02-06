@@ -4,11 +4,8 @@ const addLicensesMiddleware = (req, res, next) => {
   let errors = [];
   let result;
 
-  const { company_id, licensesNumber, email } = req.body;
+  const { company_id, licensesNumber } = req.body;
 
-  result = validateString(email, "Email", regexEmail);
-  if (result.error) errors.push(result.error);
-  else req.body.email = result.value;
 
   result = validateNumber(company_id, "Company ID");
   if (result.error) errors.push(result.error);

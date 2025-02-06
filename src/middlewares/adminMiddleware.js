@@ -17,7 +17,7 @@ const adminMiddleware = async (req, res, next) => {
     const decryptedData = await decryptJWT(token);
     const decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
 
-    //req.user = decoded;
+    req.body.user = decoded;
 
   } catch (error) {
     return res.status(401).json({ message: "Acceso denegado, token inválido" });
@@ -43,19 +43,10 @@ const adminMiddleware = async (req, res, next) => {
 
 
 
-  const { email, adminEmail } = req.body;
-  let result;
-  if (adminEmail) {
-    result = validateString(adminEmail, "Email", regexEmail);
-    if (result.error) return res.status(400).json({ errors: [result.error] });
-  } else {
-    result = validateString(email, "Email", regexEmail);
-    if (result.error) return res.status(400).json({ errors: [result.error] });
-  }
 
   const user = await prisma.petroAdmin.findUnique({
     where: {
-      email: result.value,
+      email: req.body.user.email.toLowerCase(),
     },
   });
 

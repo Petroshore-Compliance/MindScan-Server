@@ -9,15 +9,13 @@ const {
 const updateAdminMiddleware = (req, res, next) => {
   let result;
   let errors = [];
-  let { company_id, petroAdmin_id, name, email, password } = req.body;
+  let { company_id, name, email } = req.body;
 
   if (company_id) {
     result = validateNumber(company_id, "Company ID");
     if (result.error) errors.push(result.error);
   }
 
-  result = validateNumber(petroAdmin_id, "petroAdmin ID");
-  if (result.error) errors.push(result.error);
 
   if (name) {
     result = validateString(name, "Name", regexName);
@@ -31,10 +29,6 @@ const updateAdminMiddleware = (req, res, next) => {
     else req.body.email = result.value;
   }
 
-  if (password) {
-    result = validateString(password, "Password", regexPass);
-    if (result.error) errors.push(result.error);
-  }
 
   if (errors.length === 0) {
     next();
