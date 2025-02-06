@@ -9,7 +9,7 @@ const createAdminController = async (email, password, name) => {
   //si el tipo es individual, significa que no está conectado a una compañía
   const emailInUse = await prisma.petroAdmin.findUnique({
     where: {
-      email: email,
+      email: email.toLowerCase(),
     },
   });
 
@@ -20,10 +20,11 @@ const createAdminController = async (email, password, name) => {
   const newpetroAdmin = await prisma.petroAdmin.create({
     data: {
       name,
-      email: email,
+      email: email.toLowerCase(),
       password: await bcrypt.hash(password, 10),
     },
   });
+  console.log(newpetroAdmin.email);
 
   return { status: 201, message: "petroAdmin registered successfully", petroAdmin: newpetroAdmin };
 };
