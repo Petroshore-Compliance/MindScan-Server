@@ -2,7 +2,7 @@ const prisma = require("../db.js");
 const { validateString, regexEmail } = require("../tools/validations.js");
 
 const roleCheck = async (data) => {
-  const { neededRole, email, host, guest } = data;
+  const { neededRole, host, guest } = data;
 
   let result = validateString(neededRole, "neededRole");
   if (result.error) return { error: "no valid role", status: 400, message: result.error };
