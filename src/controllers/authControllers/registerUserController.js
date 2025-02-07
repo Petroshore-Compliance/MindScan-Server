@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 
 const prisma = require("../../db.js");
 
+const { emailCreatedUserScript } = require("../../tools/emailCreatedUserScript.js");
+
 //este método se encarga de crear un nuevo usuario en la base de datos
 // recibe como parámetros el email, la contraseña, el nombre, el tipo de usuario, el rol y el id de la compañía
 // y devuelve un objeto con la respuesta del registro del usuario
@@ -29,6 +31,15 @@ const registerUserController = async (email, password, name, role, company_id) =
         : undefined,
     },
   });
+
+
+  await emailCreatedUserScript(
+    newUser.name,
+    newUser.company,
+    newUser.email,
+    "../templates/createdUserEmail.html"
+  );
+
   return { status: 201, message: "User registered successfully", user: newUser };
 };
 

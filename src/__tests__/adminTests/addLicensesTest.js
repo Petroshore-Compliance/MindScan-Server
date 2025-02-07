@@ -43,7 +43,7 @@ beforeAll(async () => {
 
   // Fetch the admin user from the database
   const petroAdminData = await prisma.petroAdmin.findUnique({
-    where: { email: EMAIL_TESTER },
+    where: { email: EMAIL_TESTER.toLowerCase() },
   });
 
 

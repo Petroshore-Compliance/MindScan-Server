@@ -27,7 +27,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("login user; status 200", async () => {
     const userData = await prisma.user.findUnique({
-      where: { email: EMAIL_TESTER },
+      where: { email: EMAIL_TESTER.toLowerCase() },
     });
 
     const loginData = {

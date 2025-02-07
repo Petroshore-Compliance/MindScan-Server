@@ -5,13 +5,29 @@ const prisma = require("../../db.js");
 
 const updateAdminController = async (data) => {
   delete data.password;
-  const auxEmail = data.user.email;
-  delete data.user;
   delete data.petroAdmin_id;
+  const auxEmail = data.user.email.toLowerCase();
 
+  //andrei, compruebo el usuario actual para ver si se cambia el email, que no sea el mismo que antes
+  const userToUpdate = await prisma.petroAdmin.findUnique({
+    where: {
+      email: data.user.email.toLowerCase(),
+    },
+  });
+
+  if (!userToUpdate) {
+    return { status: 404, message: "User not found" };
+  }
+
+  if (data.email && data.email.toLowerCase() === userToUpdate.email) {
+    delete data.email;
+  }
+  delete data.user;
 
   if (Object.keys(data).length === 0) {
     return { status: 422, message: "No fields to update" };
+
+
   }
 
   const petroAdmin = await prisma.petroAdmin.update({
@@ -22,7 +38,6 @@ const updateAdminController = async (data) => {
       email: true,
     },
   });
-  console.log(petroAdmin)
 
 
 

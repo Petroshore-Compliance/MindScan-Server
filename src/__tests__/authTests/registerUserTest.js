@@ -18,6 +18,7 @@ describe("Auth Endpoints", () => {
     if (response.status !== 201) {
       console.log("Response body:", response.body);
     }
+    expect(response.body).toEqual({ message: "User registered successfully" });
     expect(response.status).toBe(201);
   });
 });

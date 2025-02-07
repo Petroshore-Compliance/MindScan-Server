@@ -5,10 +5,9 @@ const inviteMiddleware = (req, res, next) => {
   let errors = [];
   let result;
   let { role, company_id, guest } = req.body;
-
   result = validateString(guest, "Guest email", regexEmail);
   if (result.error) errors.push(result.error);
-  else req.body.email = result.value;
+  else req.body.email = result.value.toLowerCase();
 
   result = validateString(role, "Role");
   if (result.error) errors.push(result.error);
