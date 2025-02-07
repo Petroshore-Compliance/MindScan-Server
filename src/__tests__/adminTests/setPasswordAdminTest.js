@@ -36,7 +36,7 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail set password; missing email; status 400", async () => {
     await prisma.petroAdmin.findUnique({
-      where: { email: EMAIL_TESTER },
+      where: { email: EMAIL_TESTER.toLowerCase() },
     });
     const verificationData = {
       newPassword: "secureHashedPassword123",
@@ -55,7 +55,7 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail set password; missing password; status 400", async () => {
     const petroAdminData = await prisma.petroAdmin.findUnique({
-      where: { email: EMAIL_TESTER },
+      where: { email: EMAIL_TESTER.toLowerCase() },
     });
     const verificationData = {
       email: EMAIL_TESTER,
@@ -77,7 +77,7 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail set password; petroAdmin not exist; status 404", async () => {
     await prisma.petroAdmin.findUnique({
-      where: { email: EMAIL_TESTER },
+      where: { email: EMAIL_TESTER.toLowerCase() },
     });
     const verificationData = {
       email: "email@nonexistent.vom",
@@ -116,7 +116,7 @@ describe("admin Endpoints", () => {
 describe("admin Endpoints", () => {
   it("fail set password; wrong typeof; status 400", async () => {
     await prisma.petroAdmin.findUnique({
-      where: { email: EMAIL_TESTER },
+      where: { email: EMAIL_TESTER.toLowerCase() },
     });
     const verificationData = {
       email: 3,

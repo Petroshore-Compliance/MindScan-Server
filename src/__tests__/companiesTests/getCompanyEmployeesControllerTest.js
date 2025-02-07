@@ -23,7 +23,7 @@ beforeAll(async () => {
   await request(app).post("/auth/register").send(registrationData);
 
   const userData = await prisma.user.findUnique({
-    where: { email: EMAIL_TESTER },
+    where: { email: EMAIL_TESTER.toLowerCase() },
   });
   userId = userData.user_id;
 

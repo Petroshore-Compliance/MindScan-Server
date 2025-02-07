@@ -19,7 +19,7 @@ beforeAll(async () => {
   const response = await request(app).post("/auth/register").send(registrationData);
 
   const userData = await prisma.user.findUnique({
-    where: { email: EMAIL_TESTER },
+    where: { email: EMAIL_TESTER.toLowerCase() },
   });
 
   userId = userData.user_id;
@@ -174,14 +174,12 @@ describe("Auth Endpoints", () => {
   });
 });
 
-
-
-
-
 describe("Auth Endpoints", () => {
   it("fail update profile;no data; status 400 ", async () => {
     const updateProfileData = {
       token: token,
+      email: "Roman.delasheras@petroshorecompliance.com",
+
     };
 
     const response = await request(app)

@@ -42,7 +42,7 @@ beforeAll(async () => {
   auxUserId = auxuserData.user_id;
 
   const userData = await prisma.user.findUnique({
-    where: { email: EMAIL_TESTER },
+    where: { email: EMAIL_TESTER.toLowerCase() },
   });
 
   userId = userData.user_id;

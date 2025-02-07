@@ -19,7 +19,7 @@ beforeAll(async () => {
   const response = await request(app).post("/admin/create").send(registrationData);
 
   const petroAdminData = await prisma.petroAdmin.findUnique({
-    where: { email: EMAIL_TESTER },
+    where: { email: EMAIL_TESTER.toLowerCase() },
   });
 
   const registrationData2 = {
@@ -83,7 +83,7 @@ describe("admin Endpoints", () => {
       console.log("Response body:", response.body);
     }
 
-    expect(response.body.petroAdmin.email).toEqual(EMAIL_TESTER);
+    expect(response.body.petroAdmin.email).toEqual(EMAIL_TESTER.toLowerCase());
     expect(response.status).toBe(200);
 
     expect(response.body.message).toEqual("petroAdmin found");

@@ -29,6 +29,11 @@ const registerUserController = async (email, password, name, role, company_id) =
         : undefined,
     },
   });
+
+
+
+
+
   return { status: 201, message: "User registered successfully", user: newUser };
 };
 

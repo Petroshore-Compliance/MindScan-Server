@@ -17,7 +17,7 @@ const roleCheck = async (data) => {
 
   let user = await prisma.user.findUnique({
     where: {
-      email: result.value,
+      email: result.value.toLowerCase(),
     },
   });
 
@@ -28,6 +28,7 @@ const roleCheck = async (data) => {
   if (user.role !== neededRole && user.role !== "admin") {
     return { error: "user not authorized", status: 403, message: "User not authorized" };
   }
+
   return { error: null, status: 100, message: "User authorized" };
 };
 module.exports = {

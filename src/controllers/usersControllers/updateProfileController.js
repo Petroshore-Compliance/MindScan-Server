@@ -20,7 +20,7 @@ const updateProfileController = async (data) => {
   if (data.password) {
     delete data.password;
   }
-  if (data.email.toLowerCase() === userToUpdate.email) {
+  if (data.email && data.email.toLowerCase() === userToUpdate.email) {
     delete data.email;
   }
   delete data.user;

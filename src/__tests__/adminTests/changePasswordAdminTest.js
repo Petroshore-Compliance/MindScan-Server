@@ -18,7 +18,7 @@ beforeAll(async () => {
   await request(app).post("/admin/create").send(registrationData);
 
   const petroAdminData = await prisma.petroAdmin.findUnique({
-    where: { email: EMAIL_TESTER },
+    where: { email: EMAIL_TESTER.toLowerCase() },
   });
 
   petroAdminId = petroAdminData.petroAdmin_id;
