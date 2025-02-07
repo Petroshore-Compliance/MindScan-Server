@@ -1,6 +1,6 @@
 const prisma = require("../../db.js");
 const { Prisma } = require("@prisma/client");
-
+const { emailCreatedCompanyScript } = require("../../tools/emailCreatedCompanyScript.js");
 //crea una compañía
 //recibe nombre, email, subscription_plan_id, user_id
 //devuelve un objeto con el mensaje y la compañía creada
@@ -32,6 +32,16 @@ const createCompanyController = async (data) => {
         company_id: company.company_id,
       },
     });
+
+
+
+    await emailCreatedCompanyScript(
+      companyadmin.email,
+      companyadmin.name,
+      company.name,
+      company.email,
+      "../templates/createdCompanyEmail.html"
+    );
 
     return {
       status: 201,
