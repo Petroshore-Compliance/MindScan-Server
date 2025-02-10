@@ -94,7 +94,7 @@ const inviteController = async (data) => {
 
     // If we reach this point, there are no active invitations and no invitations in the last hour.
     // Proceed to create a new invitation.
-    const response = await createInvitationController(data, company.companyName);
+    const response = await createInvitationController(data, company.name);
     // ...rest of your logic (sending emails, etc.)
     return { status: response.status, message: response.message, invitation: response.invitation };
   }
@@ -112,14 +112,14 @@ const inviteController = async (data) => {
     return { status: 400, message: `This Guest email already has a pending invitation` };
   }
 
-  const response = await createInvitationController(data, company.companyName);
+  const response = await createInvitationController(data, company.name);
 
   //send email to user
   if (isNew) {
     emailCreateNewUserScript(
       data.guest,
       "../templates/invitationEmailNewAccount.html",
-      company.companyName,
+      company.name,
       response.invitation.invitation_token
     );
   } else {
@@ -127,7 +127,7 @@ const inviteController = async (data) => {
       user.user_id,
       user.guest,
       "../templates/invitationEmailExistingAccount.html",
-      company.companyName,
+      company.name,
       response.invitation.invitation_token
     );
   }

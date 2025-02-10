@@ -91,7 +91,6 @@ describe("Auth Endpoints", () => {
 
       role: "manager",
       company_id: companyId,
-      companyName: "uwuntu",
     };
 
     const response = await request(app)
@@ -123,7 +122,6 @@ describe("Auth Endpoints", () => {
 
       role: "manager",
       company_id: companyId,
-      companyName: "uwuntu",
     };
 
     const response = await request(app)
@@ -147,7 +145,6 @@ describe("Auth Endpoints", () => {
       guest: "exito@invited.com",
       role: "definitivamente esto no es un rol",
       company_id: companyId,
-      companyName: "uwuntu",
     };
 
     const response = await request(app)
@@ -171,7 +168,6 @@ describe("Auth Endpoints", () => {
       guest: 34,
       role: 22,
       company_id: "companyId",
-      companyName: 2,
     };
 
     const response = await request(app)
@@ -224,7 +220,6 @@ describe("Auth Endpoints", () => {
       guest: "exito@invited.com",
       role: "employee",
       company_id: companyId,
-      companyName: "uwuntu",
     };
 
     const response = await request(app)
@@ -295,7 +290,6 @@ describe("Auth Endpoints", () => {
       guest: "exito@invited.com",
       role: "employee",
       company_id: companyId,
-      companyName: "uwuntu",
     };
     await request(app)
       .post("/companies/invite")
@@ -343,7 +337,6 @@ describe("Auth Endpoints", () => {
       guest: "exito@invited.com",
       role: "employee",
       company_id: companyId,
-      companyName: "uwuntu",
     };
 
     const response = await request(app)
@@ -368,7 +361,6 @@ describe("Auth Endpoints", () => {
       neededRole: "manager",
       role: "employee",
       company_id: companyId,
-      companyName: "uwuntu",
     };
 
     const response = await request(app).post("/companies/invite").send(invitationData);
@@ -389,7 +381,6 @@ describe("Auth Endpoints", () => {
       guest: undefined,
       role: "employee",
       company_id: companyId,
-      companyName: "uwuntu",
     };
 
     const response = await request(app)
@@ -413,7 +404,6 @@ describe("Auth Endpoints", () => {
       guest: "exito@invited.com",
       role: undefined,
       company_id: companyId,
-      companyName: "uwuntu",
     };
 
     const response = await request(app)
@@ -457,7 +447,6 @@ describe("Auth Endpoints", () => {
       neededRole: "manager",
       guest: "exito@invited.com",
       role: "employee",
-      companyName: "uwuntu",
     };
 
     const response = await request(app)
