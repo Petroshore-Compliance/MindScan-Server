@@ -1,4 +1,4 @@
-/* General */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -7,13 +7,13 @@ body {
     padding: 20px;
 }
 
-/* Contenedor principal */
+
 table {
     width: 100%;
     border-spacing: 0;
 }
 
-/* Header */
+
 .header {
     background-color: rgb(255, 255, 255);
     /* padding: 20px; */
@@ -36,7 +36,7 @@ table {
     height: auto;
 }
 
-/* Main Content */
+
 .main-content {
     background-color: rgb(255, 255, 255);
     padding: 1.5rem;
@@ -49,7 +49,7 @@ table {
     text-align: center;
 }
 
-/* Footer */
+
 .footer {
     background-color: rgb(255, 255, 255);
     padding: 10px;
@@ -67,7 +67,7 @@ table {
     margin: 0;
 }
 
-/* Tipografía */
+
 h1 {
     font-size: 22px;
     margin-bottom: 20px;
@@ -79,7 +79,6 @@ p {
     margin-bottom: 20px;
 }
 
-/* Botón */
 .JoinCompanyBTN-container {
     border-radius: 5px;
     display: inline-block;
@@ -130,9 +129,6 @@ p {
 
 
 
-
-
-/* Responsive */
 @media (max-width: 768px) {
     .header,
     .main-content,
