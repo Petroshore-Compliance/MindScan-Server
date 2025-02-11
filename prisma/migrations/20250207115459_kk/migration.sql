@@ -78,6 +78,7 @@ CREATE TABLE "Question" (
     "content_es" TEXT NOT NULL,
     "content_en" TEXT NOT NULL,
     "content_pt" TEXT NOT NULL,
+    "inverted" BOOLEAN NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
 
@@ -88,8 +89,8 @@ CREATE TABLE "Question" (
 CREATE TABLE "UserResponses" (
     "userResponses_id" SERIAL NOT NULL,
     "user_id" INTEGER NOT NULL,
-    "question_id" INTEGER NOT NULL,
-    "questionAnswer_id" INTEGER NOT NULL,
+    "responses" INTEGER[],
+    "response_value" INTEGER[],
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
 
@@ -180,6 +181,12 @@ CREATE UNIQUE INDEX "Company_email_key" ON "Company"("email");
 CREATE UNIQUE INDEX "CompanyInvitation_invitation_token_key" ON "CompanyInvitation"("invitation_token");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "QuestionAnswer_anser_es_key" ON "QuestionAnswer"("anser_es");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Question_content_es_key" ON "Question"("content_es");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "PetroAdmin_email_key" ON "PetroAdmin"("email");
 
 -- AddForeignKey
@@ -196,12 +203,6 @@ ALTER TABLE "CompanyInvitation" ADD CONSTRAINT "CompanyInvitation_company_id_fke
 
 -- AddForeignKey
 ALTER TABLE "UserResponses" ADD CONSTRAINT "UserResponses_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "UserResponses" ADD CONSTRAINT "UserResponses_question_id_fkey" FOREIGN KEY ("question_id") REFERENCES "Question"("question_id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "UserResponses" ADD CONSTRAINT "UserResponses_questionAnswer_id_fkey" FOREIGN KEY ("questionAnswer_id") REFERENCES "QuestionAnswer"("questionAnswer_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Result" ADD CONSTRAINT "Result_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;

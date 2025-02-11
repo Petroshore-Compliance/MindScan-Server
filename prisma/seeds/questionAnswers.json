@@ -1,0 +1,27 @@
+[
+  {
+    "anser_es": "Muy en desacuerdo",
+    "answer_en": "Strongly disagree",
+    "answer_pt": "Discordo totalmente"
+  },
+  {
+    "anser_es": "En desacuerdo",
+    "answer_en": "Slightly disagree",
+    "answer_pt": "Discordo"
+  },
+  {
+    "anser_es": "Ni de acuerdo ni en desacuerdo",
+    "answer_en": "Neither agree nor disagree",
+    "answer_pt": "Nem concordo nem discordo"
+  },
+  {
+    "anser_es": "De acuerdo",
+    "answer_en": "Slightly agree",
+    "answer_pt": "Concordo"
+  },
+  {
+    "anser_es": "Muy de acuerdo",
+    "answer_en": "Strongly agree",
+    "answer_pt": "Concordo plenamente"
+  }
+]

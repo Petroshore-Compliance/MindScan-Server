@@ -66,36 +66,34 @@ model CompanyInvitation {
   created_at       DateTime  @default(now())
   updated_at       DateTime? @updatedAt
 }
-
+//muy en desacuerdo, en desacuerdo, ni de acuerdo ni en desacuerdo, de acuerdo, muy de acuerdo
 model QuestionAnswer {
   questionAnswer_id Int             @id @default(autoincrement())
   answer_pt         String
-  anser_es          String
+  anser_es          String  @unique
   answer_en         String
   created_at        DateTime        @default(now())
   updated_at        DateTime?       @updatedAt
-  userResponses     UserResponses[]
 }
+
+
 
 model Question {
   question_id   Int             @id @default(autoincrement())
-  content_es    String
-  content_en    String
+  content_es    String  @unique
+  content_en    String          
   content_pt    String
+  inverted      Boolean
   created_at    DateTime        @default(now())
   updated_at    DateTime?       @updatedAt
-  userResponses UserResponses[]
 }
 
-//userResponses.response is {user_id: Int, [question_id: Int, answer: id],[question_id: Int, answer: id]...}
 model UserResponses {
   userResponses_id  Int            @id @default(autoincrement())
   user              User           @relation(fields: [user_id], references: [user_id])
-  user_id           Int
-  question          Question       @relation(fields: [question_id], references: [question_id])
-  question_id       Int
-  questionAnswer    QuestionAnswer @relation(fields: [questionAnswer_id], references: [questionAnswer_id])
-  questionAnswer_id Int
+  user_id           Int            @unique  
+  responses         Int[]
+  responses_value    Int[]
   created_at        DateTime       @default(now())
   updated_at        DateTime?      @updatedAt
 }
