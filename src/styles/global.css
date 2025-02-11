@@ -15,8 +15,10 @@ table {
 
 /* Header */
 .header {
-    background-color: white;
-    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    /* padding: 20px; */
+    padding-top: 0.75rem;
+    padding-bottom: 0.55rem;
     border-radius: 10px;
     width: 90%;
     max-width: 600px;
@@ -36,8 +38,9 @@ table {
 
 /* Main Content */
 .main-content {
-    background-color: white;
-    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    padding: 1.5rem;
+    padding-bottom: 1.5rem;
     border-radius: 10px;
     width: 90%;
     max-width: 600px;
@@ -48,7 +51,7 @@ table {
 
 /* Footer */
 .footer {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     padding: 10px;
     border-radius: 10px;
     width: 90%;
@@ -77,13 +80,13 @@ p {
 }
 
 /* Botón */
-.button-container {
+.JoinCompanyBTN-container {
     border-radius: 5px;
     display: inline-block;
     padding: 12px 20px;
 }
 
-.button {
+.JoinCompanyBTN {
     font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: bold;
@@ -95,11 +98,39 @@ p {
     border-radius: 5px;
     text-align: center;
     width: auto;
-}
+} 
 
-.button:hover {
+.JoinCompanyBTN:hover {
     background-color: #c9302c;
 }
+
+
+.MindScanBTN-container{ 
+    padding-bottom: 1rem;
+}
+
+.MindScanBTN {
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 9999px;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: #4F46E5;
+    text-decoration: none;
+    transition: background-color 300ms ease-in-out;
+    text-align: center;
+    min-width: 200px;
+}
+
+.mindScanButton:hover {
+    background-color: #3b38c6;
+}
+
+
+
+
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -110,3 +141,12 @@ p {
         padding: 15px;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    .header,
+    .main-content,
+    .footer {
+      background-color: #ffffff ;  
+      color: #000000 !important;  
+    }
+  }
