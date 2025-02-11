@@ -1,15 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Contact Form</title>
-  </head>
-  <body>
-    <h1>New Contact Form Created</h1>
-    <p>{{Name}} has requested information in {{language}}</p>
-    <p>Message: {{message}}</p>
-    <p>Phone: {{phone}}</p>
-    <p>Email: {{email}}</p>
-  </body>
+    <link rel="stylesheet" href="/src/styles/global.css">
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.webp">
+</head>
+<body>
+    <table role="presentation">
+        <tr>
+            <td>
+                <table role="presentation" class="header">
+                    <tr>
+                        <td>
+                            <img src="https://res.cloudinary.com/petroshore/image/upload/f_auto,q_auto/MindScan/Petroshore-Logo" alt="MindScan">
+                        </td>
+                    </tr>
+                </table>
+
+                <table role="presentation" class="main-content">
+                    <tr>
+                        <td>
+                            <h1>New Contact Form Submission</h1>
+                            <p><strong>{{Name}}</strong> has requested information.</p>
+                            <p><strong>Message:</strong> {{message}}</p>
+                            <p><strong>Phone:</strong> {{phone}}</p>
+                            <p><strong>Email:</strong> {{email}}</p>
+
+                            <table role="presentation" class="MindScanBTN-container">
+                                <tr>
+                                    <td>
+                                        <a href="mailto:{{email}}" target="_blank" class="MindScanBTN">Contact {{Name}}</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <table role="presentation" class="footer">
+                    <tr>
+                        <td>
+                            <p>2025 MindScan. Todos los derechos reservados.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
 </html>
