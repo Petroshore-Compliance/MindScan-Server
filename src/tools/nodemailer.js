@@ -29,6 +29,7 @@ async function sendEmail(recipientEmail, subject, htmlContent) {
   console.log("Email sending skipped in test environment (nodemailer.js)");
   return { success: true, info: "Test environment - email not sent." };
 
+
   if (!recipientEmail) {
     throw new Error("Recipient email is required.");
   }

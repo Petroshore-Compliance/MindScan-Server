@@ -1,8 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 const sendEmail = require("./nodemailer.js");
+const juice = require("juice");
 
 const prisma = require("../db.js");
+const e = require("cors");
 
 const emailContactFormCreatedScript = async (
   formName,
@@ -17,12 +19,28 @@ const emailContactFormCreatedScript = async (
   const htmlTemplatePath = path.join(__dirname, htmlPath);
   let htmlTemplate = fs.readFileSync(htmlTemplatePath, "utf8");
 
-  htmlTemplate = htmlTemplate
+  let language;
+  switch (formLanguage) {
+    case "es":
+      language = "spanish";
+      break;
+    case "pt":
+      language = "portuguese";
+      break;
+    default:
+      language = "english";
+  }
+
+  const htmlContent = htmlTemplate
     .replace(/{{Name}}/g, formName)
-    .replace(/{{language}}/g, formLanguage)
+    .replace(/{{language}}/g, language)
     .replace(/{{message}}/g, formMessage)
     .replace(/{{phone}}/g, formPhone)
     .replace(/{{email}}/g, formEmail);
+
+  const globalCSS = fs.readFileSync(path.join(__dirname, "../styles/global.css"), "utf-8");
+
+  const inlinedHtml = juice.inlineContent(htmlContent, globalCSS);
 
   const emailReceivers = await prisma.petroAdmin.findMany({
     where: {
@@ -31,7 +49,7 @@ const emailContactFormCreatedScript = async (
   });
 
   for (const receiver of emailReceivers) {
-    await sendEmail(receiver.email, subject, htmlTemplate);
+    await sendEmail(receiver.email, subject, inlinedHtml);
   }
 
   return "Contact form notification email sent successfully.";
