@@ -1,0 +1,1442 @@
+[
+  {
+    "content_es": "Yo no soy una persona que se preocupa mucho",
+    "content_en": "I am not a person who worries a lot",
+    "content_pt": "Eu não sou uma pessoa que se preocupa muito",
+    "inverted": true
+  },
+  {
+    "content_es": "Fácilmente me da miedo",
+    "content_en": "I get frightened easily",
+    "content_pt": "Eu me assusto facilmente",
+    "inverted": false
+  },
+  {
+    "content_es": "Raramente me siento atemorizado o ansioso",
+    "content_en": "I rarely feel fearful or anxious",
+    "content_pt": "Eu raramente me sinto amedrontado ou ansioso",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia me siento tenso y sobresaltado",
+    "content_en": "I frequently feel tense and easily startled",
+    "content_pt": "Frequentemente me sinto tenso e sobressaltado",
+    "inverted": false
+  },
+  {
+    "content_es": "Rara vez me siento aprensivo acerca del futuro",
+    "content_en": "I seldom worry about the future",
+    "content_pt": "Raramente me sinto apreensivo em relação ao futuro",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia me preocupo de cosas que puedan salir mal",
+    "content_en": "I often worry about things that could go wrong",
+    "content_pt": "Frequentemente me preocupo com coisas que podem dar errado",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo menos temores que la mayoría de la gente",
+    "content_en": "I have fewer fears than most people",
+    "content_pt": "Eu tenho menos medos do que a maioria das pessoas",
+    "inverted": true
+  },
+  {
+    "content_es": "A veces se me mete en la cabeza pensamientos atemorizantes",
+    "content_en": "Sometimes, scary thoughts creep into my mind",
+    "content_pt": "Às vezes, pensamentos assustadores invadem minha mente",
+    "inverted": false
+  },
+  {
+    "content_es": "Realmente me gustan casi todas las personas que llego a conocer",
+    "content_en": "I genuinely like nearly everyone I meet",
+    "content_pt": "Eu realmente gosto de quase todas as pessoas que conheço",
+    "inverted": false
+  },
+  {
+    "content_es": "No me da mucho placer charlar con la gente",
+    "content_en": "I don't really enjoy talking with people",
+    "content_pt": "Eu não sinto muito prazer em conversar com as pessoas",
+    "inverted": true
+  },
+  {
+    "content_es": "Me conocen como una persona efusiva y amistosa",
+    "content_en": "People know me as an enthusiastic and friendly person",
+    "content_pt": "Sou conhecido como uma pessoa efusiva e amigável",
+    "inverted": false
+  },
+  {
+    "content_es": "Muchas personas piensan que soy algo frío y distante",
+    "content_en": "Many people consider me somewhat cold and distant",
+    "content_pt": "Muitas pessoas acham que eu sou um pouco frio e distante",
+    "inverted": true
+  },
+  {
+    "content_es": "Verdaderamente disfruto de hablar con las personas",
+    "content_en": "I really enjoy talking with people",
+    "content_pt": "Eu realmente gosto de conversar com as pessoas",
+    "inverted": false
+  },
+  {
+    "content_es": "Me resulta fácil sonreír y ser sociable con los extraños",
+    "content_en": "I find it easy to smile and be outgoing with strangers",
+    "content_pt": "Acho fácil sorrir e ser sociável com estranhos",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo fuertes lazos emocionales con mis amigos",
+    "content_en": "I have strong emotional connections with my friends",
+    "content_pt": "Tenho fortes laços emocionais com meus amigos",
+    "inverted": false
+  },
+  {
+    "content_es": "Me tomo un interés personal por con quienes trabajo",
+    "content_en": "I take a personal interest in those I work with",
+    "content_pt": "Eu me interesso pessoalmente pelas pessoas com quem trabalho",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo una imaginación muy activa",
+    "content_en": "I have a very active imagination",
+    "content_pt": "Tenho uma imaginação muito ativa",
+    "inverted": false
+  },
+  {
+    "content_es": "Trato de mantener todos mis pensamientos en caminados hacia la realidad Y evitar las ilusiones",
+    "content_en": "I strive to keep all my thoughts grounded in reality and avoid illusions",
+    "content_pt": "Procuro manter meus pensamentos focados na realidade e evitar ilusões",
+    "inverted": true
+  },
+  {
+    "content_es": "Tengo una vida imaginativa muy dinámica",
+    "content_en": "I lead a very dynamic imaginative life",
+    "content_pt": "Tenho uma vida imaginativa muito dinâmica",
+    "inverted": false
+  },
+  {
+    "content_es": "No me gusta perder el tiempo en ensueños",
+    "content_en": "I don't like wasting time daydreaming",
+    "content_pt": "Não gosto de perder tempo sonhando acordado",
+    "inverted": true
+  },
+  {
+    "content_es": "Verdaderamente disfruto de concentrarme en una fantasía o un ensueño y de explorar todas sus posibilidades, permitiéndole crecer desarrollarse",
+    "content_en": "I genuinely enjoy diving into a fantasy or daydream and exploring all its possibilities, allowing it to evolve",
+    "content_pt": "Eu realmente gosto de me concentrar em uma fantasia ou devaneio e explorar todas as suas possibilidades, permitindo que se desenvolva",
+    "inverted": false
+  },
+  {
+    "content_es": "Si siento que la mente se me llena de ensueños, normalmente reacciono poniéndome hacer algo y empiezo a concentrarme en algún trabajo o actividad",
+    "content_en": "When my mind gets filled with daydreams, I typically react by getting up and engaging in some work or activity",
+    "content_pt": "Quando sinto que minha mente se enche de devaneios, geralmente reajo fazendo algo e começo a me concentrar em algum trabalho ou atividade",
+    "inverted": true
+  },
+  {
+    "content_es": "Cuando era niño raramente disfrutaba de juegos de mentirillas",
+    "content_en": "As a child, I rarely enjoyed pretend play",
+    "content_pt": "Quando eu era criança, raramente gostava de jogos de faz de conta",
+    "inverted": true
+  },
+  {
+    "content_es": "Me sería difícil dejar que mi mente vagara sin control o dirección",
+    "content_en": "I would find it hard to let my mind wander without control or direction",
+    "content_pt": "Seria difícil para mim deixar minha mente divagar sem controle ou direção",
+    "inverted": true
+  },
+  {
+    "content_es": "Tiendo a ser cinico e incredulo de las intenciones de los demas",
+    "content_en": "I tend to be cynical and doubtful about others' intentions",
+    "content_pt": "Costumo ser cínico e desconfiado quanto às intenções dos outros",
+    "inverted": true
+  },
+  {
+    "content_es": "Creo que la mayoría de la gente tiene buenas intenciones",
+    "content_en": "I believe that most people have good intentions",
+    "content_pt": "Acredito que a maioria das pessoas tem boas intenções",
+    "inverted": false
+  },
+  {
+    "content_es": "Creo que casi toda la gente se aprovecharía de uno, si uno lo permitiera",
+    "content_en": "I think almost everyone would take advantage of you if given the chance",
+    "content_pt": "Acredito que quase todas as pessoas se aproveitariam de você se você permitisse",
+    "inverted": true
+  },
+  {
+    "content_es": "Creo que casi todos con tienes trato son honrados y de confianza",
+    "content_en": "I believe that nearly everyone I interact with is honest and trustworthy",
+    "content_pt": "Acredito que quase todos com quem convivo são honestos e confiáveis",
+    "inverted": false
+  },
+  {
+    "content_es": "Me siento sospechoso cuando alguien me hace algún bien",
+    "content_en": "I feel wary when someone does something good for me",
+    "content_pt": "Sinto desconfiança quando alguém me faz um bem",
+    "inverted": true
+  },
+  {
+    "content_es": "Mi primera reacción es la confiar en la gente",
+    "content_en": "My initial reaction is to trust others",
+    "content_pt": "Minha primeira reação é confiar nas pessoas",
+    "inverted": false
+  },
+  {
+    "content_es": "Tiendo a suponer lo mejor sobre la gente",
+    "content_en": "I generally assume the best in people",
+    "content_pt": "Costumo presumir o melhor das pessoas",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo mucha fe en la naturaleza humana",
+    "content_en": "I have great faith in human nature",
+    "content_pt": "Tenho muita fé na natureza humana",
+    "inverted": false
+  },
+  {
+    "content_es": "Se me conoce por mi prudencia y sentido comun",
+    "content_en": "I am known for my prudence and common sense",
+    "content_pt": "Sou conhecido pela minha prudência e senso comum",
+    "inverted": false
+  },
+  {
+    "content_es": "Las responsabilidades cívicas, como el sufragio, no las tomo muy en serio",
+    "content_en": "I don't take civic duties, such as voting, very seriously",
+    "content_pt": "Não levo muito a sério as responsabilidades cívicas, como o sufrágio",
+    "inverted": true
+  },
+  {
+    "content_es": "Me mantengo informado y normalmente tomo decisiones inteligentes",
+    "content_en": "I keep myself informed and typically make wise decisions",
+    "content_pt": "Mantenho-me informado e geralmente tomo decisões inteligentes",
+    "inverted": false
+  },
+  {
+    "content_es": "Con frecuencia me meto en situaciones para las que no estoy completamente preparado",
+    "content_en": "I frequently find myself in situations for which I'm not completely prepared",
+    "content_pt": "Frequentemente me envolvo em situações para as quais não estou totalmente preparado",
+    "inverted": true
+  },
+  {
+    "content_es": "Me enorgullezco de mi buen juicio",
+    "content_en": "I take pride in my sound judgment",
+    "content_pt": "Tenho orgulho do meu bom senso",
+    "inverted": false
+  },
+  {
+    "content_es": "No me parece que tengo un éxito completo en nada",
+    "content_en": "I feel that I haven't achieved complete success in anything",
+    "content_pt": "Não me parece que eu tenha tido sucesso total em nada",
+    "inverted": true
+  },
+  {
+    "content_es": "Soy una persona muy competente",
+    "content_en": "I consider myself very competent",
+    "content_pt": "Sou uma pessoa muito competente",
+    "inverted": false
+  },
+  {
+    "content_es": "Soy eficiente y efectivo en mi trabajo",
+    "content_en": "I am efficient and effective at my job",
+    "content_pt": "Sou eficiente e eficaz no meu trabalho",
+    "inverted": false
+  },
+  {
+    "content_es": "Con frecuencia me enfada como la gente me trata",
+    "content_en": "I frequently get upset with how people treat me",
+    "content_pt": "Frequentemente fico irritado com a forma como as pessoas me tratam",
+    "inverted": false
+  },
+  {
+    "content_es": "Mi temperamento está muy bien nivelado",
+    "content_en": "I have a very well-balanced temperament",
+    "content_pt": "Tenho um temperamento muito equilibrado",
+    "inverted": true
+  },
+  {
+    "content_es": "Se me conoce por apasionado y de mal genio",
+    "content_en": "I am known as a passionate and quick-tempered person",
+    "content_pt": "Sou conhecido por ser apaixonado e de temperamento forte",
+    "inverted": false
+  },
+  {
+    "content_es": "No se me considera una persona quisquillosa o temperamental",
+    "content_en": "I'm not regarded as overly fussy or temperamental",
+    "content_pt": "Não sou considerado uma pessoa exigente ou temperamentada",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia me siento disgustado con quien tengo que tratar",
+    "content_en": "I frequently feel repulsed by those I have to interact with",
+    "content_pt": "Frequentemente fico descontente com as pessoas com quem preciso lidar",
+    "inverted": false
+  },
+  {
+    "content_es": "Cuesta mucho ponerme de malhumor",
+    "content_en": "I find it difficult to become moody",
+    "content_pt": "É difícil para mim ficar de mau humor",
+    "inverted": true
+  },
+  {
+    "content_es": "A veces me he sentido  amargado y resentido",
+    "content_en": "Sometimes I have felt bitter and resentful",
+    "content_pt": "Às vezes, me senti amargurado e ressentido",
+    "inverted": false
+  },
+  {
+    "content_es": "Aun las molestias pequeñas pueden frustrarme",
+    "content_en": "Even minor irritations can get on my nerves",
+    "content_pt": "Até pequenas irritações podem me frustrar",
+    "inverted": false
+  },
+  {
+    "content_es": "Me retraigo de grupo de personas",
+    "content_en": "I tend to withdraw from groups of people",
+    "content_pt": "Eu me retraio de grupos de pessoas",
+    "inverted": true
+  },
+  {
+    "content_es": "Me gusta tener muchas personas a mi alrededor",
+    "content_en": "I enjoy being surrounded by many people",
+    "content_pt": "Gosto de ter muitas pessoas ao meu redor",
+    "inverted": false
+  },
+  {
+    "content_es": "Normalmente prefiero hacer cosas solo",
+    "content_en": "I generally prefer to do things on my own",
+    "content_pt": "Normalmente, prefiro fazer as coisas sozinho",
+    "inverted": true
+  },
+  {
+    "content_es": "Realmente necesito otras personas si estoy sólo por un tiempo",
+    "content_en": "I truly need others around me when I've been alone for some time",
+    "content_pt": "Realmente preciso de outras pessoas quando estou sozinho por um tempo",
+    "inverted": false
+  },
+  {
+    "content_es": "Prefiero los trabajos que me permiten trabajar solo sin que otros me molesten",
+    "content_en": "I prefer jobs that let me work independently without interference",
+    "content_pt": "Prefiro trabalhos que me permitam trabalhar sozinho, sem que outros me atrapalhem",
+    "inverted": true
+  },
+  {
+    "content_es": "Prefiero pasar las vacaciones en la playa frecuentada en una cabaña aislada en el bosque",
+    "content_en": "I prefer to spend my vacation at the beach rather than in an isolated cabin in the woods",
+    "content_pt": "Prefiro passar as férias na praia em vez de em uma cabana isolada na floresta",
+    "inverted": false
+  },
+  {
+    "content_es": "Para mí las reuniones sociales son generalmente aburridas",
+    "content_en": "I generally find social gatherings to be boring",
+    "content_pt": "Para mim, encontros sociais geralmente são entediantes",
+    "inverted": true
+  },
+  {
+    "content_es": "Disfruto de las fiestas donde hay mucha gente",
+    "content_en": "I enjoy parties with many people",
+    "content_pt": "Eu gosto de festas com muita gente",
+    "inverted": false
+  },
+  {
+    "content_es": "Los intereses estéticos y artísticos no son muy importantes para mi",
+    "content_en": "I don't place much importance on aesthetic or artistic interests",
+    "content_pt": "Os interesses estéticos e artísticos não são muito importantes para mim",
+    "inverted": true
+  },
+  {
+    "content_es": "A veces estoy completamente absorto en la música que estoy escuchando",
+    "content_en": "At times, I become completely immersed in the music I listen to",
+    "content_pt": "Às vezes, fico completamente absorto na música que estou ouvindo",
+    "inverted": false
+  },
+  {
+    "content_es": "Me aburre mirar el ballet o la danza moderna",
+    "content_en": "I get bored watching ballet or modern dance",
+    "content_pt": "Acho entediante assistir ballet ou dança moderna",
+    "inverted": true
+  },
+  {
+    "content_es": "Me siento intrigado por la semejanzas que encuentro en el arte y la naturaleza",
+    "content_en": "I am fascinated by the similarities between art and nature",
+    "content_pt": "Sinto-me intrigado pelas semelhanças que encontro entre a arte e a natureza",
+    "inverted": false
+  },
+  {
+    "content_es": "La poesía tiene poco o ningún efecto sobre mi",
+    "content_en": "Poetry doesn't affect me much",
+    "content_pt": "A poesia tem pouco ou nenhum efeito em mim",
+    "inverted": true
+  },
+  {
+    "content_es": "Ciertos tipos de música me causan una fascinación interminable",
+    "content_en": "Some types of music fascinate me endlessly",
+    "content_pt": "Certos tipos de música me causam uma fascinação interminável",
+    "inverted": false
+  },
+  {
+    "content_es": "Algunas veces cuando veo poesía o miro una obra de arte, siento un escalofrío u onda de emoción",
+    "content_en": "Sometimes, when I read poetry or view a piece of art, I feel a chill or surge of emotion",
+    "content_pt": "Às vezes, quando vejo poesia ou uma obra de arte, sinto um arrepio ou uma onda de emoção",
+    "inverted": false
+  },
+  {
+    "content_es": "Disfruto leyendo poesía que enfatiza más los sentimientos Y las imágenes que los aspectos narrativos",
+    "content_en": "I enjoy reading poetry that highlights emotions and imagery rather than just the story",
+    "content_pt": "Gosto de ler poesia que enfatiza os sentimentos e as imagens, mais do que os aspectos narrativos",
+    "inverted": false
+  },
+  {
+    "content_es": "No soy astuto o artificioso",
+    "content_en": "I'm not sly or crafty",
+    "content_pt": "Eu não sou astuto ou manhoso",
+    "inverted": false
+  },
+  {
+    "content_es": "Si es necesario estoy dispuesto a manipular a la gente para conseguir lo que quiero",
+    "content_en": "If needed, I'm willing to manipulate people to achieve my goals",
+    "content_pt": "Se necessário, estou disposto a manipular as pessoas para conseguir o que quero",
+    "inverted": true
+  },
+  {
+    "content_es": "No podría engañar a nadie aunque quisiera",
+    "content_en": "I couldn't deceive anyone even if I tried",
+    "content_pt": "Eu não conseguiria enganar ninguém, mesmo se quisesse",
+    "inverted": false
+  },
+  {
+    "content_es": "El ser perfectamente honrado Es malo para los negocios",
+    "content_en": "Being completely honest is detrimental to business",
+    "content_pt": "Ser perfeitamente honesto é ruim para os negócios",
+    "inverted": true
+  },
+  {
+    "content_es": "Odiaria que se me considerara un hipócrita",
+    "content_en": "I would detest being seen as a hypocrite",
+    "content_pt": "Eu odiaria ser considerado um hipócrita",
+    "inverted": false
+  },
+  {
+    "content_es": "A veces engaño la gente para que hagan lo que quiero",
+    "content_en": "Sometimes, I trick people into doing what I want",
+    "content_pt": "Às vezes, engano as pessoas para que façam o que quero",
+    "inverted": true
+  },
+  {
+    "content_es": "A veces intimido o adulo a la gente para que hagan lo que quiero",
+    "content_en": "Sometimes, I use intimidation or flattery to get people to do what I want",
+    "content_pt": "Às vezes, intimido ou adulo as pessoas para que façam o que eu quero",
+    "inverted": true
+  },
+  {
+    "content_es": "Me enorgullezco de mi astucia en el trato con la gente",
+    "content_en": "I pride myself on my cleverness in dealing with others",
+    "content_pt": "Tenho orgulho da minha astúcia no trato com as pessoas",
+    "inverted": true
+  },
+  {
+    "content_es": "Yo prefiero tenerme abierto a toda la posibilidad a planearlo todo de antemano",
+    "content_en": "I prefer to remain open to possibilities rather than over-planning",
+    "content_pt": "Prefiro estar aberto a todas as possibilidades do que planejar tudo com antecedência",
+    "inverted": true
+  },
+  {
+    "content_es": "Mantengo mis pertenencias ordenadas y limpias",
+    "content_en": "I keep my possessions organized and clean",
+    "content_pt": "Mantenho meus pertences organizados e limpos",
+    "inverted": false
+  },
+  {
+    "content_es": "No soy una persona muy metódica",
+    "content_en": "I'm not very methodical",
+    "content_pt": "Não sou uma pessoa muito metódica",
+    "inverted": true
+  },
+  {
+    "content_es": "Me gusta dejarlo todo en su lugar para saber exactamente dónde está",
+    "content_en": "I prefer to keep everything in its proper place so I know exactly where it is",
+    "content_pt": "Gosto de deixar tudo em seu lugar para saber exatamente onde está",
+    "inverted": false
+  },
+  {
+    "content_es": "Parece que nunca puedo organizarme",
+    "content_en": "It seems I can never get organized",
+    "content_pt": "Parece que nunca consigo me organizar",
+    "inverted": true
+  },
+  {
+    "content_es": "Tiendo a ser un poco melindroso y exigente",
+    "content_en": "I tend to be a little finicky and demanding",
+    "content_pt": "Costumo ser um pouco exigente e sensível",
+    "inverted": false
+  },
+  {
+    "content_es": "No soy maniático para la limpieza",
+    "content_en": "I'm not obsessive about cleanliness",
+    "content_pt": "Não sou maníaco por limpeza",
+    "inverted": true
+  },
+  {
+    "content_es": "Dedico mucho tiempo buscando cosas que he  extraviado",
+    "content_en": "I spend a lot of time searching for things I've misplaced",
+    "content_pt": "Dedico muito tempo procurando coisas que perdi",
+    "inverted": true
+  },
+  {
+    "content_es": "Raramente me siento solo o triste",
+    "content_en": "I seldom feel lonely or down",
+    "content_pt": "Raramente me sinto só ou triste",
+    "inverted": true
+  },
+  {
+    "content_es": "Algunas veces me siento completamente sin méritos",
+    "content_en": "Sometimes I feel entirely unworthy",
+    "content_pt": "Às vezes, sinto-me completamente sem mérito",
+    "inverted": false
+  },
+  {
+    "content_es": "Casi nunca estoy triste o deprimido",
+    "content_en": "I rarely feel sad or depressed",
+    "content_pt": "Quase nunca me sinto triste ou deprimido",
+    "inverted": true
+  },
+  {
+    "content_es": "Algunas veces he experimentado un sentido profundo de culpabilidad o de haber haber pecado",
+    "content_en": "Occasionally, I've felt a profound sense of guilt or remorse",
+    "content_pt": "Às vezes, experimento um profundo sentimento de culpa ou de ter pecado",
+    "inverted": false
+  },
+  {
+    "content_es": "Tiendo a echarme la culpa cuando cualquier cosa sale mal",
+    "content_en": "I tend to blame myself when things go wrong",
+    "content_pt": "Costumo me culpar quando algo dá errado",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo una opinión muy pobre de mí mismo",
+    "content_en": "I have a very poor opinion of myself",
+    "content_pt": "Tenho uma opinião muito baixa sobre mim mesmo",
+    "inverted": false
+  },
+  {
+    "content_es": "Algunas veces las cosas me parecen poco prometedoras y sin esperanza",
+    "content_en": "Sometimes, things seem bleak and hopeless to me",
+    "content_pt": "Às vezes, as coisas me parecem sem esperança e desanimadoras",
+    "inverted": false
+  },
+  {
+    "content_es": "Con demasiada frecuencia, cuando las cosas van mal, me desaliento y tengo ganas de rendirme",
+    "content_en": "Very often, when things go awry, I feel disheartened and want to give up",
+    "content_pt": "Com demasiada frequência, quando as coisas dão errado, fico desanimado e sinto vontade de desistir",
+    "inverted": false
+  },
+  {
+    "content_es": "Soy dominante fuerte y afirmativo",
+    "content_en": "I am dominant, strong, and assertive",
+    "content_pt": "Sou dominante, forte e assertivo",
+    "inverted": false
+  },
+  {
+    "content_es": "Algunas veces dejo de sostener mis ideas tanto como debería hacerlo",
+    "content_en": "Sometimes I don't hold onto my opinions as firmly as I ought to",
+    "content_pt": "Às vezes, não defendo minhas ideias tão firmemente quanto deveria",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia he sido dirigente de grupos a los que pertenecido",
+    "content_en": "I have frequently taken on leadership roles in the groups I've been a part of",
+    "content_pt": "Frequentemente, fui líder dos grupos dos quais participei",
+    "inverted": false
+  },
+  {
+    "content_es": "En las reuniones, normalmente dejo que los otros hablen",
+    "content_en": "In meetings, I typically allow others to speak",
+    "content_pt": "Em reuniões, normalmente deixo os outros falarem",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia otras personas esperan que yo tome las decisiones",
+    "content_en": "Frequently, others expect me to take the lead in decision-making",
+    "content_pt": "Frequentemente, outras pessoas esperam que eu tome as decisões",
+    "inverted": false
+  },
+  {
+    "content_es": "Preferiría seguir mi camino que ser líder de los demás",
+    "content_en": "I would rather go my own way than lead others",
+    "content_pt": "Preferiria seguir meu próprio caminho do que liderar os outros",
+    "inverted": true
+  },
+  {
+    "content_es": "En las  conversaciones tiendo a hablar más que nadie",
+    "content_en": "In conversations, I tend to speak more than anyone else",
+    "content_pt": "Nas conversas, costumo falar mais do que os outros",
+    "inverted": false
+  },
+  {
+    "content_es": "No me es fácil hacerle frente a una situación",
+    "content_en": "I find it difficult to confront situations",
+    "content_pt": "Não me é fácil enfrentar uma situação",
+    "inverted": true
+  },
+  {
+    "content_es": "Sin las emociones fuertes, la vida no tendría interés para mi",
+    "content_en": "Without intense emotions, life would be dull to me",
+    "content_pt": "Sem emoções fortes, a vida não teria interesse para mim",
+    "inverted": false
+  },
+  {
+    "content_es": "Raramente siento fuertes emociones",
+    "content_en": "I seldom experience intense emotions",
+    "content_pt": "Raramente sinto emoções intensas",
+    "inverted": true
+  },
+  {
+    "content_es": "Me es importante mi estado de ánimo hacia las cosas",
+    "content_en": "My outlook on things is important to me",
+    "content_pt": "Meu estado de ânimo em relação às coisas é importante para mim",
+    "inverted": false
+  },
+  {
+    "content_es": "Rara ves presto mucha atención a mis sentimientos del momento",
+    "content_en": "I seldom pay close attention to my present emotions",
+    "content_pt": "Raramente presto muita atenção aos meus sentimentos do momento",
+    "inverted": true
+  },
+  {
+    "content_es": "Experimento una gama de emociones y sentimientos",
+    "content_en": "I experience a wide range of emotions and feelings",
+    "content_pt": "Eu experimento uma variedade de emoções e sentimentos",
+    "inverted": false
+  },
+  {
+    "content_es": "Rara vez me doy cuenta de los estados de ánimo o de las emociones que producen ambientes diferentes",
+    "content_en": "I seldom notice the moods or emotions that various environments create",
+    "content_pt": "Raramente percebo os estados de ânimo ou as emoções que diferentes ambientes provocam",
+    "inverted": true
+  },
+  {
+    "content_es": "Me resulta fácil simpatizar / sentir lo que siente los demás",
+    "content_en": "I find it easy to empathize with what others feel",
+    "content_pt": "Acho fácil simpatizar com o que os outros sentem",
+    "inverted": false
+  },
+  {
+    "content_es": "Cosas raras como ciertos olores o nombres de lugares distantes, pueden evocar fuertes estados de ánimo en mi",
+    "content_en": "Odd things like certain scents or the names of faraway places can trigger strong emotions in me",
+    "content_pt": "Coisas estranhas como certos cheiros ou nomes de lugares distantes podem evocar fortes estados de ânimo em mim",
+    "inverted": false
+  },
+  {
+    "content_es": "Algunas personas piensan que soy interesado o egoísta",
+    "content_en": "Some people consider me self-interested or selfish",
+    "content_pt": "Algumas pessoas acham que sou interessado ou egoísta",
+    "inverted": true
+  },
+  {
+    "content_es": "Trato de ser cortés con todos los que me encuentro",
+    "content_en": "I make an effort to be courteous to everyone I encounter",
+    "content_pt": "Procuro ser cortês com todos que encontro",
+    "inverted": false
+  },
+  {
+    "content_es": "Algunas personas me consideran frío y calculador",
+    "content_en": "Some people view me as cold and calculating",
+    "content_pt": "Algumas pessoas me consideram frio e calculista",
+    "inverted": true
+  },
+  {
+    "content_es": "Generalmente trato de ser atento y considerado",
+    "content_en": "Generally, I strive to be kind and considerate",
+    "content_pt": "Normalmente, tento ser atencioso e considerado",
+    "inverted": false
+  },
+  {
+    "content_es": "No se me conoce por mi generosidad",
+    "content_en": "I'm not known for being generous",
+    "content_pt": "Não sou conhecido por minha generosidade",
+    "inverted": true
+  },
+  {
+    "content_es": "Le caigo bien a la mayoría de la gente que conozco",
+    "content_en": "Most people I meet get along well with me",
+    "content_pt": "A maioria das pessoas que conheço gosta de mim",
+    "inverted": false
+  },
+  {
+    "content_es": "Me considero una persona caritativa",
+    "content_en": "I see myself as a charitable person",
+    "content_pt": "Eu me considero uma pessoa caridosa",
+    "inverted": false
+  },
+  {
+    "content_es": "Si puedo me tomo la molestia de ayudar a los demás",
+    "content_en": "If I can, I make the effort to help others",
+    "content_pt": "Se posso, faço questão de ajudar os outros",
+    "inverted": false
+  },
+  {
+    "content_es": "Trato de analisar conscientemente todas las tareas que se me asignan",
+    "content_en": "I strive to thoughtfully analyze all tasks assigned to me",
+    "content_pt": "Procuro analisar conscientemente todas as tarefas que me são atribuídas",
+    "inverted": false
+  },
+  {
+    "content_es": "Algunas veces no soy tan digno de confianza o tan fiable como debiera serlo",
+    "content_en": "Sometimes I'm not as dependable or trustworthy as I ought to be",
+    "content_pt": "Às vezes, não sou tão confiável quanto deveria ser",
+    "inverted": true
+  },
+  {
+    "content_es": "Pago pronto mis deudas y en su totalidad",
+    "content_en": "I settle my debts promptly and completely",
+    "content_pt": "Pago minhas dívidas rapidamente e integralmente",
+    "inverted": false
+  },
+  {
+    "content_es": "Algunas veces hago trampas cuando juego al solitario",
+    "content_en": "Occasionally, I cheat when playing solitaire",
+    "content_pt": "Às vezes, trapaceio quando jogo paciência",
+    "inverted": true
+  },
+  {
+    "content_es": "Cuando me comprometo siempre se puede esperar que lo lleve a cabo",
+    "content_en": "When I make a commitment, I always follow through",
+    "content_pt": "Quando me comprometo, pode-se contar que eu cumprirei",
+    "inverted": false
+  },
+  {
+    "content_es": "Me rijo estrictamente por mis propios principios éticos",
+    "content_en": "I adhere strictly to my own ethical principles",
+    "content_pt": "Eu sigo rigorosamente meus próprios princípios éticos",
+    "inverted": false
+  },
+  {
+    "content_es": "Trato de realizar los trabajos con cuidado para que no haya que hacernos otra vez",
+    "content_en": "I strive to perform tasks carefully so they don't have to be redone",
+    "content_pt": "Procuro realizar os trabalhos com cuidado para que não precisem ser refeitos",
+    "inverted": false
+  },
+  {
+    "content_es": "Verdaderamente tengo que estar enfermo para faltar un día de trabajo",
+    "content_en": "I truly only miss work if I'm really sick",
+    "content_pt": "Eu realmente só falto ao trabalho se estiver realmente doente",
+    "inverted": false
+  },
+  {
+    "content_es": "En el trato con los demas, siempre temo cometer un error social",
+    "content_en": "When interacting with others, I always worry about committing a social faux pas",
+    "content_pt": "Ao lidar com os outros, sempre temo cometer um erro social",
+    "inverted": false
+  },
+  {
+    "content_es": "Pocas veces me siento cohibido cuando estoy entre la gente",
+    "content_en": "I seldom feel self-conscious when I'm in a group",
+    "content_pt": "Raramente me sinto inibido quando estou entre as pessoas",
+    "inverted": true
+  },
+  {
+    "content_es": "A veces me he sentido tan avergonzado que sólo quería esconderme",
+    "content_en": "Sometimes I've felt so ashamed that I wanted to disappear",
+    "content_pt": "Às vezes, senti tanta vergonha que só queria me esconder",
+    "inverted": false
+  },
+  {
+    "content_es": "No me siento muy abochornado si la gente me ridiculiza y me toma el pelo",
+    "content_en": "I don't get too embarrassed if people mock or tease me",
+    "content_pt": "Não fico muito envergonhado se as pessoas me ridicularizam ou zombam de mim",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia me siento inferior a los demás",
+    "content_en": "I frequently feel inferior to others",
+    "content_pt": "Frequentemente me sinto inferior aos outros",
+    "inverted": false
+  },
+  {
+    "content_es": "Me siento cómodo en presencia de mis jefes y otras autoridades",
+    "content_en": "I feel at ease when I'm around my superiors and other authority figures",
+    "content_pt": "Sinto-me confortável na presença dos meus chefes e de outras autoridades",
+    "inverted": true
+  },
+  {
+    "content_es": "Si he dicho o hecho algo malo a alguien, casi no puedo enfrentarme con ellos otra vez",
+    "content_en": "If I've wronged someone, I find it almost impossible to face them again",
+    "content_pt": "Se eu disser ou fizer algo de errado com alguém, mal consigo me enfrentar a essa pessoa novamente",
+    "inverted": false
+  },
+  {
+    "content_es": "Cuando las personas que conozco hace cosas tontas, siento bochorno en lugar de ellos",
+    "content_en": "When people I know act foolishly, I feel embarrassed on their behalf",
+    "content_pt": "Quando as pessoas que conheço fazem coisas tolas, sinto vergonha por elas",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo una manera reposada en el trabajo y en el recreo",
+    "content_en": "I have a calm and relaxed demeanor at work and during leisure",
+    "content_pt": "Tenho uma postura tranquila tanto no trabalho quanto no lazer",
+    "inverted": true
+  },
+  {
+    "content_es": "Cuando hago algo, lo hago vigorosamente",
+    "content_en": "When I act, I do it with vigor",
+    "content_pt": "Quando faço algo, faço com vigor",
+    "inverted": false
+  },
+  {
+    "content_es": "Mi labor suele ser lenta pero constante",
+    "content_en": "My work tends to be slow but steady",
+    "content_pt": "Meu trabalho costuma ser lento, mas constante",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia me siento que estoy explotando de energía",
+    "content_en": "I frequently feel like I'm bursting with energy",
+    "content_pt": "Frequentemente sinto que estou explodindo de energia",
+    "inverted": false
+  },
+  {
+    "content_es": "No soy tan despierto y animado como otra gente",
+    "content_en": "I'm not as alert and energetic as others",
+    "content_pt": "Não sou tão desperto e animado quanto as outras pessoas",
+    "inverted": true
+  },
+  {
+    "content_es": "Usualmente parezco tener prisa",
+    "content_en": "I typically appear to be in a rush",
+    "content_pt": "Normalmente, pareço estar com pressa",
+    "inverted": false
+  },
+  {
+    "content_es": "Mi vida es de un ritmo agitado",
+    "content_en": "My life is very fast-paced",
+    "content_pt": "Minha vida tem um ritmo agitado",
+    "inverted": false
+  },
+  {
+    "content_es": "Soy una persona muy activa",
+    "content_en": "I am a very active person",
+    "content_pt": "Sou uma pessoa muito ativa",
+    "inverted": false
+  },
+  {
+    "content_es": "Estoy muy acostumbrado a mi manera de ser",
+    "content_en": "I'm very used to who I am",
+    "content_pt": "Estou muito acostumado com o meu jeito de ser",
+    "inverted": true
+  },
+  {
+    "content_es": "Creo que es interesante aprender y desarrollar nuevas aficiones",
+    "content_en": "I believe it's interesting to learn and develop new hobbies",
+    "content_pt": "Acho interessante aprender e desenvolver novos passatempos",
+    "inverted": false
+  },
+  {
+    "content_es": "Una vez que descubro la forma correcta de hacer algo, sigo haciéndola",
+    "content_en": "Once I find the correct way to do something, I continue doing it that way",
+    "content_pt": "Uma vez que descubro a forma certa de fazer algo, continuo fazendo da mesma maneira",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia pruebo comidas nuevas y extranjeras",
+    "content_en": "I often try new and exotic foods",
+    "content_pt": "Frequentemente, experimento comidas novas e exóticas",
+    "inverted": false
+  },
+  {
+    "content_es": "Prefiero pasar el tiempo en lugares familiares",
+    "content_en": "I prefer to spend my time in familiar settings",
+    "content_pt": "Prefiro passar o tempo em lugares familiares",
+    "inverted": true
+  },
+  {
+    "content_es": "Algunas veces hago cambios en la casa solo para probar algo diferente",
+    "content_en": "Sometimes I make changes around the house just for a change",
+    "content_pt": "Às vezes, faço mudanças em casa só para experimentar algo diferente",
+    "inverted": false
+  },
+  {
+    "content_es": "Cuando estoy de vacaciones prefiero ir a un lugar que conozco y al que estoy acostumbrado",
+    "content_en": "When I'm on vacation, I prefer to visit a familiar place",
+    "content_pt": "Quando estou de férias, prefiro ir a um lugar que conheço e ao qual estou acostumado",
+    "inverted": true
+  },
+  {
+    "content_es": "Sigo la misma ruta cuando voy a un lugar",
+    "content_en": "I always take the same route when I travel",
+    "content_pt": "Eu sigo sempre o mesmo caminho quando vou a algum lugar",
+    "inverted": true
+  },
+  {
+    "content_es": "Prefiero cooperar con los demas que competir con ellos",
+    "content_en": "I prefer to cooperate rather than compete with others",
+    "content_pt": "Prefiro cooperar com os outros do que competir com eles",
+    "inverted": false
+  },
+  {
+    "content_es": "Puedo ser sarcástico y cortante cuando necesito serlo",
+    "content_en": "I can be sarcastic and blunt when necessary",
+    "content_pt": "Posso ser sarcástico e direto quando preciso",
+    "inverted": true
+  },
+  {
+    "content_es": "Vacilo en expresar mi ira aun cuando sea justificada",
+    "content_en": "I tend to hold back my anger even when it's warranted",
+    "content_pt": "Costumo hesitar em expressar minha raiva, mesmo quando é justificada",
+    "inverted": false
+  },
+  {
+    "content_es": "Si no me gusta la gente se lo digo",
+    "content_en": "If I don't like someone, I'll let them know",
+    "content_pt": "Se eu não gosto de alguém, eu digo",
+    "inverted": true
+  },
+  {
+    "content_es": "Cuando se me ha insultado, solo trato de perdonar y olvidar",
+    "content_en": "When someone insults me, I simply try to forgive and forget",
+    "content_pt": "Quando sou insultado, procuro apenas perdoar e esquecer",
+    "inverted": false
+  },
+  {
+    "content_es": "Si alguien comienza una pelea, estoy listo para luchar",
+    "content_en": "If someone instigates a fight, I'm ready to fight back",
+    "content_pt": "Se alguém iniciar uma briga, estou pronto para lutar",
+    "inverted": true
+  },
+  {
+    "content_es": "Soy testarudo y terco",
+    "content_en": "I am stubborn and pig-headed",
+    "content_pt": "Sou teimoso e obstinado",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia tengo discusiones con mi familia y con compañeros de trabajo",
+    "content_en": "I often have conflicts with my family and colleagues",
+    "content_pt": "Frequentemente, tenho discussões com minha família e com colegas de trabalho",
+    "inverted": true
+  },
+  {
+    "content_es": "Soy indolente y tomo las cosas con calma",
+    "content_en": "I tend to be laid-back and unhurried",
+    "content_pt": "Sou indolente e levo as coisas com calma",
+    "inverted": true
+  },
+  {
+    "content_es": "Tengo un conjunto de metas claras y me esfuerzo por alcanzarlas de forma ordenada",
+    "content_en": "I have clear goals and I work systematically to achieve them",
+    "content_pt": "Tenho um conjunto claro de metas e me esforço para alcançá-las de forma organizada",
+    "inverted": false
+  },
+  {
+    "content_es": "Cuando empiezo un programa de superación personal, normalmente lo abandono después de unos días",
+    "content_en": "When I begin a self-improvement plan, I typically give up after a few days",
+    "content_pt": "Quando começo um programa de autoaperfeiçoamento, normalmente desisto após alguns dias",
+    "inverted": true
+  },
+  {
+    "content_es": "Trabajo duro para conseguir mis fines",
+    "content_en": "I work hard to reach my objectives",
+    "content_pt": "Trabalho duro para atingir meus objetivos",
+    "inverted": false
+  },
+  {
+    "content_es": "No me siento impulsado a superarme",
+    "content_en": "I don't feel a strong drive to better myself",
+    "content_pt": "Não sinto um impulso forte para me superar",
+    "inverted": true
+  },
+  {
+    "content_es": "Me esfuerzo por alcanzar todo lo que pueda",
+    "content_en": "I do my best to achieve everything possible",
+    "content_pt": "Esforço-me para alcançar tudo o que posso",
+    "inverted": false
+  },
+  {
+    "content_es": "Me esfuerzo por alcanzar un nivel de excelencia en todo lo que hago",
+    "content_en": "I work hard to achieve excellence in all that I do",
+    "content_pt": "Esforço-me para alcançar um nível de excelência em tudo o que faço",
+    "inverted": false
+  },
+  {
+    "content_es": "Estoy algo adicto a mi trabajo",
+    "content_en": "I can be a bit workaholic",
+    "content_pt": "Sou um pouco viciado no meu trabalho",
+    "inverted": false
+  },
+  {
+    "content_es": "Raramente abuso de algo",
+    "content_en": "I seldom overdo things",
+    "content_pt": "Raramente abuso de algo",
+    "inverted": true
+  },
+  {
+    "content_es": "Tengo problemas controlando mis antojos",
+    "content_en": "I sometimes struggle to control my cravings",
+    "content_pt": "Tenho dificuldades em controlar meus impulsos",
+    "inverted": false
+  },
+  {
+    "content_es": "No me es muy difícil resistir la tentación",
+    "content_en": "I find it relatively easy to resist temptation",
+    "content_pt": "Não me é muito difícil resistir à tentação",
+    "inverted": true
+  },
+  {
+    "content_es": "Cuando estoy comiendo mis comidas favoritas, tiendo a comer demasiado",
+    "content_en": "When I'm enjoying my favorite meals, I tend to eat too much",
+    "content_pt": "Quando estou comendo minhas comidas favoritas, tendo a comer demais",
+    "inverted": false
+  },
+  {
+    "content_es": "Rara vez me dejo llevar por los impulsos",
+    "content_en": "I seldom act impulsively",
+    "content_pt": "Raramente deixo-me levar pelos impulsos",
+    "inverted": true
+  },
+  {
+    "content_es": "A veces como demasiado hasta empalagarme",
+    "content_en": "Sometimes I eat so much that I become uncomfortably full",
+    "content_pt": "Às vezes, como tanto que chego a ficar empanturrado",
+    "inverted": false
+  },
+  {
+    "content_es": "Algunas veces hago cosas impulsivamente que después lamento",
+    "content_en": "Occasionally, I act on impulse and later regret it",
+    "content_pt": "Às vezes, faço coisas por impulso que depois me arrependo",
+    "inverted": false
+  },
+  {
+    "content_es": "Siempre puedo mantener mis emociones bajo control",
+    "content_en": "I am always able to keep my emotions in check",
+    "content_pt": "Sempre consigo manter minhas emoções sob controle",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia busco situaciones emocionantes",
+    "content_en": "I often look for thrilling experiences",
+    "content_pt": "Frequentemente, procuro por situações emocionantes",
+    "inverted": false
+  },
+  {
+    "content_es": "No disfrutaría de unas vacaciones en Las Vegas",
+    "content_en": "I wouldn't enjoy a vacation in Las Vegas",
+    "content_pt": "Eu não aproveitaria umas férias em Las Vegas",
+    "inverted": true
+  },
+  {
+    "content_es": "Algunas veces he hecho cosas solamente por el gusto o la emoción",
+    "content_en": "Sometimes, I do things just for the thrill or excitement",
+    "content_pt": "Às vezes, faço coisas apenas pelo prazer ou emoção",
+    "inverted": false
+  },
+  {
+    "content_es": "Tiendo evitar las películas de horror y de sustos",
+    "content_en": "I tend to avoid horror movies and films that scare me",
+    "content_pt": "Costumo evitar filmes de terror e que causam susto",
+    "inverted": true
+  },
+  {
+    "content_es": "Quiero estar donde está la accion",
+    "content_en": "I want to be in the midst of the action",
+    "content_pt": "Quero estar onde a ação acontece",
+    "inverted": false
+  },
+  {
+    "content_es": "Me encanta la emoción de la montaña rusa",
+    "content_en": "I love the thrill of riding a roller coaster",
+    "content_pt": "Adoro a emoção de uma montanha-russa",
+    "inverted": false
+  },
+  {
+    "content_es": "Me siento atraído a los colores brillantes y estilos llamativos",
+    "content_en": "I'm drawn to vibrant colors and eye-catching styles",
+    "content_pt": "Sinto-me atraído por cores vibrantes e estilos chamativos",
+    "inverted": false
+  },
+  {
+    "content_es": "Me gusta sentirme parte de la muchedumbre en los eventos deportivos",
+    "content_en": "I enjoy being part of the crowd at sporting events",
+    "content_pt": "Gosto de me sentir parte da multidão em eventos esportivos",
+    "inverted": false
+  },
+  {
+    "content_es": "Con frecuencia me gusta darle vueltas a la cabeza a ideas y teorías abstractas",
+    "content_en": "I frequently enjoy contemplating abstract ideas and theories",
+    "content_pt": "Frequentemente, gosto de pensar sobre ideias e teorias abstratas",
+    "inverted": false
+  },
+  {
+    "content_es": "Me aburren los argumentos filosóficos",
+    "content_en": "Philosophical debates really bore me",
+    "content_pt": "Debates filosóficos me entediam",
+    "inverted": true
+  },
+  {
+    "content_es": "Disfruto resolviendo problemas o rompecabezas",
+    "content_en": "I enjoy solving puzzles and problems",
+    "content_pt": "Gosto de resolver problemas e quebra-cabeças",
+    "inverted": false
+  },
+  {
+    "content_es": "A veces pierdo interés cuando la gente habla de cosas muy abstractas y teóricas",
+    "content_en": "Sometimes, I lose interest when discussions become too abstract or theoretical",
+    "content_pt": "Às vezes, perco o interesse quando as pessoas falam de assuntos muito abstratos e teóricos",
+    "inverted": true
+  },
+  {
+    "content_es": "Disfruto resolviendo rompecabezas enredados",
+    "content_en": "I enjoy solving complex puzzles",
+    "content_pt": "Gosto de resolver quebra-cabeças complicados",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo poco interés en divagar sobre la naturaleza del universo y la condición humana",
+    "content_en": "I have little interest in pondering the nature of the universe and the human condition",
+    "content_pt": "Tenho pouco interesse em divagar sobre a natureza do universo e a condição humana",
+    "inverted": true
+  },
+  {
+    "content_es": "Tengo mucha curiosidad intelectual",
+    "content_en": "I am very intellectually curious",
+    "content_pt": "Tenho muita curiosidade intelectual",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo una amplia gama de intereses intelectuales",
+    "content_en": "I have a broad range of intellectual interests",
+    "content_pt": "Tenho uma ampla gama de interesses intelectuais",
+    "inverted": false
+  },
+  {
+    "content_es": "No me molesta alardear de mis talentos y mis logros",
+    "content_en": "I don't mind bragging about my talents and accomplishments",
+    "content_pt": "Não me importo de me gabar dos meus talentos e conquistas",
+    "inverted": true
+  },
+  {
+    "content_es": "Prefiero no hablar de mí ni de mis logros",
+    "content_en": "I prefer not to talk about myself or my accomplishments",
+    "content_pt": "Prefiro não falar sobre mim ou minhas realizações",
+    "inverted": false
+  },
+  {
+    "content_es": "Soy mejor que la mayoría de las personas y estoy seguro de ello",
+    "content_en": "I believe I'm superior to most people, and I'm sure of it",
+    "content_pt": "Acredito que sou melhor que a maioria das pessoas e estou certo disso",
+    "inverted": true
+  },
+  {
+    "content_es": "Trato de ser humilde",
+    "content_en": "I make an effort to be humble",
+    "content_pt": "Procuro ser humilde",
+    "inverted": false
+  },
+  {
+    "content_es": "Tengo una opinión muy alta de mi mismo",
+    "content_en": "I hold myself in very high regard",
+    "content_pt": "Tenho uma opinião muito elevada sobre mim mesmo",
+    "inverted": true
+  },
+  {
+    "content_es": "Pienso que no soy mejor que los demás, no importa sus condiciones",
+    "content_en": "I believe that I'm not superior to others, no matter their situation",
+    "content_pt": "Acredito que não sou melhor que os outros, independentemente de suas condições",
+    "inverted": false
+  },
+  {
+    "content_es": "Preferiría elogiar a otros que ser elogiado",
+    "content_en": "I prefer to compliment others rather than receive compliments",
+    "content_pt": "Prefiro elogiar os outros do que ser elogiado",
+    "inverted": false
+  },
+  {
+    "content_es": "Soy una persona superior",
+    "content_en": "I consider myself a superior person",
+    "content_pt": "Eu me considero uma pessoa superior",
+    "inverted": true
+  },
+  {
+    "content_es": "Soy muy hábil midiendo mis pasos para para terminar las cosas a tiempo",
+    "content_en": "I'm very adept at managing my time to finish tasks on schedule",
+    "content_pt": "Sou muito habilidoso em gerenciar meu tempo para concluir as tarefas a tempo",
+    "inverted": false
+  },
+  {
+    "content_es": "Pierdo mucho tiempo antes de ponerme a trabajar",
+    "content_en": "I lose a lot of time before I get started on work",
+    "content_pt": "Perco muito tempo antes de começar a trabalhar",
+    "inverted": true
+  },
+  {
+    "content_es": "Soy una persona productiva que siempre cumple con el trabajo",
+    "content_en": "I'm a productive person who always completes my work",
+    "content_pt": "Sou uma pessoa produtiva que sempre cumpre com o trabalho",
+    "inverted": false
+  },
+  {
+    "content_es": "Me es difícil obligarme a hacer lo que debo",
+    "content_en": "I struggle to motivate myself to do what I need to",
+    "content_pt": "Tenho dificuldade em me forçar a fazer o que devo",
+    "inverted": true
+  },
+  {
+    "content_es": "Una vez que comienzo un proyecto, casi siempre lo termino",
+    "content_en": "Once I start a project, I almost always see it through to the end",
+    "content_pt": "Uma vez que começo um projeto, quase sempre o termino",
+    "inverted": false
+  },
+  {
+    "content_es": "Cuando un proyecto se hace demasiado difícil, tiendo empezar uno nuevo",
+    "content_en": "When a project gets too challenging, I tend to start something new",
+    "content_pt": "Quando um projeto se torna muito difícil, costumo começar outro",
+    "inverted": true
+  },
+  {
+    "content_es": "Hay tantos trabajos pequeños que necesitan realizarse, que algunas veces simplemente nos les hago caso",
+    "content_en": "There are so many minor tasks that need to be completed that sometimes I just ignore them",
+    "content_pt": "Há tantas pequenas tarefas que precisam ser feitas que, às vezes, simplesmente as ignoro",
+    "inverted": true
+  },
+  {
+    "content_es": "Tengo mucha autodisciplina",
+    "content_en": "I possess a great deal of self-discipline",
+    "content_pt": "Tenho muita autodisciplina",
+    "inverted": false
+  },
+  {
+    "content_es": "A veces me siento desvalido y quiero que otras personas resuelvan mis problemas",
+    "content_en": "Sometimes I feel helpless and wish others would solve my problems for me",
+    "content_pt": "Às vezes, sinto-me desamparado e quero que outras pessoas resolvam meus problemas",
+    "inverted": false
+  },
+  {
+    "content_es": "Me siento capaz de resolver casi todos mis problemas",
+    "content_en": "I feel capable of solving nearly all of my problems",
+    "content_pt": "Sinto-me capaz de resolver quase todos os meus problemas",
+    "inverted": true
+  },
+  {
+    "content_es": "Cuando estoy bajo presión, algunas veces me siento como se me rompiera en pedazos",
+    "content_en": "When I'm under pressure, sometimes I feel like I'm falling apart",
+    "content_pt": "Quando estou sob pressão, às vezes sinto que estou me despedaçando",
+    "inverted": false
+  },
+  {
+    "content_es": "Me mantengo en control durante las emergencias",
+    "content_en": "I remain composed during emergencies",
+    "content_pt": "Eu me mantenho no controle durante emergências",
+    "inverted": true
+  },
+  {
+    "content_es": "Con frecuencia me es difícil decidirme",
+    "content_en": "I frequently have difficulty making decisions",
+    "content_pt": "Frequentemente, tenho dificuldade em tomar decisões",
+    "inverted": false
+  },
+  {
+    "content_es": "Me controlo muy bien durante una crisis",
+    "content_en": "I handle myself well in a crisis",
+    "content_pt": "Eu me controlo muito bem durante uma crise",
+    "inverted": true
+  },
+  {
+    "content_es": "Cuando todo parece ir mal ,todavía puedo tomar buenas decisiones",
+    "content_en": "Even when things seem to be going badly, I can still make sound decisions",
+    "content_pt": "Mesmo quando tudo parece dar errado, ainda consigo tomar boas decisões",
+    "inverted": true
+  },
+  {
+    "content_es": "El lo emocional soy muy estable",
+    "content_en": "Emotionally, I am very stable",
+    "content_pt": "Emocionalmente, sou muito estável",
+    "inverted": true
+  },
+  {
+    "content_es": "En un sentido literal nunca he saltado de alegría",
+    "content_en": "Literally, I've never jumped for joy",
+    "content_pt": "Literalmente, nunca pulei de alegria",
+    "inverted": true
+  },
+  {
+    "content_es": "Algunas veces he experimentado una intensa felicidad o éxtasis",
+    "content_en": "Sometimes, I've experienced intense happiness or ecstasy",
+    "content_pt": "Às vezes, experimento uma felicidade intensa ou êxtase",
+    "inverted": false
+  },
+  {
+    "content_es": "No soy un optimista animado",
+    "content_en": "I'm not an overly cheerful optimist",
+    "content_pt": "Não sou um otimista animado",
+    "inverted": true
+  },
+  {
+    "content_es": "Algunas veces reboso de felicidad",
+    "content_en": "Sometimes, I overflow with happiness",
+    "content_pt": "Às vezes, transbordo de felicidade",
+    "inverted": false
+  },
+  {
+    "content_es": "No me considero especialmente alegre",
+    "content_en": "I don't consider myself particularly cheerful",
+    "content_pt": "Não me considero especialmente alegre",
+    "inverted": true
+  },
+  {
+    "content_es": "Soy una persona alegre y animosa",
+    "content_en": "I am a cheerful and lively person",
+    "content_pt": "Sou uma pessoa alegre e animada",
+    "inverted": false
+  },
+  {
+    "content_es": "Raramente uso palabras como fantástico o sensacional  para describir mis experiencias",
+    "content_en": "I seldom use words like 'fantastic' or 'sensational' to describe my experiences",
+    "content_pt": "Raramente uso palavras como 'fantástico' ou 'sensacional' para descrever minhas experiências",
+    "inverted": true
+  },
+  {
+    "content_es": "Fácilmente me río",
+    "content_en": "I laugh easily",
+    "content_pt": "Eu rio facilmente",
+    "inverted": false
+  },
+  {
+    "content_es": "Creo que si dejamos que los estudiantes escuchen a oradores controversiales aquellos serán confundidos Y engañados",
+    "content_en": "I believe that if we allow students to hear controversial speakers, they will be confused and deceived",
+    "content_pt": "Acredito que, se permitirmos que os estudantes ouçam oradores controversos, eles ficarão confusos e enganados",
+    "inverted": true
+  },
+  {
+    "content_es": "Creo que las leyes y las normas sociales deberían cambiar para reflejar las necesidades del mundo en transición",
+    "content_en": "I believe that laws and social norms should be updated to reflect the needs of a transitioning world",
+    "content_pt": "Acredito que as leis e as normas sociais devem mudar para refletir as necessidades de um mundo em transformação",
+    "inverted": false
+  },
+  {
+    "content_es": "Creo que debemos inspirarnos en nuestras autoridades religiosas para la resolución de cuestiones morales",
+    "content_en": "I believe we should draw inspiration from our religious leaders when it comes to resolving moral issues",
+    "content_pt": "Acredito que devemos nos inspirar em nossas autoridades religiosas para resolver questões morais",
+    "inverted": true
+  },
+  {
+    "content_es": "Creo que las diferentes ideas sobre lo bueno lo malo que las personas tienen otras sociedades pueden ser válidas para ellas",
+    "content_en": "I believe that the various conceptions of right and wrong in different societies can be valid for them",
+    "content_pt": "Acredito que as diferentes ideias sobre o bem e o mal em outras sociedades podem ser válidas para elas",
+    "inverted": false
+  },
+  {
+    "content_es": "Creo que la lealtad a los ideales y principios de uno es más importante que liberalismo de ideas",
+    "content_en": "I believe that loyalty to one's ideals and principles is more important than being overly liberal with ideas",
+    "content_pt": "Acredito que a lealdade aos ideais e princípios de uma pessoa é mais importante do que o liberalismo de ideias",
+    "inverted": true
+  },
+  {
+    "content_es": "Me considero liberal y tolerante del tipo de vida de otras gentes",
+    "content_en": "I consider myself open-minded and tolerant about other people's ways of life",
+    "content_pt": "Considero-me liberal e tolerante em relação ao modo de vida dos outros",
+    "inverted": false
+  },
+  {
+    "content_es": "Creo que si las personas no saben lo que lo que creen para cuando llegan a los 25, algo no anda bien con ellos",
+    "content_en": "I believe that if people haven't figured out their beliefs by age 25, something is amiss",
+    "content_pt": "Acredito que se as pessoas não sabem no que acreditam até os 25 anos, algo está errado com elas",
+    "inverted": true
+  },
+  {
+    "content_es": "Creo que la tolerancia de la “nueva moralidad”  no es moralidad ninguna",
+    "content_en": "I believe that the so-called 'new morality' lacks true moral substance",
+    "content_pt": "Acredito que a tolerância da 'nova moralidade' não é moralidade nenhuma",
+    "inverted": true
+  },
+  {
+    "content_es": "Los dirigentes políticos necesitan estar más conscientes de lado humano de su política",
+    "content_en": "Political leaders need to be more mindful of the human aspect of their policies",
+    "content_pt": "Os líderes políticos precisam estar mais conscientes do lado humano de suas políticas",
+    "inverted": false
+  },
+  {
+    "content_es": "Soy testarudo y obstinado en mis actitudes",
+    "content_en": "I am stubborn and inflexible in my views",
+    "content_pt": "Sou teimoso e obstinado em minhas atitudes",
+    "inverted": true
+  },
+  {
+    "content_es": "Nunca podríamos hacer demasiado bien por los pobres y los ancianos",
+    "content_en": "We can never do too much for the poor and the elderly",
+    "content_pt": "Nunca podemos fazer bem demais pelos pobres e pelos idosos",
+    "inverted": false
+  },
+  {
+    "content_es": "No siento ninguna simpatía por los lismosneros",
+    "content_en": "I feel no sympathy for homosexuals",
+    "content_pt": "Não sinto nenhuma simpatia pelos homossexuais",
+    "inverted": true
+  },
+  {
+    "content_es": "Las necesidades humanas deben tener prioridad sobre las consideraciones económicas",
+    "content_en": "Human needs should have priority over economic concerns",
+    "content_pt": "As necessidades humanas devem ter prioridade sobre as considerações econômicas",
+    "inverted": false
+  },
+  {
+    "content_es": "Creo que todos los seres humanos son merecedores del respeto",
+    "content_en": "I believe that all human beings deserve respect",
+    "content_pt": "Acredito que todos os seres humanos merecem respeito",
+    "inverted": false
+  },
+  {
+    "content_es": "Siento mucha compasión por los otros menos afortunados que yo",
+    "content_en": "I feel deep compassion for those who are less fortunate than I am",
+    "content_pt": "Sinto muita compaixão pelos menos afortunados que eu",
+    "inverted": false
+  },
+  {
+    "content_es": "Preferiría ser conocido más por misericordioso que por justo",
+    "content_en": "I would prefer to be known for my compassion rather than my strict fairness",
+    "content_pt": "Prefiro ser conhecido mais por ser misericordioso do que por ser justo",
+    "inverted": false
+  },
+  {
+    "content_es": "A través de los años he hecho algunas cosas muy estúpidas",
+    "content_en": "Over the years, I've done some very foolish things",
+    "content_pt": "Ao longo dos anos, fiz algumas coisas muito estúpidas",
+    "inverted": true
+  },
+  {
+    "content_es": "Pienso las cosas cuidadosamente antes de tomar una decisión",
+    "content_en": "I carefully consider things before making a decision",
+    "content_pt": "Penso cuidadosamente antes de tomar uma decisão",
+    "inverted": false
+  },
+  {
+    "content_es": "En ocasiones actúo primero y pienso después",
+    "content_en": "Sometimes I act before I think",
+    "content_pt": "Às vezes, ajo antes de pensar",
+    "inverted": true
+  },
+  {
+    "content_es": "Siempre considero las consecuencias antes de actuar",
+    "content_en": "I always weigh the consequences before taking action",
+    "content_pt": "Sempre considero as consequências antes de agir",
+    "inverted": false
+  },
+  {
+    "content_es": "Con frecuencia hago cosas por impulso",
+    "content_en": "I frequently act on impulse",
+    "content_pt": "Frequentemente, ajo por impulso",
+    "inverted": true
+  },
+  {
+    "content_es": "Raramente tomo decisiones precipitadas",
+    "content_en": "I seldom make impulsive decisions",
+    "content_pt": "Raramente tomo decisões precipitadas",
+    "inverted": false
+  },
+  {
+    "content_es": "Cuidadosamente hago planes cuando voy de viaje",
+    "content_en": "I make careful plans when I travel",
+    "content_pt": "Planejo cuidadosamente quando viajo",
+    "inverted": false
+  },
+  {
+    "content_es": "Pienso dos veces antes de contestar una pregunta",
+    "content_en": "I think twice before responding to a question",
+    "content_pt": "Penso duas vezes antes de responder a uma pergunta",
+    "inverted": false
+  }
+]
