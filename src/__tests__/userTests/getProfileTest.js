@@ -42,7 +42,6 @@ beforeAll(async () => {
 describe("Auth Endpoints", () => {
   it("success get profile; status 200 ", async () => {
     const userData = {
-      user_id: userId,
     };
 
     const response = await request(app)
@@ -60,46 +59,8 @@ describe("Auth Endpoints", () => {
 });
 
 describe("Auth Endpoints", () => {
-  it("fail get profile;no user_id; status 400 ", async () => {
-    const userData = {};
-
-    const response = await request(app)
-      .get("/user/me")
-      .set("Authorization", `Bearer ${token}`)
-      .send(userData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.body.errors).toEqual(["User ID cannot be empty."]);
-    expect(response.status).toBe(400);
-  });
-});
-describe("Auth Endpoints", () => {
-  it("fail get profile;wrong typeof; status 400 ", async () => {
-    const userData = {
-      user_id: "userId",
-    };
-
-    const response = await request(app)
-      .get("/user/me")
-      .set("Authorization", `Bearer ${token}`)
-      .send(userData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-
-    expect(response.body.errors).toEqual(["User ID must be a number."]);
-    expect(response.status).toBe(400);
-  });
-});
-
-describe("Auth Endpoints", () => {
   it("fail get profile;no token; status 400 ", async () => {
     const userData = {
-      user_id: "userId",
     };
 
     const response = await request(app).get("/user/me").send(userData);

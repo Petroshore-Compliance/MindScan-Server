@@ -5,7 +5,7 @@ const prisma = require("../db.js");
 const getQuestionsGroupScript = async (language, page) => {
 
 
-  function getQuestionSelection() {
+  function getQuestionSelection(language) {
     const selection = { inverted: true };
     if (language === 'es') {
       selection.content_es = true;
@@ -28,7 +28,7 @@ const getQuestionsGroupScript = async (language, page) => {
     select: getQuestionSelection(language)
   });
 
-  return { questions: questionsGroup, page: page + 1 }
+  return { questions: questionsGroup, page: page }
 };
 
 
