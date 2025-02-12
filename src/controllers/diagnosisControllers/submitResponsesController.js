@@ -1,7 +1,7 @@
 const prisma = require("../../db.js");
 const { getQuestionsGroupScript } = require("../../tools/getQuestionsGroupScript.js");
 
-
+const { calculateResultsDiagnosisScript } = require("./calculateResultsDiagnosisScript.js");
 let questionsGroup;
 const submitResponsesController = async (data) => {
 
@@ -28,7 +28,7 @@ const submitResponsesController = async (data) => {
 
   const currentPage = diagnoseStarted.responses.length / 8 + 1;
   questionsGroup = await getQuestionsGroupScript("es", currentPage);
-
+  console.log("questionsGroup", questionsGroup);
   const isInverted = questionsGroup.questions;
 
 
