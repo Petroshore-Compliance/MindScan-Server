@@ -14,12 +14,14 @@ const launchDiagnosisController = async (data) => {
     return { status: 400, message: "You must be part of a company to launch a diagnosis" }
   }
 
-
   const diagnoseStarted = await prisma.UserResponses.findUnique({
     where: {
-      user_id: data.user.user_id,
-    }
-  })
+      user_id_company_id: {
+        user_id: user.user_id,
+        company_id: user.company_id,
+      },
+    },
+  });
 
   if (diagnoseStarted) {
 
@@ -58,6 +60,9 @@ const launchDiagnosisController = async (data) => {
         data: {
           user: {
             connect: { user_id: user.user_id }
+          },
+          company: {
+            connect: { company_id: user.company_id }
           }
         }
       });

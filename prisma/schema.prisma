@@ -37,6 +37,9 @@ model Company {
   name        String
   email       String              @unique
   users       User[]
+  diagnoses   UserResponses[]
+    userResult        Result[]
+
   licenses    Int                 @default(0)
   invitations CompanyInvitation[]
   created_at  DateTime            @default(now())
@@ -89,14 +92,19 @@ model Question {
 }
 
 model UserResponses {
-  userResponses_id  Int            @id @default(autoincrement())
-  user              User           @relation(fields: [user_id], references: [user_id])
-  user_id           Int            @unique  
+  userResponses_id  Int      @id @default(autoincrement())
+  user              User     @relation(fields: [user_id], references: [user_id])
+  user_id           Int
+  company           Company  @relation(fields: [company_id], references: [company_id])
+  company_id        Int
   responses         Int[]
-  responses_value    Int[]
-  created_at        DateTime       @default(now())
-  updated_at        DateTime?      @updatedAt
+  responses_value   Int[]
+  created_at        DateTime @default(now())
+  updated_at        DateTime? @updatedAt
+
+  @@unique([user_id, company_id])
 }
+
 
 model ContactForm {
   form_id    Int       @id @default(autoincrement())
@@ -125,6 +133,8 @@ model Result {
   resultado_id Int  @id @default(autoincrement())
   user         User @relation(fields: [user_id], references: [user_id])
   user_id      Int
+  company           Company  @relation(fields: [company_id], references: [company_id])
+  company_id        Int
 
   anxiety        Int
   hostility      Int
