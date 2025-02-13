@@ -7,7 +7,7 @@ const submitResponsesHandler = async (req, res) => {
 
     const response = await submitResponsesController(req.body);
 
-    return res.status(response.status).json({ message: response.message, updatedDiagnosis: response.updatedDiagnosis });
+    return res.status(response.status).json({ message: response.message, updatedDiagnosis: response.updatedDiagnosis, diagnosis: response.diagnosis });
   } catch (error) {
     res.status(500).json({ message: "Unhandled error submitting responses", error: error.message });
   }

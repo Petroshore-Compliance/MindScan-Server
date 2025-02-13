@@ -27,7 +27,6 @@ const getQuestionsGroupScript = async (language, page) => {
     take: groupSize,
     select: getQuestionSelection(language)
   });
-
   return { questions: questionsGroup, page: page }
 };
 

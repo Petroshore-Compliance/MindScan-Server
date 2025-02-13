@@ -294,7 +294,227 @@ describe("Auth Endpoints", () => {
 
 
 describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
+  it("success submitting responses 1-39 (all 0); status 200 ", async () => {
+    await prisma.userResponses.updateMany({
+
+      data: {
+        responses: [],
+        responses_value: []
+      }
+    });
+
+    const responsesData = {
+      responses: [0, 0, 0, 0, 0, 0, 0, 0]
+    };
+
+    const response = await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+
+
+    if (response.status !== 200) {
+      console.log("Response bodddddy:", response.body);
+    }
+
+    expect(response.body.message).toEqual("Responses submitted");
+
+    expect(response.status).toBe(200);
+
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+
+  });
+});
+
+describe("Auth Endpoints", () => {
+  it("success submitting responses finish all 0; status 200 ", async () => {
+
+
+
+
+    const responsesData = {
+      responses: [0, 0, 0, 0, 0, 0, 0, 0]
+    };
+
+    const response = await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+
+
+    if (response.status !== 200) {
+      console.log("Response bodddddy:", response.body);
+    }
+
+    expect(response.body.message).toEqual("Diangosis finished, results calculated");
+    expect(response.body.diagnosis.anxiety).toEqual(16);
+    expect(response.body.diagnosis.cordiality).toEqual(8);
+    expect(response.body.diagnosis.fantasy).toEqual(20);
+    expect(response.body.diagnosis.trust).toEqual(12);
+    expect(response.body.diagnosis.competence).toEqual(12);
+
+    expect(response.body.diagnosis.hostility).toEqual(12);
+    expect(response.body.diagnosis.gregariousness).toEqual(16);
+    expect(response.body.diagnosis.aesthetic_appreciation).toEqual(12);
+    expect(response.body.diagnosis.frankness).toEqual(20);
+    expect(response.body.diagnosis.orderliness).toEqual(20);
+
+    expect(response.body.diagnosis.depression).toEqual(8);
+    expect(response.body.diagnosis.assertiveness).toEqual(16);
+    expect(response.body.diagnosis.feelings).toEqual(12);
+    expect(response.body.diagnosis.altruism).toEqual(12);
+    expect(response.body.diagnosis.sense_of_duty).toEqual(8);
+
+    expect(response.body.diagnosis.social_anxiety).toEqual(12);
+    expect(response.body.diagnosis.activity).toEqual(12);
+    expect(response.body.diagnosis.actions).toEqual(20);
+    expect(response.body.diagnosis.conciliatory_attitude).toEqual(20);
+    expect(response.body.diagnosis.need_for_achievement).toEqual(12);
+
+    expect(response.body.diagnosis.impulsivity).toEqual(16);
+    expect(response.body.diagnosis.excitement_seeking).toEqual(8);
+    expect(response.body.diagnosis.ideas).toEqual(12);
+    expect(response.body.diagnosis.modesty).toEqual(16);
+    expect(response.body.diagnosis.self_discipline).toEqual(16);
+
+    expect(response.body.diagnosis.vulnerability).toEqual(20);
+    expect(response.body.diagnosis.positive_emotions).toEqual(16);
+    expect(response.body.diagnosis.values).toEqual(20);
+    expect(response.body.diagnosis.sensitivity_to_others).toEqual(8);
+    expect(response.body.diagnosis.deliberation).toEqual(12);
+
+    expect(response.body.diagnosis.neuroticism_x_emotional_stability).toEqual(84);
+    expect(response.body.diagnosis.extraversion).toEqual(76);
+    expect(response.body.diagnosis.openness_to_experience).toEqual(96);
+    expect(response.body.diagnosis.agreeableness_or_amiability).toEqual(88);
+    expect(response.body.diagnosis.perseverance_or_responsibility).toEqual(80);
+
+    expect(response.status).toBe(200);
+  });
+});
+
+
+describe("Auth Endpoints", () => {
+  it("success submitting responses 1-39 (all 4); status 200 ", async () => {
+    await prisma.userResponses.updateMany({
+
+      data: {
+        responses: [],
+        responses_value: []
+      }
+    });
 
     const responsesData = {
       responses: [4, 4, 4, 4, 4, 4, 4, 4]
@@ -313,11 +533,129 @@ describe("Auth Endpoints", () => {
     expect(response.body.message).toEqual("Responses submitted");
 
     expect(response.status).toBe(200);
+
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+
   });
 });
 
 describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
+  it("success submitting responses finish all 4; status 200 ", async () => {
+
+
+
 
     const responsesData = {
       responses: [4, 4, 4, 4, 4, 4, 4, 4]
@@ -333,17 +671,65 @@ describe("Auth Endpoints", () => {
       console.log("Response bodddddy:", response.body);
     }
 
-    expect(response.body.message).toEqual("Responses submitted");
+    expect(response.body.message).toEqual("Diangosis finished, results calculated");
+    expect(response.body.diagnosis.anxiety).toEqual(16);
+    expect(response.body.diagnosis.cordiality).toEqual(24);
+    expect(response.body.diagnosis.fantasy).toEqual(12);
+    expect(response.body.diagnosis.trust).toEqual(20);
+    expect(response.body.diagnosis.competence).toEqual(20);
 
+    expect(response.body.diagnosis.hostility).toEqual(20);
+    expect(response.body.diagnosis.gregariousness).toEqual(16);
+    expect(response.body.diagnosis.aesthetic_appreciation).toEqual(20);
+    expect(response.body.diagnosis.frankness).toEqual(12);
+    expect(response.body.diagnosis.orderliness).toEqual(12);
+
+    expect(response.body.diagnosis.depression).toEqual(24);
+    expect(response.body.diagnosis.assertiveness).toEqual(16);
+    expect(response.body.diagnosis.feelings).toEqual(20);
+    expect(response.body.diagnosis.altruism).toEqual(20);
+    expect(response.body.diagnosis.sense_of_duty).toEqual(24);
+
+    expect(response.body.diagnosis.social_anxiety).toEqual(20);
+    expect(response.body.diagnosis.activity).toEqual(20);
+    expect(response.body.diagnosis.actions).toEqual(12);
+    expect(response.body.diagnosis.conciliatory_attitude).toEqual(12);
+    expect(response.body.diagnosis.need_for_achievement).toEqual(20);
+
+    expect(response.body.diagnosis.impulsivity).toEqual(16);
+    expect(response.body.diagnosis.excitement_seeking).toEqual(24);
+    expect(response.body.diagnosis.ideas).toEqual(20);
+    expect(response.body.diagnosis.modesty).toEqual(16);
+    expect(response.body.diagnosis.self_discipline).toEqual(16);
+
+    expect(response.body.diagnosis.vulnerability).toEqual(12);
+    expect(response.body.diagnosis.positive_emotions).toEqual(16);
+    expect(response.body.diagnosis.values).toEqual(12);
+    expect(response.body.diagnosis.sensitivity_to_others).toEqual(24);
+    expect(response.body.diagnosis.deliberation).toEqual(20);
+
+    expect(response.body.diagnosis.neuroticism_x_emotional_stability).toEqual(108);
+    expect(response.body.diagnosis.extraversion).toEqual(116);
+    expect(response.body.diagnosis.openness_to_experience).toEqual(96);
+    expect(response.body.diagnosis.agreeableness_or_amiability).toEqual(104);
+    expect(response.body.diagnosis.perseverance_or_responsibility).toEqual(112);
     expect(response.status).toBe(200);
   });
 });
 
+
 describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
+  it("success submitting responses 1-39 (all 0,4,2,3,0,2,1,3); status 200 ", async () => {
+    await prisma.userResponses.updateMany({
+
+      data: {
+        responses: [],
+        responses_value: []
+      }
+    });
 
     const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
+      responses: [0, 4, 2, 3, 0, 2, 1, 3]
     };
 
     const response = await request(app)
@@ -359,14 +745,132 @@ describe("Auth Endpoints", () => {
     expect(response.body.message).toEqual("Responses submitted");
 
     expect(response.status).toBe(200);
+
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+    await request(app)
+      .patch("/diagnoses/submit")
+      .set("Authorization", `Bearer ${token}`)
+      .send(responsesData);
+
   });
 });
 
 describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
+  it("success submitting responses finish all 0,4,2,3,0,2,1,3; status 200 ", async () => {
+
+
+
 
     const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
+      responses: [0, 4, 2, 3, 0, 2, 1, 3]
     };
 
     const response = await request(app)
@@ -379,17 +883,59 @@ describe("Auth Endpoints", () => {
       console.log("Response bodddddy:", response.body);
     }
 
-    expect(response.body.message).toEqual("Responses submitted");
+    expect(response.body.message).toEqual("Diangosis finished, results calculated");
+    expect(response.body.diagnosis.anxiety).toEqual(25);
+    expect(response.body.diagnosis.cordiality).toEqual(9);
+    expect(response.body.diagnosis.fantasy).toEqual(9);
+    expect(response.body.diagnosis.trust).toEqual(23);
+    expect(response.body.diagnosis.competence).toEqual(9);
 
+    expect(response.body.diagnosis.hostility).toEqual(9);
+    expect(response.body.diagnosis.gregariousness).toEqual(25);
+    expect(response.body.diagnosis.aesthetic_appreciation).toEqual(23);
+    expect(response.body.diagnosis.frankness).toEqual(9);
+    expect(response.body.diagnosis.orderliness).toEqual(23);
+
+    expect(response.body.diagnosis.depression).toEqual(19);
+    expect(response.body.diagnosis.assertiveness).toEqual(7);
+    expect(response.body.diagnosis.feelings).toEqual(9);
+    expect(response.body.diagnosis.altruism).toEqual(23);
+    expect(response.body.diagnosis.sense_of_duty).toEqual(9);
+
+    expect(response.body.diagnosis.social_anxiety).toEqual(9);
+    expect(response.body.diagnosis.activity).toEqual(23);
+    expect(response.body.diagnosis.actions).toEqual(23);
+    expect(response.body.diagnosis.conciliatory_attitude).toEqual(9);
+    expect(response.body.diagnosis.need_for_achievement).toEqual(23);
+
+    expect(response.body.diagnosis.impulsivity).toEqual(21);
+    expect(response.body.diagnosis.excitement_seeking).toEqual(9);
+    expect(response.body.diagnosis.ideas).toEqual(9);
+    expect(response.body.diagnosis.modesty).toEqual(21);
+    expect(response.body.diagnosis.self_discipline).toEqual(11);
+
+    expect(response.body.diagnosis.vulnerability).toEqual(9);
+    expect(response.body.diagnosis.positive_emotions).toEqual(25);
+    expect(response.body.diagnosis.values).toEqual(23);
+    expect(response.body.diagnosis.sensitivity_to_others).toEqual(9);
+    expect(response.body.diagnosis.deliberation).toEqual(23);
+
+    expect(response.body.diagnosis.neuroticism_x_emotional_stability).toEqual(92);
+    expect(response.body.diagnosis.extraversion).toEqual(98);
+    expect(response.body.diagnosis.openness_to_experience).toEqual(96);
+    expect(response.body.diagnosis.agreeableness_or_amiability).toEqual(94);
+    expect(response.body.diagnosis.perseverance_or_responsibility).toEqual(98);
     expect(response.status).toBe(200);
   });
 });
 
 describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
+  it("fail submit responses;ya esta terminado; status 409 ", async () => {
+
+
 
     const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
+      responses: [0, 0, 0, 0, 0, 0, 0, 0]
     };
 
     const response = await request(app)
@@ -398,548 +944,20 @@ describe("Auth Endpoints", () => {
       .send(responsesData);
 
 
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
-      console.log("Response bodddddy:", response.body);
-    }
-
-    expect(response.body.message).toEqual("Responses submitted");
-
-    expect(response.status).toBe(200);
-  });
-});
-
-describe("Auth Endpoints", () => {
-  it("success submitting responses 4-40; status 200 ", async () => {
-
-    const responsesData = {
-      responses: [4, 4, 4, 4, 4, 4, 4, 4]
-    };
-
-    const response = await request(app)
-      .patch("/diagnoses/submit")
-      .set("Authorization", `Bearer ${token}`)
-      .send(responsesData);
-
-
-    if (response.status !== 200) {
+    if (response.status !== 409) {
       console.log("Response bodddddy:", response.body);
     }
 
     expect(response.body).toEqual({ "message": "Diangosis already submitted" });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(409);
   });
 });
 
 
 // borrado de lo creado
 afterAll(async () => {
+  await prisma.result.deleteMany();
   await prisma.userResponses.deleteMany();
   await prisma.user.deleteMany();
 

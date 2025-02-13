@@ -25,12 +25,13 @@ const launchDiagnosisController = async (data) => {
 
   if (diagnoseStarted) {
 
-    if (diagnoseStarted.responses.length == 240) { return { status: 409, message: "diagnosis already completed" } }
 
     const nextPage = diagnoseStarted.responses.length / 8 + 1;
 
     const questionsGroup = await getQuestionsGroupScript(data.language, nextPage);
     if (nextPage == 30) { return { status: 200, message: "Diagnosis last page", questions: questionsGroup.questions, page: questionsGroup.page } }
+    if (nextPage == 31) { return { status: 409, message: "Diagnosis already completed", questions: questionsGroup.questions, page: questionsGroup.page } }
+
     return { status: 206, message: "Diagnosis continued", questions: questionsGroup.questions, page: questionsGroup.page }
 
   }
@@ -71,6 +72,7 @@ const launchDiagnosisController = async (data) => {
 
 
     const questionsGroup = await getQuestionsGroupScript(data.language, 1);
+
 
     return { status: 201, message: "Diagnosis started", questions: questionsGroup.questions, page: questionsGroup.page }
 

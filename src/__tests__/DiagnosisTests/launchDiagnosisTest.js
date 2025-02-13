@@ -123,7 +123,18 @@ describe("Auth Endpoints", () => {
     if (response.status !== 201) {
       console.log("Response bodddddy:", response.body);
     }
+    console.log("response.body", response.body);
     expect(response.body.message).toEqual("Diagnosis started");
+    expect(response.body.page).toEqual(1);
+    console.log("response.body", response.body.questions[0]);
+    console.log("response.body", response.body.questions[1]);
+    console.log("response.body", response.body.questions[2]);
+    console.log("response.body", response.body.questions[3]);
+    console.log("response.body", response.body.questions[4]);
+    console.log("response.body", response.body.questions[5]);
+    console.log("response.body", response.body.questions[6]);
+    console.log("response.body", response.body.questions[7]);
+    console.log("response.body", response.body.questions[8]);
     expect(response.status).toBe(201);
   });
 });
@@ -153,6 +164,8 @@ describe("Auth Endpoints", () => {
       console.log("Response bodddddy:", response.body);
     }
     expect(response.body.message).toEqual("Diagnosis continued");
+    expect(response.body.page).toEqual(2);
+
     expect(response.status).toBe(206);
   });
 });
@@ -195,10 +208,73 @@ describe("Auth Endpoints", () => {
   });
 });
 
+describe("Auth Endpoints", () => {
+  it("success continue diagnosis; status 200 ", async () => {
+    const responses = Array.from({ length: 232 }, (_, i) => i + 1);
+    await prisma.UserResponses.updateMany({
+      data: {
+        responses: responses,
+      }
+
+    })
+
+
+    const diagnosisData = {
+      language: "en",
+    };
+
+    const response = await request(app)
+      .post("/diagnoses/launch")
+      .set("Authorization", `Bearer ${token}`)
+      .send(diagnosisData);
+
+    if (response.status !== 200) {
+      console.log("Response bodddddy:", response.body);
+    }
+    expect(response.body.message).toEqual("Diagnosis last page");
+    expect(response.body.page).toEqual(30);
+
+    expect(response.status).toBe(200);
+  });
+});
+
+describe("Auth Endpoints", () => {
+  it("fail continue diagnosis;; status 409 ", async () => {
+
+    const responses = Array.from({ length: 240 }, (_, i) => i + 1);
+    await prisma.UserResponses.updateMany({
+      data: {
+        responses: responses,
+      }
+
+    })
+
+
+    const diagnosisData = {
+      language: "en",
+    };
+
+    const response = await request(app)
+      .post("/diagnoses/launch")
+      .set("Authorization", `Bearer ${token}`)
+      .send(diagnosisData);
+
+    if (response.status !== 409) {
+      console.log("Response bodddddy:", response.body);
+    }
+    expect(response.body.message).toEqual("Diagnosis already completed");
+    expect(response.body.page).toEqual(31);
+
+    expect(response.status).toBe(409);
+  });
+});
+
 
 
 // borrado de lo creado
 afterAll(async () => {
+  await prisma.result.deleteMany();
+
   await prisma.userResponses.deleteMany();
   await prisma.user.deleteMany();
 

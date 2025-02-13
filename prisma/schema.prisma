@@ -38,8 +38,7 @@ model Company {
   email       String              @unique
   users       User[]
   diagnoses   UserResponses[]
-    userResult        Result[]
-
+  userResult  Result[]
   licenses    Int                 @default(0)
   invitations CompanyInvitation[]
   created_at  DateTime            @default(now())
@@ -179,6 +178,8 @@ model Result {
 
   created_at DateTime  @default(now())
   updated_at DateTime? @updatedAt
+
+
 }
 
 enum Role {
