@@ -25,6 +25,8 @@ const submitResponsesController = async (data) => {
     },
   });
 
+  if (!diagnoseStarted) { return { status: 404, message: "No diagnosis started" }; }
+
 
   const currentPage = diagnoseStarted.responses.length / 8 + 1;
   questionsGroup = await getQuestionsGroupScript("es", currentPage);
@@ -37,7 +39,7 @@ const submitResponsesController = async (data) => {
 
   if (newResponses.length === 240) {
 
-    return { status: 200, message: "Diangosis already submitted" };
+    return { status: 409, message: "Diangosis already submitted" };
   }
 
   for (let i = 0; i < 8; i++) {
@@ -62,6 +64,15 @@ const submitResponsesController = async (data) => {
       responses_value: newResponsesValue,
     }
   });
+
+
+  if (updatedDiagnosis.responses.length === 240) {
+
+
+    const resultOfDiagnosis = await calculateResultsDiagnosisScript(updatedDiagnosis);
+
+    return { status: 200, message: "Diangosis finished, results calculated", diagnosis: resultOfDiagnosis };
+  }
 
   return { status: 200, message: "Responses submitted", updatedDiagnosis };
 }

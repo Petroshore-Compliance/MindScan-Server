@@ -178,6 +178,8 @@ model Result {
 
   created_at DateTime  @default(now())
   updated_at DateTime? @updatedAt
+
+
 }
 
 enum Role {

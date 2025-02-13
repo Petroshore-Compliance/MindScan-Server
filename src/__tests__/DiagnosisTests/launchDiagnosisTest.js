@@ -123,9 +123,18 @@ describe("Auth Endpoints", () => {
     if (response.status !== 201) {
       console.log("Response bodddddy:", response.body);
     }
+    console.log("response.body", response.body);
     expect(response.body.message).toEqual("Diagnosis started");
     expect(response.body.page).toEqual(1);
-
+    console.log("response.body", response.body.questions[0]);
+    console.log("response.body", response.body.questions[1]);
+    console.log("response.body", response.body.questions[2]);
+    console.log("response.body", response.body.questions[3]);
+    console.log("response.body", response.body.questions[4]);
+    console.log("response.body", response.body.questions[5]);
+    console.log("response.body", response.body.questions[6]);
+    console.log("response.body", response.body.questions[7]);
+    console.log("response.body", response.body.questions[8]);
     expect(response.status).toBe(201);
   });
 });
@@ -264,6 +273,8 @@ describe("Auth Endpoints", () => {
 
 // borrado de lo creado
 afterAll(async () => {
+  await prisma.result.deleteMany();
+
   await prisma.userResponses.deleteMany();
   await prisma.user.deleteMany();
 
