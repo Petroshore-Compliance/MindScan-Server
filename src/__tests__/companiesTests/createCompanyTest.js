@@ -113,6 +113,8 @@ describe("Auth Endpoints", () => {
     const companyRegistrationData = {
       name: "Test company name",
       email: companyEmail + "   ",
+      user_id: UserId,
+
     };
 
     const response = await request(app)
@@ -131,6 +133,8 @@ describe("Auth Endpoints", () => {
   it("fail create company; missing name; status 400 ", async () => {
     const registrationData = {
       email: companyEmail,
+      user_id: UserId,
+
     };
 
     const response = await request(app)
@@ -153,6 +157,7 @@ describe("Auth Endpoints", () => {
     const registrationData = {
       name: "Test company name",
       email: companyEmail,
+      user_id: UserId,
     };
 
     const response = await request(app)
@@ -173,6 +178,7 @@ describe("Auth Endpoints", () => {
     const registrationData = {
       name: 23,
       email: 23,
+      user_id: "23",
 
     };
 

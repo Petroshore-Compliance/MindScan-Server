@@ -1,7 +1,7 @@
 const prisma = require("../db.js");
 const { validateString, regexEmail } = require("../tools/validations.js");
 
-const roleMiddleware = async (req, res) => {
+const roleMiddleware = async (req, res, next) => {
   try {
     const { user: { email } = {} } = req.body;
     const { role } = req.query;
@@ -33,14 +33,16 @@ const roleMiddleware = async (req, res) => {
     if (!foundUser) {
       errors.push("User not found");
     } else if (foundUser.role !== role && foundUser.role !== "admin") {
-      errors.push("User not authorized");
+      return res.status(403).json("User not authorized");
     }
 
     if (errors.length > 0) {
       return res.status(400).json({ errors });
     }
 
-    return res.status(200).json({ access: true });
+    next();
+
+    return;
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });

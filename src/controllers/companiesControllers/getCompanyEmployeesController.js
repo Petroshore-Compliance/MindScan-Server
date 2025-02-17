@@ -14,7 +14,7 @@ const getCompanyEmployeesController = async (data) => {
 
   const requestedCompany = await prisma.company.findUnique({
     where: {
-      company_id: data.company_id,
+      company_id: data.user.company_id,
     },
     select: {
       company_id: true,

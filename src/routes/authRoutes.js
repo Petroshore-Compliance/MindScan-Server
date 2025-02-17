@@ -38,6 +38,10 @@ router.post("/verify-user", authMiddleware, (req, res) => {
 });
 
 
-router.post("/verify-role", authMiddleware, roleMiddleware);
+router.post("/verify-role", authMiddleware, roleMiddleware, (req, res) => {
+  res.status(200).json({ access: true, });
+
+}
+);
 
 module.exports = router;

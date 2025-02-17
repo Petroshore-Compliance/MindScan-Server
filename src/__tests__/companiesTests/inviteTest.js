@@ -5,97 +5,116 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
-let companyId = 0;
+
+let petroAdminId;
+const companyEmail = "compania@company.pou";
+let companyId;
+const userEmail = "user@user.pou";
 let userId;
-let companyEmail = "test@test.com";
-let subscriptionPlanId = 4;
+let tokenAdmin;
 let token;
 
-/* beforeAll:
-1- Registrar usuario que va a ser el admin de la compañía
-2- Registrar usuario que va a ser el usuario de la compañía
-3- Crear una compañía
-*/
-
 beforeAll(async () => {
-  const registrationData = {
+
+
+  // Register an admin user
+  const registrationDataAdmin = {
     name: "Alice Smith",
     email: EMAIL_TESTER,
     password: "secureHashedPassword123",
   };
 
-  await request(app).post("/auth/register").send(registrationData);
+  await request(app).post("/admin/create").query({ role: "manager" })
+    .send(registrationDataAdmin);
 
-  const registrationDataAux = {
-    name: "Alice Smith",
-    email: "aux@email.com",
-    password: "secureHashedPassword123",
-  };
-
-  await request(app).post("/auth/register").send(registrationDataAux);
-
-  const auxuserData = await prisma.user.findUnique({
-    where: { email: "aux@email.com" },
-  });
-
-  auxUserId = auxuserData.user_id;
-
-  const userData = await prisma.user.findUnique({
+  // Fetch the admin user from the database
+  const petroAdminData = await prisma.petroAdmin.findUnique({
     where: { email: EMAIL_TESTER.toLowerCase() },
   });
 
-  userId = userData.user_id;
 
-  const loginData = {
+  petroAdminId = petroAdminData.petroAdmin_id;
+
+  // Log in the admin user
+  const loginDataAdmin = {
     email: EMAIL_TESTER,
     password: "secureHashedPassword123",
   };
 
-  const response3 = await request(app).post("/auth/login").send(loginData);
+  const responseAdminLogin = await request(app).post("/admin/login").query({ role: "manager" })
+    .send(loginDataAdmin);
 
-  if (response3.status !== 200) {
-    console.log("Response body:", response3.body);
-  }
+  tokenAdmin = responseAdminLogin.body.token;
 
-  token = response3.body.token;
 
-  const companyData = {
+  // Register a regular user
+  const registrationDataUser = {
+    name: "Alice Smith",
+    email: userEmail,
+    password: "secureHashedPassword123",
+  };
+
+  const u = await request(app).post("/auth/register").set("Authorization", `Bearer ${tokenAdmin}`)
+    .query({ role: "manager" })
+    .send(registrationDataUser);
+  console.log(u.body)
+  userId = u.body.user.user_id;
+
+
+  // Create a company associated with the regular user
+  const companyRegistrationData = {
     name: "Test company name",
     email: companyEmail,
-    subscription_plan_id: subscriptionPlanId,
     user_id: userId,
   };
 
-  const companyResponse = await request(app)
+  const company = await request(app)
     .post("/companies/create-company")
-    .set("Authorization", `Bearer ${token}`)
-    .send(companyData);
+    .set("Authorization", `Bearer ${tokenAdmin}`)
+    .query({ role: "manager" })
+    .send(companyRegistrationData);
 
-  const companyInviter = await prisma.company.findUnique({
-    where: { company_id: companyResponse._body.company.company_id },
-    include: {
-      users: true,
-    },
-  });
+  companyId = company.body.company.company_id;
 
-  companyId = companyInviter.company_id;
+  const auxcompanyRegistrationData = {
+    name: "Test company name",
+    email: "asdfasf@asdf.asf",
+    user_id: userId,
+  };
+
+  await request(app)
+    .post("/companies/create-company")
+    .set("Authorization", `Bearer ${tokenAdmin}`)
+    .query({ role: "manager" })
+    .send(auxcompanyRegistrationData);
+
+  // Log in the regular user
+  const loginDataUser = {
+    email: userEmail,
+    password: "secureHashedPassword123",
+  };
+
+  const loggedUser = await request(app).post("/auth/login").query({ role: "manager" })
+    .send(loginDataUser);
+  token = loggedUser.body.token;
+
 });
 
 
 describe("Auth Endpoints", () => {
   it("fail create invitation;not enough licenses; status 402 ", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
+
       guest: EMAIL_TESTER,
-      neededRole: "manager",
+
 
       role: "manager",
-      company_id: companyId,
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 402) {
@@ -116,17 +135,18 @@ describe("Auth Endpoints", () => {
     });
 
     const invitationData = {
-      host: EMAIL_TESTER,
-      guest: EMAIL_TESTER,
-      neededRole: "manager",
+
+      guest: userEmail,
+
 
       role: "manager",
-      company_id: companyId,
+
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 409) {
@@ -140,16 +160,17 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail create invitation;role not exists ;status 200 ", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
+
+
       guest: "exito@invited.com",
       role: "definitivamente esto no es un rol",
-      company_id: companyId,
+
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "managekljñsdljkfsdjlr" })
       .send(invitationData);
 
     if (response.status !== 400) {
@@ -163,16 +184,16 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail create invitation;wrong typeof; status 200 ", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
+
+
       guest: 34,
-      role: 22,
-      company_id: "companyId",
+
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 400) {
@@ -180,8 +201,7 @@ describe("Auth Endpoints", () => {
     }
     expect(response.body.errors).toEqual([
       "Guest email must be a string.",
-      "Role must be a string.",
-      "Company ID must be a number.",
+
     ]);
     expect(response.status).toBe(400);
   });
@@ -190,16 +210,15 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("success create invitation; status 200 ", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
+
       guest: "exito@invited.com",
-      role: "employee",
-      company_id: companyId,
+
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 201) {
@@ -208,23 +227,25 @@ describe("Auth Endpoints", () => {
     expect(response.body.message).toBe("Invitation created successfully");
     expect(response.status).toBe(201);
 
-    await request(app).post("/auth/registerUser").send(invitationData);
+    await request(app).post("/auth/registerUser").query({ role: "manager" })
+      .send(invitationData);
   });
 });
 
 describe("Auth Endpoints", () => {
   it("fail create invitation;already pending invitation; status 400", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
+
+
       guest: "exito@invited.com",
       role: "employee",
-      company_id: companyId,
+
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 400) {
@@ -242,25 +263,25 @@ describe("Auth Endpoints", () => {
       password: "secureHashedPassword123",
       name: "exito",
       surname: "exito",
-      company_id: companyId,
       role: "employee",
     };
-    console.log("bbbbbbdfsbsdfbvsdfbsdfbsefbsd", registerUserData);
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
-      guest: "exito@invited.com",
+
+
+      guest: userEmail,
       role: "employee",
-      company_id: companyId,
+
     };
 
-    await request(app).post("/auth/register").send(registerUserData);
+    await request(app).post("/auth/register").set("Authorization", `Bearer ${tokenAdmin}`).query({ role: "manager" })
+      .send(registerUserData);
 
     await prisma.companyInvitation.deleteMany();
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 409) {
@@ -274,8 +295,9 @@ describe("Auth Endpoints", () => {
 
 describe("Auth Endpoints", () => {
   it("fail create invitation ; invited in last hour ; status 429", async () => {
+
     //simula sacar el usuario de la empresa
-    await prisma.user.update({
+    const editsNumber = await prisma.user.update({
       where: {
         email: "exito@invited.com",
       },
@@ -284,16 +306,19 @@ describe("Auth Endpoints", () => {
       },
     });
 
+    console.log("editsNumber", editsNumber);
+
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
+
+
       guest: "exito@invited.com",
       role: "employee",
-      company_id: companyId,
+
     };
     await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     await prisma.companyInvitation.updateMany({
@@ -308,6 +333,7 @@ describe("Auth Endpoints", () => {
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 429) {
@@ -332,16 +358,17 @@ describe("Auth Endpoints", () => {
     });
 
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
+
+
       guest: "exito@invited.com",
       role: "employee",
-      company_id: companyId,
+
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 403) {
@@ -357,13 +384,13 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail create invitation; not logged in ;status 401 ", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
-      role: "employee",
-      company_id: companyId,
+
+
+
     };
 
-    const response = await request(app).post("/companies/invite").send(invitationData);
+    const response = await request(app).post("/companies/invite").query({ role: "manager" })
+      .send(invitationData);
 
     if (response.status !== 401) {
       console.log("Response body:", response.body);
@@ -376,16 +403,15 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail create invitation; missing Guest email;status 400 ", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
+
+
       guest: undefined,
-      role: "employee",
-      company_id: companyId,
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 400) {
@@ -396,103 +422,39 @@ describe("Auth Endpoints", () => {
   });
 });
 
-describe("Auth Endpoints", () => {
-  it("fail create invitation; missing role;status 400 ", async () => {
-    const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
-      guest: "exito@invited.com",
-      role: undefined,
-      company_id: companyId,
-    };
 
-    const response = await request(app)
-      .post("/companies/invite")
-      .set("Authorization", `Bearer ${token}`)
-      .send(invitationData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.body.errors).toEqual(["Role cannot be empty."]);
-    expect(response.status).toBe(400);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail create invitation; missing all data;status 400 ", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
-      guest: "exito@invited.com",
+
+
     };
 
     const response = await request(app)
       .post("/companies/invite")
       .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
       .send(invitationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
     }
-    expect(response.body.errors).toEqual(["Role cannot be empty.", "Company ID cannot be empty."]);
+    expect(response.body.errors).toEqual(["Guest email cannot be empty."]);
     expect(response.status).toBe(400);
   });
 });
 
-describe("Auth Endpoints", () => {
-  it("fail create invitation; missing company_id;status 400 ", async () => {
-    const invitationData = {
-      host: EMAIL_TESTER,
-      neededRole: "manager",
-      guest: "exito@invited.com",
-      role: "employee",
-    };
 
-    const response = await request(app)
-      .post("/companies/invite")
-      .set("Authorization", `Bearer ${token}`)
-      .send(invitationData);
 
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.body.errors).toEqual(["Company ID cannot be empty."]);
-    expect(response.status).toBe(400);
-  });
-});
 
-describe("Auth Endpoints", () => {
-  it("fail create invitation; missing host;status 400 ", async () => {
-    const invitationData = {
-      neededRole: "manager",
-      guest: "exito@invited.com",
-      role: "employee",
-      company_id: companyId,
-    };
-
-    const response = await request(app)
-      .post("/companies/invite")
-      .set("Authorization", `Bearer ${token}`)
-      .send(invitationData);
-
-    if (response.status !== 400) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.body.errors).toBe("no valid host email");
-    expect(response.status).toBe(400);
-
-    await request(app).post("/auth/registerUser").send(invitationData);
-  });
-});
 
 describe("Auth Endpoints", () => {
   it("fail create invitation; missing neededRole; status 400", async () => {
     const invitationData = {
-      host: EMAIL_TESTER,
+
       guest: "exito@invited.com",
-      role: "employee",
-      company_id: companyId,
+
     };
 
     const response = await request(app)
@@ -503,10 +465,11 @@ describe("Auth Endpoints", () => {
     if (response.status !== 400) {
       console.log("Response body:", response.body);
     }
-    expect(response.body.errors).toBe("no valid role");
+    expect(response.body.errors).toEqual(["Role is required"]);
     expect(response.status).toBe(400);
 
-    await request(app).post("/auth/registerUser").send(invitationData);
+    await request(app).post("/auth/registerUser").query({ role: "manager" })
+      .send(invitationData);
   });
 });
 

@@ -6,7 +6,7 @@ const prisma = require("../../db.js");
 const createInvitationController = async (data) => {
   const company = await prisma.company.findUnique({
     where: {
-      company_id: data.company_id,
+      company_id: data.user.company_id,
     },
   });
   if (!company) {
@@ -32,8 +32,8 @@ const createInvitationController = async (data) => {
 
   const invitation = await prisma.companyInvitation.create({
     data: {
-      email: data.email.toLowerCase(),
-      company_id: data.company_id,
+      email: data.guest.toLowerCase(),
+      company_id: data.user.company_id,
       invitation_token: invToken.toString(),
     },
   });
