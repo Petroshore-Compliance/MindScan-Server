@@ -8,7 +8,76 @@ const { EMAIL_TESTER } = process.env;
 let UserId;
 let token;
 
+
+let petroAdminId;
+let tokenPetroAdmin;
+
+
 beforeAll(async () => {
+
+  const registrationDataAdmin = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/admin/create").send(registrationDataAdmin);
+
+  const petroAdminData = await prisma.petroAdmin.findUnique({
+    where: { email: EMAIL_TESTER.toLowerCase() },
+  });
+
+  const registrationData2 = {
+    name: "Alice Smith",
+    email: "aux@email.com",
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/admin/create")
+    .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+    .send(registrationData2);
+
+  petroAdminId = petroAdminData.petroAdmin_id;
+
+  const loginDataAdmin = {
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  const response3Admin = await request(app).post("/admin/login").send(loginDataAdmin);
+
+  if (response3Admin.status !== 200) {
+    console.log("Response body:", response3Admin.body);
+  }
+  tokenPetroAdmin = response3Admin.body.token;
+
+
+  const registrationDataUser = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  const res = await request(app)
+    .post("/auth/register")
+    .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+    .send(registrationDataUser);
+
+  console.log(res.body);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const registrationData = {
     name: "Alice Smith",
     email: EMAIL_TESTER,

@@ -32,12 +32,11 @@ beforeAll(async () => {
     password: "secureHashedPassword123",
   };
 
-  await request(app).post("/auth/register").send(registrationDataAux);
+  const a = await request(app).post("/auth/register").send(registrationDataAux);
 
   const auxuserData = await prisma.user.findUnique({
     where: { email: "aux@email.com" },
   });
-
   auxUserId = auxuserData.user_id;
 
   const userData = await prisma.user.findUnique({

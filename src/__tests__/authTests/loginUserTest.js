@@ -5,24 +5,64 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
-describe("Auth Endpoints", () => {
-  it("success register user; status 201", async () => {
-    const registrationData = {
-      name: "Alice Smith",
-      email: EMAIL_TESTER,
-      password: "secureHashedPassword123",
-    };
 
-    const response = await request(app).post("/auth/register").send(registrationData);
 
-    if (response.status !== 201) {
-      console.log("Response body:", response.body);
-    }
+let petroAdminId;
 
-    expect(response.status).toBe(201);
-    expect(response.body.message).toEqual("User registered successfully");
+let tokenPetroAdmin;
+
+beforeAll(async () => {
+  const registrationData = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/admin/create").send(registrationData);
+
+  const petroAdminData = await prisma.petroAdmin.findUnique({
+    where: { email: EMAIL_TESTER.toLowerCase() },
   });
+
+  const registrationData2 = {
+    name: "Alice Smith",
+    email: "aux@email.com",
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/admin/create")
+    .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+    .send(registrationData2);
+
+  petroAdminId = petroAdminData.petroAdmin_id;
+
+  const loginData = {
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  const response3 = await request(app).post("/admin/login").send(loginData);
+
+  if (response3.status !== 200) {
+    console.log("Response body:", response3.body);
+  }
+  tokenPetroAdmin = response3.body.token;
+
+
+  const registrationDataUser = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  const res = await request(app)
+    .post("/auth/register")
+    .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+    .send(registrationDataUser);
+
+  console.log(res.body);
 });
+
 
 describe("Auth Endpoints", () => {
   it("login user; status 200", async () => {

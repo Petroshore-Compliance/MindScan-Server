@@ -17,10 +17,9 @@ const getQuestionsGroupScript = async (language, page) => {
     return selection;
   }
 
-  const groupIndex = page - 1; // Change this for the desired group index: 0 for first 8, 1 for second, etc.
+  const groupIndex = page - 1;
   const groupSize = 8; //NO CAMBIAR este número esta aquí por comodidad
 
-  // Now run your query using the dynamic selection
   const questionsGroup = await prisma.question.findMany({
     orderBy: { question_id: 'asc' },
     skip: groupIndex * groupSize,
