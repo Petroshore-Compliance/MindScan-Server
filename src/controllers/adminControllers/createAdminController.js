@@ -24,7 +24,6 @@ const createAdminController = async (email, password, name) => {
       password: await bcrypt.hash(password, 10),
     },
   });
-  console.log(newpetroAdmin.email);
 
   return { status: 201, message: "petroAdmin registered successfully", petroAdmin: newpetroAdmin };
 };
