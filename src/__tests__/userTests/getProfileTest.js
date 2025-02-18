@@ -138,6 +138,7 @@ describe("Auth Endpoints", () => {
 afterAll(async () => {
   await prisma.user.deleteMany();
   await prisma.company.deleteMany();
+  await prisma.petroAdmin.deleteMany();
 
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

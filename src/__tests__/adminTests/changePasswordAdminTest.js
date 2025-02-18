@@ -178,6 +178,7 @@ describe("admin Endpoints", () => {
 // borrado de lo creado
 afterAll(async () => {
   await prisma.petroAdmin.deleteMany();
+  await prisma.company.deleteMany();
   await prisma.user.deleteMany();
 
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
