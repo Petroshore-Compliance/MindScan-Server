@@ -5,44 +5,105 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
+let petroAdminId;
+const companyEmail = "compania@company.pou";
+let companyId;
+const userEmail = "user@user.pou";
 let userId;
-let subscriptionPlanId = 4;
+let tokenAdmin;
 let token;
 
 beforeAll(async () => {
-  const registrationData = {
+
+
+  // Register an admin user
+  const registrationDataAdmin = {
     name: "Alice Smith",
     email: EMAIL_TESTER,
     password: "secureHashedPassword123",
   };
 
-  const response = await request(app).post("/auth/register").send(registrationData);
+  await request(app).post("/admin/create").query({ role: "manager" })
+    .send(registrationDataAdmin);
 
-  const userData = await prisma.user.findUnique({
+  // Fetch the admin user from the database
+  const petroAdminData = await prisma.petroAdmin.findUnique({
     where: { email: EMAIL_TESTER.toLowerCase() },
   });
 
-  userId = userData.user_id;
 
-  const loginData = {
+  petroAdminId = petroAdminData.petroAdmin_id;
+
+  // Log in the admin user
+  const loginDataAdmin = {
     email: EMAIL_TESTER,
     password: "secureHashedPassword123",
   };
 
-  const response3 = await request(app).post("/auth/login").send(loginData);
+  const responseAdminLogin = await request(app).post("/admin/login").query({ role: "manager" })
+    .send(loginDataAdmin);
 
-  if (response3.status !== 200) {
-    console.log("Response body:", response3.body);
-  }
+  tokenAdmin = responseAdminLogin.body.token;
 
-  token = response3.body.token;
+
+  // Register a regular user
+  const registrationDataUser = {
+    name: "Alice Smith",
+    email: userEmail,
+    password: "secureHashedPassword123",
+  };
+
+  const u = await request(app).post("/auth/register").set("Authorization", `Bearer ${tokenAdmin}`)
+    .query({ role: "manager" })
+    .send(registrationDataUser);
+  console.log(u.body)
+  userId = u.body.user.user_id;
+
+
+  // Create a company associated with the regular user
+  const companyRegistrationData = {
+    name: "Test company name",
+    email: companyEmail,
+    user_id: userId,
+  };
+
+  const company = await request(app)
+    .post("/companies/create-company")
+    .set("Authorization", `Bearer ${tokenAdmin}`)
+    .query({ role: "manager" })
+    .send(companyRegistrationData);
+
+  console.log(company.body)
+
+  companyId = company.body.company.company_id;
+
+  const auxcompanyRegistrationData = {
+    name: "Test company name",
+    email: "asdfasf@asdf.asf",
+    user_id: userId,
+  };
+
+  await request(app)
+    .post("/companies/create-company")
+    .set("Authorization", `Bearer ${tokenAdmin}`)
+    .query({ role: "manager" })
+    .send(auxcompanyRegistrationData);
+
+  // Log in the regular user
+  const loginDataUser = {
+    email: userEmail,
+    password: "secureHashedPassword123",
+  };
+
+  const loggedUser = await request(app).post("/auth/login").query({ role: "manager" })
+    .send(loginDataUser);
+  token = loggedUser.body.token;
+
 });
-
 
 describe("Auth Endpoints", () => {
   it("success update profile; status 200 ", async () => {
     const updateProfileData = {
-      token: token,
       name: "roman",
       password: "secureHashedPassword123",
     };
@@ -66,7 +127,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail update profile;invalid password; status 400 ", async () => {
     const updateProfileData = {
-      token: token, name: "roman",
+      name: "roman",
       password: "a",
     };
 
@@ -87,7 +148,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail update profile;invalid email; status 400 ", async () => {
     const updateProfileData = {
-      token: token, name: "roman",
+      name: "roman",
       email: "a",
     };
 
@@ -108,7 +169,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail update profile;invalid name; status 400 ", async () => {
     const updateProfileData = {
-      token: token, name: " h!$·,.",
+      name: " h!$·,.",
     };
 
     const response = await request(app)
@@ -159,7 +220,6 @@ describe("Auth Endpoints", () => {
   describe("Auth Endpoints", () => {
     it("fail update profile;no token; status 401 ", async () => {
       const userData = {
-        user_id: "userId",
       };
 
       const response = await request(app).get("/user/me").send(userData);
@@ -177,8 +237,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail update profile;no data; status 400 ", async () => {
     const updateProfileData = {
-      token: token,
-      email: "Roman.delasheras@petroshorecompliance.com",
 
     };
 
@@ -199,6 +257,7 @@ describe("Auth Endpoints", () => {
 
 // borrado de todo lo creado
 afterAll(async () => {
+  await prisma.company.deleteMany();
   await prisma.user.deleteMany();
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

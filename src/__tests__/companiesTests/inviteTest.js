@@ -479,6 +479,7 @@ afterAll(async () => {
   await prisma.user.deleteMany();
 
   await prisma.companyInvitation.deleteMany();
+  await prisma.petroAdmin.deleteMany();
   await prisma.company.deleteMany();
 
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
