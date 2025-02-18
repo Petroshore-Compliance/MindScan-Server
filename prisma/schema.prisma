@@ -72,7 +72,7 @@ model CompanyInvitation {
 model QuestionAnswer {
   questionAnswer_id Int             @id @default(autoincrement())
   answer_pt         String
-  anser_es          String  @unique
+  answer_es          String  @unique
   answer_en         String
   created_at        DateTime        @default(now())
   updated_at        DateTime?       @updatedAt
