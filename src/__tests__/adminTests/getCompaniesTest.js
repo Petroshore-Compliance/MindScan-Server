@@ -11,26 +11,10 @@ let companyId;
 const userEmail = "user@user.pou";
 let userId;
 let token;
+let tokenUser;
 
 beforeAll(async () => {
-  // Register a regular user
-  const registrationDataUser = {
-    name: "Alice Smith",
-    email: userEmail,
-    password: "secureHashedPassword123",
-  };
 
-  await request(app).post("/auth/register").send(registrationDataUser);
-
-  // Log in the regular user
-  const loginDataUser = {
-    email: userEmail,
-    password: "secureHashedPassword123",
-  };
-
-  const loggedUser = await request(app).post("/auth/login").send(loginDataUser);
-
-  userId = loggedUser.body.user.user_id;
 
   // Register an admin user
   const registrationDataAdmin = {
@@ -46,6 +30,7 @@ beforeAll(async () => {
     where: { email: EMAIL_TESTER.toLowerCase() },
   });
 
+
   petroAdminId = petroAdminData.petroAdmin_id;
 
   // Log in the admin user
@@ -57,6 +42,27 @@ beforeAll(async () => {
   const responseAdminLogin = await request(app).post("/admin/login").send(loginDataAdmin);
 
   token = responseAdminLogin.body.token;
+
+
+  // Register a regular user
+  const registrationDataUser = {
+    name: "Alice Smith",
+    email: userEmail,
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/auth/register").set("Authorization", `Bearer ${token}`)
+    .send(registrationDataUser);
+
+  // Log in the regular user
+  const loginDataUser = {
+    email: userEmail,
+    password: "secureHashedPassword123",
+  };
+
+  const loggedUser = await request(app).post("/auth/login").send(loginDataUser);
+  tokenUser = loggedUser.body.token;
+  userId = loggedUser.body.user.user_id;
 
   // Create a company associated with the regular user
   const companyRegistrationData = {
@@ -83,6 +89,7 @@ beforeAll(async () => {
     .set("Authorization", `Bearer ${token}`)
     .send(auxcompanyRegistrationData);
 });
+
 
 describe("admin Endpoints", () => {
   it("successfully retrieves one company; status 200", async () => {

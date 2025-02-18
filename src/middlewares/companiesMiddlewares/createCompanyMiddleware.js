@@ -3,12 +3,12 @@ const { validateNumber, validateString } = require("../../tools/validations.js")
 const createCompanyMiddleware = (req, res, next) => {
   let errors = [];
   let result;
-  let { name, email, user_id } = req.body;
+  let { name, email } = req.body;
 
   const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
   const regexName = /^[A-Za-zÀ-ÿ\s]+$/;
 
-  result = validateNumber(user_id, "User ID");
+  result = validateNumber(req.body.user_id, "User ID");
   if (result.error) errors.push(result.error);
   else req.body.user_id = result.value;
 

@@ -5,6 +5,49 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
+
+let petroAdminId;
+
+let tokenPetroAdmin;
+
+beforeAll(async () => {
+  const registrationData = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/admin/create").send(registrationData);
+
+  const petroAdminData = await prisma.petroAdmin.findUnique({
+    where: { email: EMAIL_TESTER.toLowerCase() },
+  });
+
+  const registrationData2 = {
+    name: "Alice Smith",
+    email: "aux@email.com",
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/admin/create")
+    .send(registrationData2);
+
+  petroAdminId = petroAdminData.petroAdmin_id;
+
+  const loginData = {
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  const response3 = await request(app).post("/admin/login").send(loginData);
+
+  if (response3.status !== 200) {
+    console.log("Response body:", response3.body);
+  }
+
+  tokenPetroAdmin = response3.body.token;
+});
+
 describe("Auth Endpoints", () => {
   it("should register a user successfully and return a 201 status", async () => {
     const registrationData = {
@@ -13,12 +56,15 @@ describe("Auth Endpoints", () => {
       password: "secureHashedPassword123",
     };
 
-    const response = await request(app).post("/auth/register").send(registrationData);
+    const response = await request(app)
+      .post("/auth/register")
+      .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+      .send(registrationData);
 
     if (response.status !== 201) {
       console.log("Response body:", response.body);
     }
-    expect(response.body).toEqual({ message: "User registered successfully" });
+    expect(response.body.message).toEqual("User registered successfully");
     expect(response.status).toBe(201);
   });
 });
@@ -31,7 +77,10 @@ describe("Auth Endpoints", () => {
       password: "secureHashedPassword123",
     };
 
-    const response = await request(app).post("/auth/register").send(registrationData);
+    const response = await request(app)
+      .post("/auth/register")
+      .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+      .send(registrationData);
 
     if (response.status !== 409) {
       console.log("Response body:", response.body);
@@ -49,7 +98,10 @@ describe("Auth Endpoints", () => {
       password: "secureHashedPassword123",
     };
 
-    const response = await request(app).post("/auth/register").send(registrationData);
+    const response = await request(app)
+      .post("/auth/register")
+      .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+      .send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
@@ -67,7 +119,10 @@ describe("Auth Endpoints", () => {
       password: "secureHashedPassword123",
     };
 
-    const response = await request(app).post("/auth/register").send(registrationData);
+    const response = await request(app)
+      .post("/auth/register")
+      .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+      .send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
@@ -85,7 +140,10 @@ describe("Auth Endpoints", () => {
       email: EMAIL_TESTER,
     };
 
-    const response = await request(app).post("/auth/register").send(registrationData);
+    const response = await request(app)
+      .post("/auth/register")
+      .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+      .send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
@@ -104,7 +162,10 @@ describe("Auth Endpoints", () => {
       password: 3,
     };
 
-    const response = await request(app).post("/auth/register").send(registrationData);
+    const response = await request(app)
+      .post("/auth/register")
+      .set("Authorization", `Bearer ${tokenPetroAdmin}`)
+      .send(registrationData);
 
     if (response.status !== 400) {
       console.log("Response body:", response.body);
@@ -120,6 +181,7 @@ describe("Auth Endpoints", () => {
 // borrado de lo creado
 afterAll(async () => {
   await prisma.user.deleteMany();
-
+  await prisma.petroAdmin.deleteMany();
+  await prisma.company.deleteMany();
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });

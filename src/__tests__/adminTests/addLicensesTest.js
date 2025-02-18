@@ -13,24 +13,7 @@ let token;
 let tokenUser;
 
 beforeAll(async () => {
-  // Register a regular user
-  const registrationDataUser = {
-    name: "Alice Smith",
-    email: userEmail,
-    password: "secureHashedPassword123",
-  };
 
-  await request(app).post("/auth/register").send(registrationDataUser);
-
-  // Log in the regular user
-  const loginDataUser = {
-    email: userEmail,
-    password: "secureHashedPassword123",
-  };
-
-  const loggedUser = await request(app).post("/auth/login").send(loginDataUser);
-  tokenUser = loggedUser.body.token;
-  userId = loggedUser.body.user.user_id;
 
   // Register an admin user
   const registrationDataAdmin = {
@@ -58,6 +41,27 @@ beforeAll(async () => {
   const responseAdminLogin = await request(app).post("/admin/login").send(loginDataAdmin);
 
   token = responseAdminLogin.body.token;
+
+
+  // Register a regular user
+  const registrationDataUser = {
+    name: "Alice Smith",
+    email: userEmail,
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/auth/register").set("Authorization", `Bearer ${token}`)
+    .send(registrationDataUser);
+
+  // Log in the regular user
+  const loginDataUser = {
+    email: userEmail,
+    password: "secureHashedPassword123",
+  };
+
+  const loggedUser = await request(app).post("/auth/login").send(loginDataUser);
+  tokenUser = loggedUser.body.token;
+  userId = loggedUser.body.user.user_id;
 
   // Create a company associated with the regular user
   const companyRegistrationData = {

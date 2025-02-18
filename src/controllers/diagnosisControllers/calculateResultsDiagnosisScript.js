@@ -1,7 +1,6 @@
 const prisma = require("../../db.js");
 
 const calculateResultsDiagnosisScript = async (rawDiagnostic) => {
-  console.log("rawDiagnostic", rawDiagnostic.responses_value);
   const groupSum = (arr, start, groupSize = 8) =>
     arr.slice(start, start + groupSize).reduce((sum, value) => sum + value, 0);
 

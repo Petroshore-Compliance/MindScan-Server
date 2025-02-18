@@ -2,6 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { authMiddleware } = require("../middlewares/authMiddleware.js");
+const { roleMiddleware } = require("../middlewares/roleMiddleware.js");
+const { adminMiddleware } = require("../middlewares/adminMiddleware.js");
+
 const { registerUserMiddleware } = require("../middlewares/authMiddlewares/putUserMiddleware.js");
 const {
   changePasswordMiddleware,
@@ -20,7 +23,7 @@ const { loginUserHandler } = require("../handlers/authHandlers/loginUserHandler.
 const { registerUserHandler } = require("../handlers/authHandlers/registerUserHandler.js");
 const { setPasswordHandler } = require("../handlers/authHandlers/setPasswordHandler.js");
 
-router.post("/register", registerUserMiddleware, registerUserHandler);
+router.post("/register", adminMiddleware, registerUserMiddleware, registerUserHandler);
 router.post("/login", loginUserMiddleware, loginUserHandler);
 router.post("/forgot-password", forgotPasswordMiddleware, forgotPasswordHandler);
 router.patch("/set-password", setPasswordMiddleware, setPasswordHandler);
@@ -33,5 +36,12 @@ router.post("/verify-user", authMiddleware, (req, res) => {
     user: req.user,
   });
 });
+
+
+router.post("/verify-role", authMiddleware, roleMiddleware, (req, res) => {
+  res.status(200).json({ access: true, });
+
+}
+);
 
 module.exports = router;

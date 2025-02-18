@@ -29,7 +29,6 @@ const updateProfileController = async (data) => {
   if (Object.keys(data).length === 0) {
     return { status: 400, message: "No valid data to update" };
   }
-  console.log("data", data);
 
   const user = await prisma.user.update({
     where: { email: userToUpdate.email },

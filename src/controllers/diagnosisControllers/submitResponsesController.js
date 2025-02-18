@@ -30,7 +30,7 @@ const submitResponsesController = async (data) => {
 
   const currentPage = diagnoseStarted.responses.length / 8 + 1;
   questionsGroup = await getQuestionsGroupScript("es", currentPage);
-  console.log("questionsGroup", questionsGroup);
+
   const isInverted = questionsGroup.questions;
 
 

@@ -5,15 +5,54 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
-
+let petroAdminId;
+let tokenAdmin;
+let UserId;
+let token;
 beforeAll(async () => {
+
+
+  // Register an admin user
+  const registrationDataAdmin = {
+    name: "Alice Smith",
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  await request(app).post("/admin/create").query({ role: "manager" })
+    .send(registrationDataAdmin);
+
+  // Fetch the admin user from the database
+  const petroAdminData = await prisma.petroAdmin.findUnique({
+    where: { email: EMAIL_TESTER.toLowerCase() },
+  });
+
+
+  petroAdminId = petroAdminData.petroAdmin_id;
+
+  // Log in the admin user
+  const loginDataAdmin = {
+    email: EMAIL_TESTER,
+    password: "secureHashedPassword123",
+  };
+
+  const responseAdminLogin = await request(app).post("/admin/login").query({ role: "manager" })
+    .send(loginDataAdmin);
+
+  tokenAdmin = responseAdminLogin.body.token;
+
+
+
+
+
   const registrationData = {
     name: "Alice Smith",
     email: EMAIL_TESTER,
     password: "secureHashedPassword123",
   };
 
-  const response = await request(app).post("/auth/register").send(registrationData);
+  const response = await request(app).post("/auth/register").set("Authorization", `Bearer ${tokenAdmin}`)
+    .send(registrationData);
 
   const userData = await prisma.user.findUnique({
     where: { email: EMAIL_TESTER.toLowerCase() },
@@ -54,6 +93,7 @@ describe("Auth Endpoints", () => {
 // borrado de lo creado
 afterAll(async () => {
   await prisma.petroAdmin.deleteMany();
+  await prisma.company.deleteMany();
   await prisma.user.deleteMany();
 
   await prisma.contactForm.deleteMany(); // borrar todos los registros de formularios

@@ -165,7 +165,7 @@ describe("Auth Endpoints", () => {
 
 afterAll(async () => {
   await prisma.petroAdmin.deleteMany();
-  await prisma.user.deleteMany();
+  await prisma.company.deleteMany(); await prisma.user.deleteMany();
 
   await prisma.contactForm.deleteMany(); // borrar todos los registros de formularios
 });

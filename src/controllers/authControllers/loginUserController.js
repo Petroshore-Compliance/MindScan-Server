@@ -11,6 +11,9 @@ const loginUserController = async (email, password) => {
     user = await prisma.user.update({
       where: { email: email.toLowerCase() },
       data: { connected_at: new Date() },
+      include: {
+        company: true,
+      },
     });
   } catch (error) {
     //error p2025 es porque no existe usuario con este email
@@ -29,7 +32,12 @@ const loginUserController = async (email, password) => {
   const JWTtoken = jwt.sign(
     {
       user_id: user.user_id,
+      name: user.name,
       email: user.email,
+      role: user.role,
+      company_name: user.company?.name || null,
+      company_id: user.company?.company_id || null,
+      company_email: user.company?.email || null,
     },
     process.env.JWT_SECRET,
     {

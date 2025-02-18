@@ -3,6 +3,8 @@ const router = Router();
 
 const { roleMiddleware } = require("../middlewares/roleMiddleware.js");
 const { authMiddleware } = require("../middlewares/authMiddleware.js");
+const { adminMiddleware } = require("../middlewares/adminMiddleware.js");
+
 const {
   createCompanyMiddleware,
 } = require("../middlewares/companiesMiddlewares/createCompanyMiddleware.js");
@@ -21,7 +23,7 @@ const {
 } = require("../handlers/companiesHandlers/getCompanyEmployeesHandler.js");
 const { inviteHandler } = require("../handlers/companiesHandlers/inviteHandler.js");
 
-router.post("/create-company", authMiddleware, createCompanyMiddleware, createCompanyHandler);
+router.post("/create-company", adminMiddleware, createCompanyMiddleware, createCompanyHandler);
 router.post("/invite", authMiddleware, roleMiddleware, inviteMiddleware, inviteHandler);
 router.get("/get-company", authMiddleware, roleMiddleware, getCompanyMiddleware, getCompanyHandler);
 router.get(

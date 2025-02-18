@@ -12,9 +12,10 @@ const {
 const inviteController = async (data) => {
   let isNew = false;
 
+
   const company = await prisma.company.findUnique({
     where: {
-      company_id: data.company_id,
+      company_id: data.user.company_id,
     },
     include: {
       invitations: true,
@@ -94,6 +95,7 @@ const inviteController = async (data) => {
 
     // If we reach this point, there are no active invitations and no invitations in the last hour.
     // Proceed to create a new invitation.
+
     const response = await createInvitationController(data, company.name);
     // ...rest of your logic (sending emails, etc.)
     return { status: response.status, message: response.message, invitation: response.invitation };
