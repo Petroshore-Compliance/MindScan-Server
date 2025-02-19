@@ -1,7 +1,6 @@
 const prisma = require("../../db.js");
 
 const getQuestionAnswersController = async (data) => {
-  console.log(data);
 
   function getQuestionSelection(language) {
     const selection = {};
