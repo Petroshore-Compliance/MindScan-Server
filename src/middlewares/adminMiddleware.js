@@ -25,25 +25,6 @@ const adminMiddleware = async (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const user = await prisma.petroAdmin.findUnique({
     where: {
       email: req.body.user.email.toLowerCase(),
