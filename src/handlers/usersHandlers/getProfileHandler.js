@@ -1,4 +1,4 @@
-const { getProfileController } = require("../../controllers/usersControllers/getProfileController");
+const { getProfileController } = require("../../controllers/usersControllers/getProfileController.js");
 
 const getProfileHandler = async (req, res) => {
   try {
