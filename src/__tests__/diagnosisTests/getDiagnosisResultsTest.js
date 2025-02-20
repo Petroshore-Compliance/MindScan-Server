@@ -142,6 +142,82 @@ describe("Auth Endpoints", () => {
 
 
 
+    const diagnosis = await prisma.result.findFirst({})
+
+    const diagnosisResultId = diagnosis.result_id;
+
+
+    const diagnosisData = {
+    };
+
+    const response = await request(app)
+      .get("/diagnoses/results")
+      .set("Authorization", `Bearer ${token}`)
+      .query({ result_id: diagnosisResultId })
+      .send(diagnosisData);
+
+    if (response.status !== 200) {
+      console.log("Response body:", response.body);
+    }
+    expect(response.body.message).toEqual("questionResponses found");
+    expect(response.body).toEqual({ "diagnosisResult": [{ "actions": 3, "activity": 3, "aesthetic_appreciation": 3, "altruism": 3, "anxiety": 3, "assertiveness": 3, "competence": 3, "conciliatory_attitude": 3, "cordiality": 3, "deliberation": 3, "depression": 3, "excitement_seeking": 3, "fantasy": 3, "feelings": 3, "frankness": 3, "gregariousness": 3, "hostility": 3, "ideas": 3, "impulsivity": 3, "modesty": 3, "need_for_achievement": 3, "orderliness": 3, "positive_emotions": 3, "self_discipline": 3, "sense_of_duty": 3, "sensitivity_to_others": 3, "social_anxiety": 3, "trust": 3, "values": 3, "vulnerability": 3 }], "diagnosisSummary": { "agreeableness_or_amiability": 3, "extraversion": 3, "neuroticism_x_emotional_stability": 3, "openness_to_experience": 3, "perseverance_or_responsibility": 3 }, "message": "questionResponses found" });
+    expect(response.status).toBe(200);
+  });
+});
+
+describe("Auth Endpoints", () => {
+  it("success getDiagnosisResult;status 200 ", async () => {
+
+    await prisma.result.create({
+      data: {
+        user_id: userId,
+        company_id: companyId,
+
+        anxiety: 3,
+        hostility: 3,
+        depression: 3,
+        social_anxiety: 3,
+        impulsivity: 3,
+        vulnerability: 3,
+
+        cordiality: 3,
+        gregariousness: 3,
+        assertiveness: 3,
+        activity: 3,
+        excitement_seeking: 3,
+        positive_emotions: 3,
+
+        fantasy: 3,
+        aesthetic_appreciation: 3,
+        feelings: 3,
+        actions: 3,
+        ideas: 3,
+        values: 3,
+
+        trust: 3,
+        frankness: 3,
+        altruism: 3,
+        conciliatory_attitude: 3,
+        modesty: 3,
+        sensitivity_to_others: 3,
+
+        competence: 3,
+        orderliness: 3,
+        sense_of_duty: 3,
+        need_for_achievement: 3,
+        self_discipline: 3,
+        deliberation: 3,
+
+        neuroticism_x_emotional_stability: 3,
+        extraversion: 3,
+        openness_to_experience: 3,
+        agreeableness_or_amiability: 3,
+        perseverance_or_responsibility: 3,
+
+        created_at: new Date(),
+      },
+    });
+
 
     const diagnosisData = {
     };
@@ -155,11 +231,10 @@ describe("Auth Endpoints", () => {
       console.log("Response body:", response.body);
     }
     expect(response.body.message).toEqual("questionResponses found");
-    expect(response.body).toEqual({ "diagnosisResult": [{ "actions": 3, "activity": 3, "aesthetic_appreciation": 3, "altruism": 3, "anxiety": 3, "assertiveness": 3, "competence": 3, "conciliatory_attitude": 3, "cordiality": 3, "deliberation": 3, "depression": 3, "excitement_seeking": 3, "fantasy": 3, "feelings": 3, "frankness": 3, "gregariousness": 3, "hostility": 3, "ideas": 3, "impulsivity": 3, "modesty": 3, "need_for_achievement": 3, "orderliness": 3, "positive_emotions": 3, "self_discipline": 3, "sense_of_duty": 3, "sensitivity_to_others": 3, "social_anxiety": 3, "trust": 3, "values": 3, "vulnerability": 3 }], "diagnosisSummary": { "agreeableness_or_amiability": 3, "extraversion": 3, "neuroticism_x_emotional_stability": 3, "openness_to_experience": 3, "perseverance_or_responsibility": 3 }, "message": "questionResponses found" });
+
     expect(response.status).toBe(200);
   });
 });
-
 
 
 
