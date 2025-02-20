@@ -5,6 +5,8 @@ const { launchDiagnosisMiddleware } = require("../middlewares/diagnosisMiddlewar
 const { submitResponsesMiddleware } = require("../middlewares/diagnosisMiddlewares/submitResponsesMiddleware.js");
 const { getQuestionAnswersMiddleware } = require("../middlewares/diagnosisMiddlewares/getQuestionAnswersMiddleware.js");
 const { getDiagnosisResultsMiddleware } = require("../middlewares/diagnosisMiddlewares/getDiagnosisResultsMiddleware.js");
+const { employeeDiagnosesMiddleware } = require("../middlewares/diagnosisMiddlewares/employeeDiagnosesMiddleware.js");
+const { adminMiddleware } = require("../middlewares/adminMiddleware.js");
 const { authMiddleware } = require("../middlewares/authMiddleware.js");
 
 const { launchDiagnosisHandler } = require("../handlers/diagnosisHandlers/launchDiagnosisHandler.js");
@@ -12,9 +14,12 @@ const { submitResponsesHandler } = require("../handlers/diagnosisHandlers/submit
 const { getQuestionAnswersHandler } = require("../handlers/diagnosisHandlers/getQuestionAnswersHandler.js");
 const { getDiagnosisResultsHandler } = require("../handlers/diagnosisHandlers/getDiagnosisResultsHandler.js");
 
+
 router.post("/launch", authMiddleware, launchDiagnosisMiddleware, launchDiagnosisHandler);
 router.patch("/submit", authMiddleware, submitResponsesMiddleware, submitResponsesHandler);
 router.get("/get-answers", authMiddleware, getQuestionAnswersMiddleware, getQuestionAnswersHandler);
 router.get("/results", authMiddleware, getDiagnosisResultsMiddleware, getDiagnosisResultsHandler);
+router.get("/employee-diagnoses", adminMiddleware, employeeDiagnosesMiddleware, getDiagnosisResultsHandler)
+
 
 module.exports = router;

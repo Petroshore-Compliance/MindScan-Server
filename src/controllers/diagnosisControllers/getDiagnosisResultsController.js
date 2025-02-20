@@ -30,7 +30,6 @@ const getDiagnosisResultsController = async (data) => {
     } : null;
 
 
-
     return { status: 200, message: "questionResponses found", diagnosisResult: nonSummary, diagnosisSummary: diagnosisSummary };
   } else {
     const diagnoses = await prisma.result.findMany({
@@ -54,6 +53,7 @@ const getDiagnosisResultsController = async (data) => {
       created_at: new Date(diagnosis.created_at)
         .toLocaleDateString("en-GB"),
     }));
+
     return { status: 200, message: "questionResponses found", diagnoses: formattedDiagnoses };
 
   }

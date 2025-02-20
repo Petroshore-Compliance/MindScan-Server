@@ -7,7 +7,8 @@ const getDiagnosisResultsHandler = async (req, res) => {
 
     const response = await getDiagnosisResultsController(req.body);
 
-    return res.status(response.status).json({ message: response.message, diagnosisResult: response.diagnosisResult, diagnosisSummary: response.diagnosisSummary });
+    res.status(response.status).json({ message: response.message, diagnosisResult: response.diagnosisResult, diagnosisSummary: response.diagnosisSummary, diagnoses: response.diagnoses });
+
   } catch (error) {
     res.status(500).json({ message: "Unhandled error getting diagnosis results", error: error.message });
   }

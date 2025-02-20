@@ -21,7 +21,6 @@ const getCompanyEmployeesController = async (data) => {
       name: true,
       users: {
         select: {
-          user_id: true,
           email: true,
           role: true,
           name: true,
