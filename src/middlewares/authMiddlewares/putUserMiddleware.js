@@ -1,13 +1,7 @@
-const { validateNumber, validateString } = require("../../tools/validations.js");
+const { validateNumber, validateString, regexEmail, regexPass, regexName } = require("../../tools/validations.js");
 
 const registerUserMiddleware = (req, res, next) => {
   let { email, password, name, company_id, role } = req.body;
-
-  // Default missing fields to empty strings to avoid `typeof` errors
-
-  const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
-  const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-  const regexName = /^[A-Za-zÀ-ÿ\s]+$/;
 
   let errors = [];
   let result;

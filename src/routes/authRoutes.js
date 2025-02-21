@@ -6,23 +6,20 @@ const { roleMiddleware } = require("../middlewares/roleMiddleware.js");
 const { adminMiddleware } = require("../middlewares/adminMiddleware.js");
 
 const { registerUserMiddleware } = require("../middlewares/authMiddlewares/putUserMiddleware.js");
-const {
-  changePasswordMiddleware,
-} = require("../middlewares/authMiddlewares/changePasswordMiddleware.js");
-const {
-  forgotPasswordMiddleware,
-} = require("../middlewares/authMiddlewares/forgotPasswordMiddleware.js");
+const { changePasswordMiddleware, } = require("../middlewares/authMiddlewares/changePasswordMiddleware.js");
+const { forgotPasswordMiddleware, } = require("../middlewares/authMiddlewares/forgotPasswordMiddleware.js");
 const { loginUserMiddleware } = require("../middlewares/authMiddlewares/loginUserMiddleware.js");
-const {
-  setPasswordMiddleware,
-} = require("../middlewares/authMiddlewares/setPasswordMiddleware.js");
+const { setPasswordMiddleware, } = require("../middlewares/authMiddlewares/setPasswordMiddleware.js");
+const { employeeRegisterMiddleware } = require("../middlewares/authMiddlewares/employeeRegisterMiddleware.js");
 
 const { changePasswordHandler } = require("../handlers/authHandlers/changePasswordHandler.js");
 const { forgotPasswordHandler } = require("../handlers/authHandlers/forgotPasswordHandler.js");
 const { loginUserHandler } = require("../handlers/authHandlers/loginUserHandler.js");
 const { registerUserHandler } = require("../handlers/authHandlers/registerUserHandler.js");
 const { setPasswordHandler } = require("../handlers/authHandlers/setPasswordHandler.js");
+const { employeeRegisterHandler } = require("../handlers/authHandlers/employeeRegisterHandler.js");
 
+router.post("/employee-register", employeeRegisterMiddleware, employeeRegisterHandler);
 router.post("/register", adminMiddleware, registerUserMiddleware, registerUserHandler);
 router.post("/login", loginUserMiddleware, loginUserHandler);
 router.post("/forgot-password", forgotPasswordMiddleware, forgotPasswordHandler);

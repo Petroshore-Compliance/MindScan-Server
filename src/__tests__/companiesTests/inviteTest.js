@@ -184,7 +184,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail create invitation;wrong typeof; status 200 ", async () => {
     const invitationData = {
-
+      role: 12,
 
       guest: 34,
 
@@ -201,7 +201,7 @@ describe("Auth Endpoints", () => {
     }
     expect(response.body.errors).toEqual([
       "Guest email must be a string.",
-
+      "Role must be a string.",
     ]);
     expect(response.status).toBe(400);
   });
@@ -212,6 +212,7 @@ describe("Auth Endpoints", () => {
     const invitationData = {
 
       guest: "exito@invited.com",
+      role: "employee",
 
     };
 
@@ -403,7 +404,7 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail create invitation; missing Guest email;status 400 ", async () => {
     const invitationData = {
-
+      role: "employee",
 
       guest: undefined,
     };
@@ -440,7 +441,7 @@ describe("Auth Endpoints", () => {
     if (response.status !== 400) {
       console.log("Response body:", response.body);
     }
-    expect(response.body.errors).toEqual(["Guest email cannot be empty."]);
+    expect(response.body.errors).toEqual(["Guest email cannot be empty.", "Role cannot be empty.",]);
     expect(response.status).toBe(400);
   });
 });

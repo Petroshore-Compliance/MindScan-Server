@@ -5,6 +5,8 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
+jest.setTimeout(30000);
+
 let petroAdminId;
 const companyEmail = "compania@company.pou";
 let companyId;
@@ -97,75 +99,131 @@ beforeAll(async () => {
     .send(loginDataUser);
   token = loggedUser.body.token;
 
+
+  //añadir licencias parap oder invitar a los usuarios
+
+  await prisma.company.updateMany({
+    data: {
+      licenses: 1000,
+    },
+  });
+
+
+  const invitationData = {
+
+    guest: "exito@invited.com",
+    role: "employee",
+
+  };
+
+  const response = await request(app)
+    .post("/companies/invite")
+    .set("Authorization", `Bearer ${token}`)
+    .query({ role: "manager" })
+    .send(invitationData);
+
 });
+
+
 describe("Auth Endpoints", () => {
-  it("fail start diagnosis;not enough licenses; status 200 ", async () => {
-    const diagnosisData = {
-      language: "es",
+  it("success register employee; status 201 ", async () => {
+
+
+    const companyInvitation = await prisma.companyInvitation.findMany({});
+
+
+    const employeeRegister = {
+
+      name: "Alice Smith",
+      password: "secureHashedPassword123",
+      token: companyInvitation[0].invitation_token,
+
     };
 
     const response = await request(app)
-      .get("/diagnoses/get-answers")
-      .set("Authorization", `Bearer ${token}`)
-      .send(diagnosisData);
+      .post("/auth/employee-register")
+      .send(employeeRegister);
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       console.log("Response body:", response.body);
     }
-    expect(response.body.message).toEqual("questionResponses found");
-    expect(response.status).toBe(200);
+
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual({ "message": "Employee registered successfully." });
   });
 });
 
+
 describe("Auth Endpoints", () => {
-  it("fail start diagnosis;not enough licenses; status 200 ", async () => {
-    const diagnosisData = {
-      language: "pt",
+  it("fail register employee; already registered; status 410", async () => {
+
+
+    const companyInvitation = await prisma.companyInvitation.findMany({});
+
+
+    const employeeRegister = {
+
+      name: "Alice Smith",
+      password: "secureHashedPassword123",
+      token: companyInvitation[0].invitation_token,
+
     };
 
     const response = await request(app)
-      .get("/diagnoses/get-answers")
-      .set("Authorization", `Bearer ${token}`)
-      .send(diagnosisData);
+      .post("/auth/employee-register")
+      .send(employeeRegister);
 
-    if (response.status !== 200) {
+    if (response.status !== 410) {
       console.log("Response body:", response.body);
     }
-    expect(response.body.message).toEqual("questionResponses found");
-    expect(response.status).toBe(200);
+
+    expect(response.status).toBe(410);
+    expect(response.body).toEqual({ "message": "Invalid invitation", });
   });
 });
+
+
 describe("Auth Endpoints", () => {
-  it("fail start diagnosis;not enough licenses; status 200 ", async () => {
-    const diagnosisData = {
-      language: "en",
+  it("fail register employee; already registered; status 409", async () => {
+
+    await prisma.companyInvitation.updateMany({
+
+      data: {
+        status: "pending",
+      },
+    });
+    const companyInvitation = await prisma.companyInvitation.findMany({});
+
+
+    const employeeRegister = {
+
+      name: "Alice Smith",
+      password: "secureHashedPassword123",
+      token: companyInvitation[0].invitation_token,
+
     };
 
     const response = await request(app)
-      .get("/diagnoses/get-answers")
-      .set("Authorization", `Bearer ${token}`)
-      .send(diagnosisData);
+      .post("/auth/employee-register")
+      .send(employeeRegister);
 
-    if (response.status !== 200) {
+    if (response.status !== 409) {
       console.log("Response body:", response.body);
     }
-    expect(response.body.message).toEqual("questionResponses found");
-    expect(response.status).toBe(200);
+
+    expect(response.status).toBe(409);
+    expect(response.body).toEqual({ "message": "Email already in use", });
   });
 });
-
 
 
 
 // borrado de lo creado
 afterAll(async () => {
-  await prisma.result.deleteMany();
-
-  await prisma.userResponses.deleteMany();
   await prisma.user.deleteMany();
-  await prisma.petroAdmin.deleteMany();
 
   await prisma.companyInvitation.deleteMany();
+  await prisma.petroAdmin.deleteMany();
   await prisma.company.deleteMany();
 
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión

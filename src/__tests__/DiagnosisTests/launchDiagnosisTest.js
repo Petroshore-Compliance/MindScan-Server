@@ -293,6 +293,7 @@ afterAll(async () => {
 
   await prisma.userResponses.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.petroAdmin.deleteMany();
 
   await prisma.companyInvitation.deleteMany();
   await prisma.company.deleteMany();
