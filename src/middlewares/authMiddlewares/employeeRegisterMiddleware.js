@@ -19,12 +19,20 @@ const employeeRegisterMiddleware = async (req, res, next) => {
   result = validateString(name, "Name", regexName);
   if (result.error) errors.push(result.error);
 
-  const decryptedData = await decryptJWT(token);
-  const decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
 
-  req.body.company_id = decoded.company_id;
-  req.body.email = decoded.email;
-  req.body.role = decoded.role;
+  try {
+    const decryptedData = await decryptJWT(token);
+    const decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
+
+    req.body.company_id = decoded.company_id;
+    req.body.email = decoded.email;
+    req.body.role = decoded.role;
+
+  } catch (error) {
+    console.error("JWT Verification Error:", error.message);
+    res.status(410).json({ message: "Token inválido" });
+  }
+
 
   if (errors.length === 0) {
     return next();
