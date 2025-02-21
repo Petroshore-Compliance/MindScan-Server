@@ -60,12 +60,11 @@ const inviteController = async (data) => {
       }
     }
 
-    // Check if there's any active (pending) invitation
+    // comprobar si hay invitaciones activas
     const activeInvitation = await prisma.companyInvitation.findFirst({
       where: {
         email: data.guest.toLowerCase(),
         company_id: parseInt(company.company_id),
-        // Adjust this condition based on how you define 'active'
         status: "pending",
       },
     });
@@ -74,7 +73,7 @@ const inviteController = async (data) => {
       return { status: 423, message: "This Guest email already has a pending invitation" };
     }
 
-    // No active invitations, now check if any invitation was created in the last hour
+    // No hay invitaciones activas, comprobar si hay invitaciones recientes
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
 
     const recentInvitation = await prisma.companyInvitation.findFirst({
@@ -82,7 +81,6 @@ const inviteController = async (data) => {
         email: data.guest.toLowerCase(),
         company_id: parseInt(company.company_id),
         created_at: { gte: oneHourAgo },
-        // No status filter here, we consider all statuses.
       },
     });
 
@@ -93,15 +91,12 @@ const inviteController = async (data) => {
       };
     }
 
-    // If we reach this point, there are no active invitations and no invitations in the last hour.
-    // Proceed to create a new invitation.
+    // Se ha comprobado que si es necesario crear una invitación
 
     const response = await createInvitationController(data, company.name);
-    // ...rest of your logic (sending emails, etc.)
     return { status: response.status, message: response.message, invitation: response.invitation };
   }
 
-  //create invitetocompany
 
   let alreadyInvited = await prisma.companyInvitation.findMany({
     where: {
@@ -116,7 +111,7 @@ const inviteController = async (data) => {
 
   const response = await createInvitationController(data, company.name);
 
-  //send email to user
+  //send email 
   if (isNew) {
     emailCreateNewUserScript(
       data.guest,

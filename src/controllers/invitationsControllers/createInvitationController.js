@@ -1,5 +1,9 @@
 const prisma = require("../../db.js");
 
+
+const jwt = require("jsonwebtoken");
+const { encryptJWT } = require("../../tools/auth.js");
+
 //crea la invitación
 //recibe el email y el id de la compañía
 //devuelve las tres cosas en caso de exito
@@ -12,29 +16,30 @@ const createInvitationController = async (data) => {
   if (!company) {
     return { status: 400, message: "Company not found" };
   }
-  let uniqueInvitationToken = false;
-  let tokenUsed;
-  let invToken;
-  while (!uniqueInvitationToken) {
-    //hay que mantener la misma cantidad de 0 para que sea de 1000000 a 999999 en vez de 0 a 999999
-    invToken = Math.floor(1000000000 + Math.random() * 90000000000);
 
-    tokenUsed = await prisma.companyInvitation.findUnique({
-      where: {
-        invitation_token: invToken.toString(),
-      },
-    });
+  const JWTtoken = jwt.sign(
+    {
+      email: data.guest.toLowerCase(),
+      role: data.role,
+      company_id: data.user.company_id,
 
-    if (!tokenUsed) {
-      uniqueInvitationToken = true;
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN || "8h",
     }
-  }
+  );
+  const payload = { token: JWTtoken };
+
+  const token = await encryptJWT(payload);
+
+
 
   const invitation = await prisma.companyInvitation.create({
     data: {
       email: data.guest.toLowerCase(),
       company_id: data.user.company_id,
-      invitation_token: invToken.toString(),
+      invitation_token: token.toString(),
     },
   });
 
