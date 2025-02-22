@@ -174,12 +174,12 @@ describe("admin Endpoints", () => {
 
     formId = contactform.form_id;
     const petroAdminData = {
-      form_id: formId
     };
 
     const response = await request(app)
       .get("/contact/get")
       .set("Authorization", `Bearer ${token}`)
+      .query({ form_id: formId })
       .send(petroAdminData);
 
     if (response.status !== 200) {
