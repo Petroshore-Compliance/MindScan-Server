@@ -10,6 +10,8 @@ let petroAdminId;
 let subscriptionPlanId = 4;
 let token;
 
+let formId;
+
 beforeAll(async () => {
   const registrationData = {
     name: "Alice Smith",
@@ -48,37 +50,96 @@ beforeAll(async () => {
 });
 
 describe("admin Endpoints", () => {
-  it("success get admin; status 200 ", async () => {
+  it("fail get contactForm;none; status 404 ", async () => {
     const petroAdminData = {
-      email: EMAIL_TESTER,
     };
 
     const response = await request(app)
-      .get("/admin/get")
+      .get("/contact/get")
       .set("Authorization", `Bearer ${token}`)
       .send(petroAdminData);
 
-    if (response.status !== 200) {
+    if (response.status !== 404) {
       console.log("Response body:", response.body);
     }
 
-    expect(response.status).toBe(200);
-    expect(response.body.petroAdmins.length).toBe(2);
+    expect(response.body).toEqual({ "message": "No forms found" });
 
-    expect(response.body.message).toEqual("petroAdmins found");
+    expect(response.status).toBe(404);
   });
 });
 
-describe("admin Endpoints", () => {
-  it("success get admin; status 200 ", async () => {
-    const petroAdminData = {
-      email: EMAIL_TESTER,
 
-      petroAdmin_id: petroAdminId,
+
+describe("admin Endpoints", () => {
+  it("success get admin; status 404 ", async () => {
+    const petroAdminData = {
+
+      form_id: formId,
     };
 
     const response = await request(app)
-      .get("/admin/get")
+      .get("/contact/get")
+      .set("Authorization", `Bearer ${token}`)
+      .send(petroAdminData);
+
+    if (response.status !== 404) {
+      console.log("Response body:", response.body);
+    }
+
+    expect(response.body.message).toEqual("No forms found");
+    expect(response.status).toBe(404);
+
+  });
+});
+
+
+describe("admin Endpoints", () => {
+  it("success get contactforms; status 200 ", async () => {
+
+
+    await prisma.contactForm.create({
+      data: {
+        name: "name",
+        email: "email@email.email",
+        phone: "+3434623456234",
+        language: "es",
+        message: "ayuda",
+      },
+    });
+    await prisma.contactForm.create({
+      data: {
+        name: "name",
+        email: "email@email.email",
+        phone: "+3434623456234",
+        language: "es",
+        message: "ayuda",
+      },
+    });
+    await prisma.contactForm.create({
+      data: {
+        name: "name",
+        email: "email@email.email",
+        phone: "+3434623456234",
+        language: "es",
+        message: "ayuda",
+      },
+    });
+    await prisma.contactForm.create({
+      data: {
+        name: "name",
+        email: "email@email.email",
+        phone: "+3434623456234",
+        language: "es",
+        message: "ayuda",
+      },
+    });
+    const petroAdminData = {
+
+    };
+
+    const response = await request(app)
+      .get("/contact/get")
       .set("Authorization", `Bearer ${token}`)
       .send(petroAdminData);
 
@@ -86,10 +147,49 @@ describe("admin Endpoints", () => {
       console.log("Response body:", response.body);
     }
 
+    expect(response.body.message).toEqual("Forms found successfully");
+    expect(response.body.contactForms.length).toBe(4);
     expect(response.status).toBe(200);
-    expect(response.body.petroAdmin.email).toEqual(EMAIL_TESTER.toLowerCase());
 
-    expect(response.body.message).toEqual("petroAdmin found");
+  });
+});
+
+
+
+describe("admin Endpoints", () => {
+  it("success get contactforms; status 200 ", async () => {
+
+
+    await prisma.contactForm.create({
+      data: {
+        name: "name",
+        email: "email@email.email",
+        phone: "+3434623456234",
+        language: "es",
+        message: "ayuda",
+      },
+    });
+
+    const contactform = await prisma.contactForm.findFirst({});
+
+    formId = contactform.form_id;
+    const petroAdminData = {
+      form_id: formId
+    };
+
+    const response = await request(app)
+      .get("/contact/get")
+      .set("Authorization", `Bearer ${token}`)
+      .send(petroAdminData);
+
+    if (response.status !== 200) {
+      console.log("Response body:", response.body);
+    }
+
+    expect(response.body.message).toEqual("Form found successfully");
+    expect(response.body.contactForms.email).toBe("email@email.email");
+    expect(response.status).toBe(200);
+
   });
 });
 
@@ -98,6 +198,7 @@ afterAll(async () => {
   await prisma.petroAdmin.deleteMany();
   await prisma.company.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.contactForm.deleteMany();
 
   await prisma.$disconnect(); // desconectarse de prisma, se cierra la conexión
 });
