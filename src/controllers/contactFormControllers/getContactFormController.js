@@ -1,6 +1,8 @@
 const prisma = require("../../db.js");
 
 const getContactFormController = async (data) => {
+
+  console.log(data.form_id)
   if (data.form_id) {
     const form = await prisma.contactForm.findUnique({
       where: {
@@ -9,7 +11,7 @@ const getContactFormController = async (data) => {
     });
 
     if (form) {
-      return { status: 200, message: "Form found successfully", form: form };
+      return { status: 200, message: "Form found successfully", contactForms: form };
     }
 
     return { status: 404, message: "Form not found" };
@@ -20,7 +22,7 @@ const getContactFormController = async (data) => {
   if (forms.length === 0) {
     return { status: 404, message: "No forms found" };
   } else {
-    return { status: 200, message: "Forms found successfully", forms: forms };
+    return { status: 200, message: "Forms found successfully", contactForms: forms };
   }
 };
 
