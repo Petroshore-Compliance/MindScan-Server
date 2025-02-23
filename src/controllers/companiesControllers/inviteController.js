@@ -94,6 +94,15 @@ const inviteController = async (data) => {
     // Se ha comprobado que si es necesario crear una invitación
 
     const response = await createInvitationController(data, company.name);
+
+
+    emailChangeCompanySenderScript(
+      user.user_id,
+      data.guest,
+      "../templates/invitationEmailExistingAccount.html",
+      company.name,
+      response.invitation.invitation_token
+    );
     return { status: response.status, message: response.message, invitation: response.invitation };
   }
 
@@ -122,7 +131,7 @@ const inviteController = async (data) => {
   } else {
     emailChangeCompanySenderScript(
       user.user_id,
-      user.guest,
+      data.guest,
       "../templates/invitationEmailExistingAccount.html",
       company.name,
       response.invitation.invitation_token

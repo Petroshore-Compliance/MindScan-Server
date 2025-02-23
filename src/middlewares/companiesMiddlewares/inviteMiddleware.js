@@ -4,6 +4,9 @@ const { validateNumber, validateString } = require("../../tools/validations.js")
 const inviteMiddleware = (req, res, next) => {
   let errors = [];
   let result;
+
+  req.body.role = req.query.role;
+
   let { guest, role } = req.body;
   result = validateString(guest, "Guest email", regexEmail);
   if (result.error) errors.push(result.error);
