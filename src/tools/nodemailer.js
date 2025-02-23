@@ -26,8 +26,6 @@ const transporter = nodemailer.createTransport({
 async function sendEmail(recipientEmail, subject, htmlContent) {
   //estas dos líneas "simulan" el envío de un email
 
-  console.log("Email sending skipped in test environment (nodemailer.js)");
-  return { success: true, info: "Test environment - email not sent." };
 
 
   if (!recipientEmail) {
@@ -41,6 +39,8 @@ async function sendEmail(recipientEmail, subject, htmlContent) {
     text: ``,
     html: htmlContent,
   };
+  console.log("Email sending skipped in test environment (nodemailer.js)");
+  return { success: true, info: "Test environment - email not sent." };
 
   try {
     const info = await transporter.sendMail(mailOptions);

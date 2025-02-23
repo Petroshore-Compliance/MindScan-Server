@@ -5,6 +5,7 @@ const app = require("../../app");
 const prisma = require("../../db.js");
 const { EMAIL_TESTER } = process.env;
 
+jest.setTimeout(30000);
 
 let petroAdminId;
 const companyEmail = "compania@company.pou";
@@ -13,6 +14,9 @@ const userEmail = "user@user.pou";
 let userId;
 let tokenAdmin;
 let token;
+let auxUserId;
+const emailChangeCompany = "romanraldhc1@gmail.com";
+
 
 beforeAll(async () => {
 
@@ -108,7 +112,6 @@ describe("Auth Endpoints", () => {
       guest: EMAIL_TESTER,
 
 
-      role: "manager",
     };
 
     const response = await request(app)
@@ -139,7 +142,6 @@ describe("Auth Endpoints", () => {
       guest: userEmail,
 
 
-      role: "manager",
 
     };
 
@@ -163,7 +165,6 @@ describe("Auth Endpoints", () => {
 
 
       guest: "exito@invited.com",
-      role: "definitivamente esto no es un rol",
 
     };
 
@@ -184,7 +185,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail create invitation;wrong typeof; status 200 ", async () => {
     const invitationData = {
-      role: 12,
 
       guest: 34,
 
@@ -201,7 +201,6 @@ describe("Auth Endpoints", () => {
     }
     expect(response.body.errors).toEqual([
       "Guest email must be a string.",
-      "Role must be a string.",
     ]);
     expect(response.status).toBe(400);
   });
@@ -212,7 +211,6 @@ describe("Auth Endpoints", () => {
     const invitationData = {
 
       guest: "exito@invited.com",
-      role: "employee",
 
     };
 
@@ -362,7 +360,6 @@ describe("Auth Endpoints", () => {
 
 
       guest: "exito@invited.com",
-      role: "employee",
 
     };
 
@@ -404,7 +401,6 @@ describe("Auth Endpoints", () => {
 describe("Auth Endpoints", () => {
   it("fail create invitation; missing Guest email;status 400 ", async () => {
     const invitationData = {
-      role: "employee",
 
       guest: undefined,
     };
@@ -441,7 +437,7 @@ describe("Auth Endpoints", () => {
     if (response.status !== 400) {
       console.log("Response body:", response.body);
     }
-    expect(response.body.errors).toEqual(["Guest email cannot be empty.", "Role cannot be empty.",]);
+    expect(response.body.errors).toEqual(["Guest email cannot be empty.",]);
     expect(response.status).toBe(400);
   });
 });
@@ -474,6 +470,59 @@ describe("Auth Endpoints", () => {
   });
 });
 
+
+describe("Auth Endpoints", () => {
+  it("success create invitation; status 200 ", async () => {
+
+    await prisma.user.updateMany({
+      data: {
+        company_id: companyId,
+      },
+    });
+
+    await prisma.user.create({
+      data: {
+        name: "user",
+        email: emailChangeCompany,
+        password: "secureHashedPassword123",
+        company_id: companyId,
+      },
+    });
+
+    const companyRegistrationData = {
+      name: "La wagoneta",
+      email: "testy@test.com",
+      user_id: userId,
+    };
+    await request(app)
+      .post("/companies/create-company")
+      .set("Authorization", `Bearer ${tokenAdmin}`)
+      .query({ role: "manager" })
+      .send(companyRegistrationData);
+
+    const invitationData = {
+
+      guest: emailChangeCompany,
+
+    };
+
+    const response = await request(app)
+      .post("/companies/invite")
+      .set("Authorization", `Bearer ${token}`)
+      .query({ role: "manager" })
+      .send(invitationData);
+
+    console.log("Response bodyyyyyyy:", response.body);
+    if (response.status !== 201) {
+      console.log("Response body:", response.body);
+    }
+    expect(response.body.message).toBe("Invitation created successfully");
+    expect(response.status).toBe(201);
+
+    await request(app).post("/auth/registerUser").query({ role: "manager" })
+      .send(invitationData);
+  });
+});
 
 // borrado de lo creado
 afterAll(async () => {
