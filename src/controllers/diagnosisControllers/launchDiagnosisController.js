@@ -11,7 +11,7 @@ const launchDiagnosisController = async (data) => {
     }
   })
   if (user.company_id == null) {
-    return { status: 400, message: "You must be part of a company to launch a diagnosis" }
+    return { status: 422, message: "You must be part of a company to launch a diagnosis" }
   }
 
   const diagnoseStarted = await prisma.UserResponses.findUnique({

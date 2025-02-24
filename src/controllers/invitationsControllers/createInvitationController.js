@@ -16,7 +16,6 @@ const createInvitationController = async (data) => {
   if (!company) {
     return { status: 400, message: "Company not found" };
   }
-
   const JWTtoken = jwt.sign(
     {
       email: data.guest.toLowerCase(),

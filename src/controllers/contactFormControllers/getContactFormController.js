@@ -2,7 +2,6 @@ const prisma = require("../../db.js");
 
 const getContactFormController = async (data) => {
 
-  console.log(data.form_id)
   if (data.form_id) {
     const form = await prisma.contactForm.findUnique({
       where: {
