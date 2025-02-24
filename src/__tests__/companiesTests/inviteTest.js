@@ -237,7 +237,6 @@ describe("Auth Endpoints", () => {
 
 
       guest: "exito@invited.com",
-      role: "employee",
 
     };
 
@@ -268,7 +267,6 @@ describe("Auth Endpoints", () => {
 
 
       guest: userEmail,
-      role: "employee",
 
     };
 
@@ -311,7 +309,6 @@ describe("Auth Endpoints", () => {
 
 
       guest: "exito@invited.com",
-      role: "employee",
 
     };
     await request(app)
