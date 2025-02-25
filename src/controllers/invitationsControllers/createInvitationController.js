@@ -26,6 +26,7 @@ const createInvitationController = async (data) => {
     process.env.JWT_SECRET,
     {
       expiresIn: "336h",
+
     }
   );
   const payload = { token: JWTtoken };

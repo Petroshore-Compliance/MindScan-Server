@@ -16,7 +16,7 @@ const createCompanyController = async (data) => {
       return { status: 404, message: `user does not exist` };
     }
 
-    if (userExists.role === "admin") {
+    if (userExists.role === "admin" && userExists.company_id) {
       return { status: 422, message: `user is already an admin` };
     }
 

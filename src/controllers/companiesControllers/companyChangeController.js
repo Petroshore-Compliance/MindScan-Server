@@ -6,8 +6,27 @@ const { leaveCompanyController } = require("../../controllers/usersControllers/l
 
 const companyChangeController = async (data) => {
   const decryptedData = await decryptJWT(data.token);
-  const decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
+  let decoded;
 
+
+  try {
+    decoded = jwt.verify(decryptedData.token, process.env.JWT_SECRET);
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+
+      const ugu = await prisma.companyInvitation.update({
+        where: {
+          invitation_token: data.token,
+        },
+        data: {
+          status: "expired",
+        },
+      });
+
+      return { status: 401, message: "Invitation expired", error: error.message };
+    } else { throw error; }
+
+  }
   const userFound = await prisma.user.findUnique({
     where: { email: data.user.email },
   });
