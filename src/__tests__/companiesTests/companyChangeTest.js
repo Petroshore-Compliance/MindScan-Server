@@ -8,18 +8,21 @@ const { EMAIL_TESTER } = process.env;
 jest.setTimeout(30000);
 const bcrypt = require("bcrypt");
 let nuevotoken;
-
-let petroAdminId;
-const companyEmail = "compania@company.pou";
-let companyId;
 const userEmail = "user@user.pou";
+let petroAdminId;
+let companyId;
 let userId;
 let tokenAdmin;
 let token;
 let auxUserId;
-const emailChangeCompany = "romanraldhc1@gmail.com";
 let invitationtoken;
 let invitationTokenn;
+
+const emailChangeCompany = "romanraldhc1@gmail.com";
+let a;
+
+const companyEmail = "compania@company.pou";
+
 
 beforeAll(async () => {
 
@@ -126,7 +129,7 @@ describe("Auth Endpoints", () => {
         name: "user",
         email: emailChangeCompany,
         password: await bcrypt.hash("secureHashedPassword123", 10),
-        company_id: companyId,
+        company_id: null,
       },
     });
 
@@ -189,6 +192,7 @@ describe("Auth Endpoints", () => {
 
   });
 });
+
 
 
 describe("Auth Endpoints", () => {

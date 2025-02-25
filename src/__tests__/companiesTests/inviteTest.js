@@ -468,58 +468,6 @@ describe("Auth Endpoints", () => {
 });
 
 
-describe("Auth Endpoints", () => {
-  it("success create invitation; status 200 ", async () => {
-
-    await prisma.user.updateMany({
-      data: {
-        company_id: companyId,
-      },
-    });
-
-    await prisma.user.create({
-      data: {
-        name: "user",
-        email: emailChangeCompany,
-        password: "secureHashedPassword123",
-        company_id: companyId,
-      },
-    });
-
-    const companyRegistrationData = {
-      name: "La wagoneta",
-      email: "testy@test.com",
-      user_id: userId,
-    };
-    await request(app)
-      .post("/companies/create-company")
-      .set("Authorization", `Bearer ${tokenAdmin}`)
-      .query({ role: "manager" })
-      .send(companyRegistrationData);
-
-    const invitationData = {
-
-      guest: emailChangeCompany,
-
-    };
-
-    const response = await request(app)
-      .post("/companies/invite")
-      .set("Authorization", `Bearer ${token}`)
-      .query({ role: "manager" })
-      .send(invitationData);
-
-    console.log("Response bodyyyyyyy:", response.body);
-    if (response.status !== 201) {
-      console.log("Response body:", response.body);
-    }
-    expect(response.body.message).toBe("Invitation created successfully");
-    expect(response.status).toBe(201);
-
-    await request(app).post("/auth/registerUser").query({ role: "manager" })
-      .send(invitationData);
-  });
-});
 
 // borrado de lo creado
 afterAll(async () => {
