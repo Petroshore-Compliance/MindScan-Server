@@ -17,6 +17,7 @@ const createAdminController = async (email, password, name) => {
     return { status: 409, message: "Email already in use" };
   }
 
+
   const newpetroAdmin = await prisma.petroAdmin.create({
     data: {
       name,
