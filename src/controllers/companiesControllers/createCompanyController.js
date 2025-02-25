@@ -16,6 +16,10 @@ const createCompanyController = async (data) => {
       return { status: 404, message: `user does not exist` };
     }
 
+    if (userExists.role === "admin") {
+      return { status: 422, message: `user is already an admin` };
+    }
+
     const company = await prisma.company.create({
       data: {
         name: data.name,

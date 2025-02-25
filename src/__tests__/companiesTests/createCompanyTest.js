@@ -154,10 +154,20 @@ describe("Auth Endpoints", () => {
 
 describe("Auth Endpoints", () => {
   it("fail create company; email already in use; status 409", async () => {
+
+    const auxUser = await prisma.user.create({
+      data: {
+        name: "Alice Smith",
+        email: "jlksfadadflsñ@fdajskl.com",
+        password: "secureHashedPassword123",
+      },
+    });
+
+
     const registrationData = {
       name: "Test company name",
       email: companyEmail,
-      user_id: UserId,
+      user_id: auxUser.user_id,
     };
 
     const response = await request(app)
