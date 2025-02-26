@@ -8,7 +8,7 @@ const createCompanyController = async (data) => {
   try {
     const userExists = await prisma.user.findUnique({
       where: {
-        user_id: data.user_id,
+        email: data.adminEmail
       },
     });
 
@@ -29,7 +29,7 @@ const createCompanyController = async (data) => {
 
     const companyadmin = await prisma.user.update({
       where: {
-        user_id: data.user_id,
+        email: data.adminEmail
       },
       data: {
         role: "admin",
