@@ -1,16 +1,17 @@
-const { validateNumber, validateString } = require("../../tools/validations.js");
+const { validateNumber, validateString, regexEmail, regexName } = require("../../tools/validations.js");
 
 const createCompanyMiddleware = (req, res, next) => {
   let errors = [];
   let result;
-  let { name, email } = req.body;
+  let { name, email, adminEmail } = req.body;
 
-  const regexEmail = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
-  const regexName = /^[A-Za-zÀ-ÿ\s]+$/;
 
-  result = validateNumber(req.body.user_id, "User ID");
+
+  result = validateString(adminEmail, "Admin email", regexEmail);
   if (result.error) errors.push(result.error);
-  else req.body.user_id = result.value;
+  else req.body.adminEmail = result.value;
+
+
 
   result = validateString(email, "Email", regexEmail);
   if (result.error) errors.push(result.error);
